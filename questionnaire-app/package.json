@@ -7,9 +7,12 @@
     "dev": "vite",
     "build": "vite build",
     "lint": "eslint .",
-    "preview": "vite preview"
+    "preview": "vite preview",
+    "schema:export": "node mysql_explorer/export_schema_csv.js"
   },
   "dependencies": {
+    "dotenv": "^16.4.5",
+    "mysql2": "^3.11.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1"
   },
