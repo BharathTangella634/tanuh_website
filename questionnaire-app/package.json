@@ -4,11 +4,14 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
+    "predev": "node scripts/fetch_questionnaire.js",
     "dev": "vite",
+    "prebuild": "node scripts/fetch_questionnaire.js",
     "build": "vite build",
     "lint": "eslint .",
     "preview": "vite preview",
-    "schema:export": "node mysql_explorer/export_schema_csv.js"
+    "schema:export": "node mysql_explorer/export_schema_csv.js",
+    "fetch:questionnaire": "node scripts/fetch_questionnaire.js"
   },
   "dependencies": {
     "dotenv": "^16.4.5",
