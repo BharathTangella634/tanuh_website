@@ -1,0 +1,63 @@
+/* src/components/ThankYou.css */
+.thank-you-overlay {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(0, 0, 0, 0.6);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 1000;
+}
+
+.thank-you-dialog {
+  background-color: #ffffff;
+  padding: 30px;
+  border-radius: 12px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  width: 90%;
+  max-width: 450px;
+  position: relative;
+  text-align: center;
+}
+
+.thank-you-dialog h3 {
+  font-size: 24px;
+  margin-top: 0;
+  font-weight: 600;
+}
+
+.thank-you-dialog p {
+  font-size: 18px;
+  margin-bottom: 30px;
+  color: #555;
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: none;
+  border: none;
+  font-size: 28px;
+  cursor: pointer;
+  color: #aaa;
+}
+
+.ok-button {
+  padding: 12px 40px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #6200EE;
+  border: none;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.ok-button:hover {
+  background-color: #5000d1;
+}

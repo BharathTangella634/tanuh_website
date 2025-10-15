@@ -1,0 +1,61 @@
+/* src/components/Consent.css */
+.consent-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px 40px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.consent-container h2, .consent-container h3 {
+  color: #1c1c1e;
+  margin-top: 20px;
+  margin-bottom: 10px;
+}
+
+.consent-container p {
+  color: #555;
+  line-height: 1.6;
+}
+
+.consent-checkbox {
+  margin-top: 30px;
+  display: flex;
+  align-items: center;
+}
+
+.consent-checkbox input {
+  margin-right: 10px;
+  width: 18px;
+  height: 18px;
+}
+
+.consent-checkbox label {
+  font-weight: 500;
+}
+
+.consent-container button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #6200EE; /* Purple color from screenshot */
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, opacity 0.3s;
+}
+
+.consent-container button:hover {
+  background-color: #5000d1;
+}
+
+.consent-container button:disabled {
+  background-color: #c5c5c5;
+  cursor: not-allowed;
+  opacity: 0.7;
+}
+

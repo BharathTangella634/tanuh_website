@@ -1,0 +1,8 @@
+/* src/App.css */
+.app-container {
+  display: flex;
+  justify-content: center;
+  align-items: flex-start; /* Align to the top */
+  min-height: 100vh;
+  padding: 40px 20px;
+}

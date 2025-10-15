@@ -1,0 +1,298 @@
+src/components/Questionnaire.css
+.questionnaire-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px 40px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+}
+
+.form-header h1 {
+  font-size: 28px;
+  color: #1c1c1e;
+}
+
+.form-header p {
+  font-size: 16px;
+  color: #6c6c70;
+}
+
+.form-section {
+  border-top: 1px solid #e5e5e5;
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.form-section:first-of-type {
+  border-top: none;
+}
+
+.form-section h2 {
+  font-size: 20px;
+  color: #1c1c1e;
+  margin-bottom: 25px;
+}
+
+.question-block {
+  margin-bottom: 25px;
+}
+
+.question-block > label {
+  display: block;
+  font-weight: 500;
+  color: #333;
+  margin-bottom: 10px;
+}
+
+.text-input, .select-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #c5c5c5;
+  border-radius: 8px;
+  font-size: 16px;
+}
+
+.text-input::placeholder {
+  color: #aaa;
+}
+
+.inline-inputs {
+  display: flex;
+  gap: 20px;
+}
+
+.inline-inputs .text-input {
+  flex: 1;
+}
+
+.radio-group label, .checkbox-group label {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+  font-weight: normal;
+  color: #333;
+}
+
+.radio-group.vertical label {
+    margin-right: 0;
+}
+
+.radio-group input, .checkbox-group input {
+  margin-right: 10px;
+}
+
+.sub-question-container {
+  background-color: #f7f7f7;
+  border-left: 3px solid #6200EE;
+  padding: 20px;
+  margin-top: 15px;
+  border-radius: 0 8px 8px 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+.sub-question-container.visible {
+  max-height: 1000px; /* Adjust if needed */
+  opacity: 1;
+  padding: 20px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #6200EE;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #5000d1;
+}
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+/* src/components/Questionnaire.css */
+.questionnaire-container {
+  background-color: #ffffff;
+  border-radius: 12px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
+  padding: 30px 40px;
+  max-width: 800px;
+  width: 100%;
+}
+
+.form-header {
+  text-align: center;
+  margin-bottom: 40px;
+  border-bottom: 1px solid #e5e5e5;
+  padding-bottom: 20px;
+}
+
+.form-header h1 {
+  font-size: 28px;
+  color: #1c1c1e;
+}
+
+.form-header p {
+  font-size: 16px;
+  color: #6c6c70;
+}
+
+.form-section {
+  padding-top: 20px;
+  margin-top: 20px;
+}
+
+.form-section h2 {
+  font-size: 20px;
+  color: #1c1c1e;
+  margin-bottom: 25px;
+  padding-bottom: 10px;
+  border-bottom: 1px solid #e5e5e5;
+}
+
+.question-block {
+  margin-bottom: 25px;
+}
+
+.question-block > label {
+  display: block;
+  font-weight: 600;
+  color: #333;
+  margin-bottom: 10px;
+  font-size: 16px;
+}
+
+.text-input, .select-input {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #c5c5c5;
+  border-radius: 8px;
+  font-size: 16px;
+  background-color: #fdfdfd;
+}
+
+.text-input::placeholder {
+  color: #aaa;
+}
+
+.inline-inputs {
+  display: flex;
+  gap: 20px;
+}
+
+.inline-inputs .text-input {
+  flex: 1;
+}
+
+.radio-group, .checkbox-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 20px;
+}
+
+.radio-group label, .checkbox-group label {
+  display: flex;
+  align-items: center;
+  font-weight: normal;
+  color: #333;
+  cursor: pointer;
+}
+
+.radio-group.vertical, .checkbox-group.vertical {
+    flex-direction: column;
+    align-items: flex-start;
+    gap: 12px;
+}
+
+.radio-group input, .checkbox-group input {
+  margin-right: 10px;
+}
+
+/* New style for radio buttons with long descriptions */
+.radio-group.with-description label {
+    align-items: flex-start;
+}
+
+.radio-group.with-description input {
+    margin-top: 4px; /* Align radio button with the first line of text */
+}
+
+.radio-group.with-description span {
+    display: block;
+    line-height: 1.5;
+}
+
+.sub-question-container {
+  background-color: rgba(230, 230, 245, 0.3); /* Lighter purple tint */
+  border-left: 3px solid #6200EE;
+  padding: 0 20px;
+  margin-top: 15px;
+  border-radius: 0 8px 8px 0;
+  max-height: 0;
+  opacity: 0;
+  overflow: hidden;
+  transition: max-height 0.5s ease-in-out, opacity 0.5s ease-in-out, padding 0.5s ease-in-out;
+}
+
+.sub-question-container.visible {
+  max-height: 1500px; /* Increased to accommodate large sub-sections */
+  opacity: 1;
+  padding: 20px;
+}
+
+.submit-button {
+  width: 100%;
+  padding: 15px;
+  margin-top: 30px;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  background-color: #6200EE;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s;
+}
+
+.submit-button:hover {
+  background-color: #5000d1;
+}
