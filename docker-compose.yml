@@ -8,8 +8,18 @@ services:
     ports:
       - "8080:80"
     restart: unless-stopped
+    depends_on:
+      - backend
     # If the build needs network access to fetch questionnaire data during `npm run build`,
     # it will use the default Docker build network. No extra config needed.
+
+  backend:
+    build:
+      context: .
+      dockerfile: questionnaire-app/backend/Dockerfile
+    ports:
+      - "3001:3001"
+    restart: unless-stopped
 
 # Usage:
 #   docker compose build
