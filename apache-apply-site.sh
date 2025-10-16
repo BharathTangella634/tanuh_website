@@ -19,7 +19,7 @@
 
 set -euo pipefail
 
-DEFAULT_SRC="deploy/apache/bc-screener-research.conf"
+DEFAULT_SRC="deploy/apache/bc-screener-research_1.conf"
 SRC_CONF_PATH="${1:-$DEFAULT_SRC}"
 
 # Ensure source file exists
