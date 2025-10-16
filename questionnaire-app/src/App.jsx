@@ -104,7 +104,7 @@ function App() {
       } else {
         alert('Could not start a session. Please try again.');
       }
-    } catch (error) {
+    } catch {
       alert('Could not connect to the server to start a session.');
     }
   };
@@ -129,7 +129,7 @@ function App() {
       } else {
         alert('There was an error submitting your form. Please try again.');
       }
-    } catch (error) {
+    } catch {
       alert('Could not connect to the server to submit the form.');
     } finally {
       setIsSubmitting(false);

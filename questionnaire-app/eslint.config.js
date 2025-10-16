@@ -33,7 +33,7 @@ export default defineConfig([
   },
   // Node-specific overrides (scripts and tooling)
   {
-    files: ['mysql_explorer/**/*.js', 'scripts/**/*.js', 'vite.config.js'],
+    files: ['mysql_explorer/**/*.js', 'scripts/**/*.js', 'backend/**/*.js', 'vite.config.js'],
     languageOptions: {
       globals: {
         ...globals.node,
