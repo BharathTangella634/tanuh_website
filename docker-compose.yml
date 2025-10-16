@@ -1,0 +1,17 @@
+version: "3.9"
+
+services:
+  web:
+    build:
+      context: ./questionnaire-app
+      dockerfile: Dockerfile
+    ports:
+      - "8080:80"
+    restart: unless-stopped
+    # If the build needs network access to fetch questionnaire data during `npm run build`,
+    # it will use the default Docker build network. No extra config needed.
+
+# Usage:
+#   docker compose build
+#   docker compose up -d
+# Then open http://localhost:8080
