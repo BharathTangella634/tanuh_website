@@ -94,5 +94,15 @@ To run any script, first cd questionnaire-app.
 ## Deployment
 - TODO: Add deployment instructions (e.g., where and how the built assets are hosted — static hosting, container, or other).
 
+## Docker Compose helper
+A convenience script is provided to stop, remove, build, and start services defined in docker-compose.yml.
+
+Usage (run from repo root):
+- bash ./dc-rebuild.sh            # all services
+- bash ./dc-rebuild.sh web        # specific service (e.g., "web")
+
+Requirements:
+- Docker with Compose v2 (docker compose ...)
+
 ## License
 - TODO: Add a LICENSE file and specify the project license in this README.
