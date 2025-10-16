@@ -283,7 +283,7 @@ const formStructure = [
             { key: "Q29", type: "radio" },
         ]},
         { key: "Q30", type: "radio", condition: {key: "Q30", value: "Yes"}, subQuestions: [
-            { key: "Q31", type: "checkbox" },
+            { key: "Q31", type: "radio" },
             { key: "Q32", type: "radio" },
             { key: "Q33", type: "radio" },
         ]},

@@ -234,8 +234,8 @@ app.set('trust proxy', true);
 // }
 
 function calculateSnehithaRisk(formData) {
-    console.log('--- Starting Snehitha Risk Calculation ---');
-    console.log('Received Form Data:', formData);
+    // console.log('--- Starting Snehitha Risk Calculation ---');
+    // console.log('Received Form Data:', formData);
 
     // --- 1. Map form answers to variables (with defaults) ---
     // Safely parse numbers, defaulting to 0 if they are missing or not a number.
@@ -257,15 +257,15 @@ function calculateSnehithaRisk(formData) {
     const ageAtFirstLiveBirth30OrMore = ageAtFirstBirth_gte30 ? 1 : 0;
 
     // --- Log the interpreted values for debugging ---
-    console.log('Interpreted Variables:');
-    console.log(`  - Age: ${age}`);
-    console.log(`  - Age at Menarche: ${ageAtMenarche}`);
-    console.log(`  - Irregular Cycles: ${irregularCycles} (from '${formData.Q11}')`);
-    console.log(`  - Breastfeeding >24M: ${breastfeeding24M} (from '${formData.Q17}')`);
-    console.log(`  - First-Degree Relatives: ${firstDegreeRelatives} (from '${formData.Q21}')`);
-    console.log(`  - Previous Biopsy: ${previousBiopsy} (from '${formData.Q40}')`);
-    console.log(`  - Age at First Birth 25-29 or Nullipara: ${ageAtFirstLiveBirth2529OrNullipara}`);
-    console.log(`  - Age at First Birth >=30: ${ageAtFirstLiveBirth30OrMore}`);
+    // console.log('Interpreted Variables:');
+    // console.log(`  - Age: ${age}`);
+    // console.log(`  - Age at Menarche: ${ageAtMenarche}`);
+    // console.log(`  - Irregular Cycles: ${irregularCycles} (from '${formData.Q11}')`);
+    // console.log(`  - Breastfeeding >24M: ${breastfeeding24M} (from '${formData.Q17}')`);
+    // console.log(`  - First-Degree Relatives: ${firstDegreeRelatives} (from '${formData.Q21}')`);
+    // console.log(`  - Previous Biopsy: ${previousBiopsy} (from '${formData.Q40}')`);
+    // console.log(`  - Age at First Birth 25-29 or Nullipara: ${ageAtFirstLiveBirth2529OrNullipara}`);
+    // console.log(`  - Age at First Birth >=30: ${ageAtFirstLiveBirth30OrMore}`);
 
     // --- 3. Calculate logit(p) using the provided formula ---
     const logitP = -0.140 +
@@ -288,8 +288,8 @@ function calculateSnehithaRisk(formData) {
         riskPercentage = "0.00";
     }
     
-    console.log(`Final Calculation: Logit(p)=${logitP.toFixed(4)}, Probability=${probability.toFixed(4)}, Risk=${riskPercentage}%`);
-    console.log('--- Risk Calculation Finished ---');
+    // console.log(`Final Calculation: Logit(p)=${logitP.toFixed(4)}, Probability=${probability.toFixed(4)}, Risk=${riskPercentage}%`);
+    // console.log('--- Risk Calculation Finished ---');
     return riskPercentage;
 }
 
