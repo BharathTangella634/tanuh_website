@@ -13,6 +13,11 @@ async function viewData() {
         console.log('\n--- 1. Fetching recent sessions from session_table ---');
         const [sessions] = await pool.query(
             'SELECT session_id, ip_address, session_start_time, session_end_time FROM session_table ORDER BY session_start_time DESC LIMIT 10'
+            // 'SELECT * FROM session_table ORDER BY session_start_time DESC LIMIT 10'
+            // 'select question_id, is_mandatory, section_id, question_number FROM question'
+            // 'select 8 from '
+            // 'SHOW TABLES'
+
         );
 
         if (sessions.length === 0) {
@@ -30,6 +35,8 @@ async function viewData() {
         
         const [answers] = await pool.query(
             'SELECT question, answer, created_at FROM session_data_table WHERE session_id = ? ORDER BY created_at ASC',
+            // 'SELECT * FROM session_data_table WHERE session_id = ? ORDER BY created_at ASC',
+            // 'select * from session_data_table where session_id = ? order by created_at asc',
             [mostRecentSessionId]
         );
 
