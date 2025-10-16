@@ -1,0 +1,14 @@
+# .htaccess for Vite SPA routing with Apache
+# - If the requested path is an existing file or directory, serve it as-is.
+# - Otherwise, rewrite to /index.html so the client-side router can handle it.
+
+RewriteEngine On
+RewriteBase /
+
+# Serve existing files/directories directly
+RewriteCond %{REQUEST_FILENAME} -f [OR]
+RewriteCond %{REQUEST_FILENAME} -d
+RewriteRule ^ - [L]
+
+# Fallback all other requests to index.html
+RewriteRule . /index.html [L]
