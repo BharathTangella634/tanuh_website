@@ -28,12 +28,13 @@ function required(name, value) {
   return value;
 }
 
+// Do NOT throw at module load time when env is missing; defer validation to connection time.
 const config = {
-  host: required('MYSQL_HOST', process.env.MYSQL_HOST),
+  host: process.env.MYSQL_HOST,
   port: Number(process.env.MYSQL_PORT || 3306),
-  database: required('MYSQL_DB', process.env.MYSQL_DB),
-  user: required('MYSQL_USER', process.env.MYSQL_USER),
-  password: required('MYSQL_PASSWORD', process.env.MYSQL_PASSWORD),
+  database: process.env.MYSQL_DB,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
   // Optional extra connection options via MYSQL_QUERY (e.g., charset=utf8mb4&ssl=false)
   // We'll parse simple key=value pairs joined by & and apply a few known ones.
 };
@@ -67,8 +68,17 @@ const extra = parseExtraOptions(process.env.MYSQL_QUERY || '');
 
 let pool;
 
+function ensureConfig() {
+  // Validate required env vars at connection time rather than module load.
+  required('MYSQL_HOST', config.host);
+  required('MYSQL_DB', config.database);
+  required('MYSQL_USER', config.user);
+  required('MYSQL_PASSWORD', config.password);
+}
+
 export function getPool() {
   if (!pool) {
+    ensureConfig();
     pool = mysql.createPool({
       host: config.host,
       port: config.port,
