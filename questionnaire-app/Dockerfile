@@ -19,7 +19,12 @@ FROM httpd:2.4-alpine AS runtime
 # - Un-comment (or add) the rewrite module
 # - Allow .htaccess overrides in the DocumentRoot
 RUN sed -i 's%^#\?LoadModule rewrite_module modules/mod_rewrite.so%LoadModule rewrite_module modules/mod_rewrite.so%' /usr/local/apache2/conf/httpd.conf \
-  && sed -i 's/AllowOverride None/AllowOverride All/i' /usr/local/apache2/conf/httpd.conf
+  && sed -i 's/AllowOverride None/AllowOverride All/i' /usr/local/apache2/conf/httpd.conf \
+  && echo "ServerName localhost" >> /usr/local/apache2/conf/httpd.conf \
+  && echo "Include conf/extra/logfilter.conf" >> /usr/local/apache2/conf/httpd.conf
+
+# Copy Apache log filter to exclude docker healthcheck noise
+COPY apache/logfilter.conf /usr/local/apache2/conf/extra/logfilter.conf
 
 # Copy built assets to Apache's document root
 COPY --from=builder /app/dist/ /usr/local/apache2/htdocs/
@@ -29,7 +34,8 @@ COPY apache.htaccess /usr/local/apache2/htdocs/.htaccess
 
 EXPOSE 80
 
-HEALTHCHECK --interval=30s --timeout=3s CMD wget -qO- http://127.0.0.1/ >/dev/null || exit 1
+# Healthcheck: use a HEAD-like probe and tag with a unique User-Agent; quiet output
+HEALTHCHECK --interval=30s --timeout=3s CMD wget -q --spider -U docker-healthcheck http://127.0.0.1/ || exit 1
 
 # Start Apache in the foreground
 CMD ["httpd-foreground"]
