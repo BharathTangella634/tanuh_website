@@ -243,10 +243,654 @@
 
 // export default Questionnaire;
 
+// import React, { useState } from 'react';
+// import './Questionnaire.css';
+// // Import the questions data from your JSON file using an import assertion
+// import questionnaireData from '../assets/questionnaire.json' with { type: 'json' };
+
+// function Questionnaire({ onSubmit }) {
+//   const [formData, setFormData] = useState({});
+
+//   const handleChange = (e) => {
+//     const { name, value, type, checked } = e.target;
+//     if (type === 'checkbox') {
+//         const currentValues = formData[name] || [];
+//         if (checked) {
+//             setFormData(prev => ({ ...prev, [name]: [...currentValues, value] }));
+//         } else {
+//             setFormData(prev => ({ ...prev, [name]: currentValues.filter(v => v !== value) }));
+//         }
+//     } else {
+//         setFormData(prev => ({ ...prev, [name]: value }));
+//     }
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     onSubmit(formData);
+//   };
+  
+//   // Helper function to create a safe value for form inputs from the option text
+//   const formatValue = (option) => {
+//     if (typeof option !== 'string') return '';
+//     return option.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
+//   };
+
+//   // This function acts as a "render engine" for each type of question
+//   const renderQuestionInput = (question) => {
+//     const { id, type, placeholder, options, inputs, otherOptionId } = question;
+
+//     switch (type) {
+//       case 'number':
+//       case 'text':
+//         return <input type={type} name={id} placeholder={placeholder || ''} onChange={handleChange} className="text-input" />;
+      
+//       case 'inline-inputs':
+//         return (
+//             <div className="inline-inputs">
+//                 {inputs.map(input => (
+//                     <input key={input.id} type={input.type} name={input.id} placeholder={input.placeholder} onChange={handleChange} className="text-input" />
+//                 ))}
+//             </div>
+//         );
+
+//       case 'select':
+//         return (
+//           <select name={id} onChange={handleChange} className="select-input" defaultValue="">
+//             {options.map((option, index) => <option key={index} value={index === 0 ? "" : formatValue(option)} disabled={index === 0}>{option}</option>)}
+//           </select>
+//         );
+
+//       case 'radio':
+//         return (
+//           <div className="radio-group vertical">
+//             {options.map((option, index) => (
+//               <label key={index}>
+//                 <input type="radio" name={id} value={formatValue(option)} onChange={handleChange} /> {option}
+//               </label>
+//             ))}
+//           </div>
+//         );
+    
+//       case 'radio-long':
+//          return (
+//              <div className="radio-group vertical with-description">
+//                 {options.map((option, index) => (
+//                     <label key={index}>
+//                         <input type="radio" name={id} value={option.value} onChange={handleChange} />
+//                         <span><b>{option.label}</b> {option.description}</span>
+//                     </label>
+//                 ))}
+//              </div>
+//          );
+
+//       case 'checkbox':
+//         return (
+//           <div className="checkbox-group">
+//             {options.map((option, index) => (
+//               <label key={index}>
+//                 <input type="checkbox" name={id} value={formatValue(option)} onChange={handleChange} /> {option}
+//               </label>
+//             ))}
+//           </div>
+//         );
+        
+//       case 'checkbox-plus-text':
+//          return (
+//              <div className="checkbox-group vertical">
+//                 {options.map((option, index) => (
+//                     <label key={index}>
+//                         <input type="checkbox" name={id} value={formatValue(option)} onChange={handleChange} /> {option}
+//                     </label>
+//                 ))}
+//                  <label>
+//                     <input type="checkbox" name={id} value="other" onChange={handleChange} /> Other (please specify if you wish)
+//                  </label>
+//                  <input type="text" name={otherOptionId} placeholder="Please specify other cancer (optional)" onChange={handleChange} className="text-input" />
+//              </div>
+//          );
+
+//       default:
+//         console.warn(`Unknown question type: ${type}`);
+//         return null;
+//     }
+//   };
+
+//   // This function renders a list of questions (and their sub-questions recursively)
+//   const renderQuestions = (questions) => {
+//       return questions.map(q => {
+//           return (
+//               <React.Fragment key={q.id}>
+//                   <div className="question-block">
+//                       <label>{q.text}</label>
+//                       {renderQuestionInput(q)}
+//                   </div>
+//                   {/* If the question has sub-questions, render them in a container */}
+//                   {q.subQuestions && (
+//                       <div className={`sub-question-container ${formData[q.id] === 'yes' ? 'visible' : ''}`}>
+//                           {/* Recursively call renderQuestions for the sub-questions */}
+//                           {renderQuestions(q.subQuestions)}
+//                       </div>
+//                   )}
+//               </React.Fragment>
+//           );
+//       });
+//   };
+
+//   return (
+//     <form className="questionnaire-container" onSubmit={handleSubmit}>
+//       <div className="form-header">
+//         <h1>Breast Cancer Risk Questionnaire</h1>
+//         <p>Please answer the following questions to the best of your ability.</p>
+//       </div>
+
+//       {/* Main render loop: iterates through sections from the JSON file */}
+//       {questionnaireData.sections.map((section, index) => (
+//         <div key={index} className="form-section">
+//           <h2>{section.title}</h2>
+//           {/* Renders all questions for the current section */}
+//           {renderQuestions(section.questions)}
+//         </div>
+//       ))}
+      
+//       <button type="submit" className="submit-button">Submit Questionnaire</button>
+//     </form>
+//   );
+// }
+
+// export default Questionnaire;
+
+
+
+// import React, { useState } from 'react';
+// import './Questionnaire.css';
+// import questionnaireData from '../assets/questionnaire.json' with { type: 'json' };
+
+// // This structure defines the layout, sections, and sub-question logic.
+// // It uses the keys from your questionnaire.json to fetch the content.
+// const formStructure = [
+//   {
+//     title: "Section 1: General Information",
+//     questions: [
+//       { key: "Q1", type: "number" },
+//       { key: "Q2", type: "number", name: "height_cm" }, // Renamed for clarity in form data
+//       { key: "Q3", type: "number", name: "weight_kg" }, // Renamed for clarity
+//       { key: "Q4", type: "select" },
+//       { key: "Q5", type: "radio" },
+//       { key: "Q6", type: "radio" },
+//       { key: "Q7", type: "radio" },
+//       { key: "Q8", type: "radio" },
+//       { key: "Q9", type: "radio", condition: { key: "Q9", value: "Yes" }, subQuestions: [
+//           { key: "Q10", type: "number" },
+//           { key: "Q11", type: "radio" },
+//           { key: "Q12", type: "radio" }
+//       ]},
+//       { key: "Q13", type: "radio" },
+//       { key: "Q14", type: "radio", condition: { key: "Q14", value: "Yes" }, subQuestions: [
+//           { key: "Q15", type: "number" },
+//           { key: "Q16", type: "radio" },
+//           { key: "Q17", type: "radio" }
+//       ]},
+//       { key: "Q18", type: "radio" },
+//       { key: "Q19", type: "radio" },
+//       { key: "Q20", type: "radio", condition: { key: "Q20", value: "Yes" }, subQuestions: [
+//           { key: "Q21", type: "radio" },
+//           { key: "Q22", type: "number" },
+//           { key: "Q23", type: "checkbox" },
+//           { key: "Q24", type: "radio", condition: { key: "Q24", value: "No" }, subQuestions: [
+//               { key: "Q25", type: "number", placeholder: "Enter age of death" }
+//           ]},
+//           { key: "Q26", type: "text", placeholder: "Enter ethnicity" }
+//       ]},
+//     ]
+//   },
+//   {
+//     title: "Section 2: Breast Examination (BE)",
+//     questions: [
+//         { key: "Q27", type: "radio", condition: {key: "Q27", value: "Yes"}, subQuestions: [
+//             { key: "Q28", type: "radio" },
+//             { key: "Q29", type: "radio" },
+//         ]},
+//         { key: "Q30", type: "radio", condition: {key: "Q30", value: "Yes"}, subQuestions: [
+//             { key: "Q31", type: "checkbox" },
+//             { key: "Q32", type: "radio" },
+//             { key: "Q33", type: "radio" },
+//         ]},
+//         { key: "Q34", type: "radio", condition: {key: "Q34", value: "Yes"}, subQuestions: [
+//             { key: "Q35", type: "radio" },
+//         ]},
+//         { key: "Q36", type: "radio", condition: {key: "Q36", value: "Yes"}, subQuestions: [
+//             { key: "Q37", type: "checkbox" },
+//         ]},
+//     ]
+//   },
+//   {
+//     title: "Section 3: Beyond BE",
+//     questions: [
+//         { key: "Q38", type: "radio", condition: {key: "Q38", value: "Yes"}, subQuestions: [
+//             { key: "Q39", type: "radio" },
+//         ]},
+//         { key: "Q40", type: "radio", condition: {key: "Q40", value: "Yes"}, subQuestions: [
+//             { key: "Q41", type: "radio" },
+//         ]},
+//         { key: "Q42", type: "radio", condition: {key: "Q42", value: "Yes"}, subQuestions: [
+//             { key: "Q43", type: "checkbox-plus-text", otherOptionId: "q43_other_specify" },
+//         ]},
+//     ]
+//   }
+// ];
+
+// function Questionnaire({ onSubmit }) {
+//   const [formData, setFormData] = useState({});
+
+//   const handleChange = (e) => {
+//     const { name, value, type, checked } = e.target;
+//     if (type === 'checkbox') {
+//         const currentValues = formData[name] || [];
+//         const newValues = checked ? [...currentValues, value] : currentValues.filter(v => v !== value);
+//         setFormData(prev => ({ ...prev, [name]: newValues }));
+//     } else {
+//         setFormData(prev => ({ ...prev, [name]: value }));
+//     }
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     onSubmit(formData);
+//   };
+
+//   const renderInput = (qConfig) => {
+//     const data = questionnaireData[qConfig.key];
+//     if (!data) return <p>Error: Question {qConfig.key} not found in JSON.</p>;
+
+//     const name = qConfig.name || qConfig.key;
+
+//     // For text/number inputs
+//     if (data.answers.length === 0) {
+//       return <input type={qConfig.type || 'text'} name={name} placeholder={qConfig.placeholder || ''} onChange={handleChange} className="text-input" />;
+//     }
+    
+//     // For choice-based inputs
+//     switch (qConfig.type) {
+//       case 'select':
+//         return (
+//           <select name={name} onChange={handleChange} defaultValue="" className="select-input">
+//             <option value="" disabled>Select an option</option>
+//             {data.answers.map((ans, i) => <option key={i} value={ans}>{ans}</option>)}
+//           </select>
+//         );
+//       case 'checkbox':
+//         return (
+//           <div className="checkbox-group vertical">
+//             {data.answers.map((ans, i) => (
+//               <label key={i}><input type="checkbox" name={name} value={ans} onChange={handleChange} /> {ans}</label>
+//             ))}
+//           </div>
+//         );
+//       case 'checkbox-plus-text':
+//          return (
+//              <div className="checkbox-group vertical">
+//                 {data.answers.map((ans, i) => (
+//                     <label key={i}><input type="checkbox" name={name} value={ans} onChange={handleChange} /> {ans}</label>
+//                 ))}
+//                  <input type="text" name={qConfig.otherOptionId} placeholder="Specify other" onChange={handleChange} className="text-input" />
+//              </div>
+//          );
+//       case 'radio':
+//       default:
+//         return (
+//           <div className="radio-group vertical">
+//             {data.answers.map((ans, i) => (
+//               <label key={i}><input type="radio" name={name} value={ans} onChange={handleChange} /> {ans}</label>
+//             ))}
+//           </div>
+//         );
+//     }
+//   };
+
+//   const renderQuestions = (questions) => {
+//     return questions.map((qConfig) => {
+//       const data = questionnaireData[qConfig.key];
+//       if (!data) return null;
+
+//       const name = qConfig.name || qConfig.key;
+
+//       return (
+//         <React.Fragment key={name}>
+//           <div className="question-block">
+//             <label>{data.question}</label>
+//             {renderInput(qConfig)}
+//           </div>
+//           {qConfig.subQuestions && (
+//             <div className={`sub-question-container ${formData[qConfig.condition.key] === qConfig.condition.value ? 'visible' : ''}`}>
+//               {renderQuestions(qConfig.subQuestions)}
+//             </div>
+//           )}
+//         </React.Fragment>
+//       );
+//     });
+//   };
+
+//   return (
+//     <form className="questionnaire-container" onSubmit={handleSubmit}>
+//       <div className="form-header">
+//         <h1>Breast Cancer Risk Questionnaire</h1>
+//         <p>Please answer the following questions to the best of your ability.</p>
+//       </div>
+
+//       {formStructure.map((section, index) => (
+//         <div key={index} className="form-section">
+//           <h2>{section.title}</h2>
+//           {renderQuestions(section.questions)}
+//         </div>
+//       ))}
+      
+//       <button type="submit" className="submit-button">Submit Questionnaire</button>
+//     </form>
+//   );
+// }
+
+// export default Questionnaire;
+
+// final modified one
+
+// import React, { useState } from 'react';
+// import './Questionnaire.css';
+// import questionnaireData from '../assets/questionnaire.json' with { type: 'json' };
+
+// // This structure defines the layout, sections, and sub-question logic.
+// // Placeholders are now included here.
+// const formStructure = [
+//   {
+//     title: "Section 1: General Information",
+//     questions: [
+//       { key: "Q1", type: "number", placeholder: "e.g., 35" },
+//       { key: "Q2", type: "number", name: "height_cm", placeholder: "e.g., 165" },
+//       { key: "Q3", type: "number", name: "weight_kg", placeholder: "e.g., 60" },
+//       { key: "Q4", type: "select" },
+//       { key: "Q5", type: "radio" },
+//       { key: "Q6", type: "radio" },
+//       { key: "Q7", type: "radio" },
+//       { key: "Q8", type: "radio" },
+//       { key: "Q9", type: "radio", condition: { key: "Q9", value: "Yes" }, subQuestions: [
+//           { key: "Q10", type: "number", placeholder: "Please enter a number - years" },
+//           { key: "Q11", type: "radio" },
+//           { key: "Q12", type: "radio" }
+//       ]},
+//       { key: "Q13", type: "radio" },
+//       { key: "Q14", type: "radio", condition: { key: "Q14", value: "Yes" }, subQuestions: [
+//           { key: "Q15", type: "number", placeholder: "Please enter a number" },
+//           { key: "Q16", type: "radio" },
+//           { key: "Q17", type: "radio" }
+//       ]},
+//       { key: "Q18", type: "radio" },
+//       { key: "Q19", type: "radio" },
+//       { key: "Q20", type: "radio", condition: { key: "Q20", value: "Yes" }, subQuestions: [
+//           { key: "Q21", type: "radio" },
+//           { key: "Q22", type: "number", placeholder: "e.g., 45" },
+//           { key: "Q23", type: "checkbox" },
+//           { key: "Q24", type: "radio", condition: { key: "Q24", value: "No" }, subQuestions: [
+//               { key: "Q25", type: "number", placeholder: "Enter age of death" }
+//           ]},
+//           { key: "Q26", type: "text", placeholder: "Enter ethnicity" }
+//       ]},
+//     ]
+//   },
+//   {
+//     title: "Section 2: Breast Examination (BE)",
+//     questions: [
+//         { key: "Q27", type: "radio", condition: {key: "Q27", value: "Yes"}, subQuestions: [
+//             { key: "Q28", type: "radio" },
+//             { key: "Q29", type: "radio" },
+//         ]},
+//         { key: "Q30", type: "radio", condition: {key: "Q30", value: "Yes"}, subQuestions: [
+//             { key: "Q31", type: "checkbox" },
+//             { key: "Q32", type: "radio" },
+//             { key: "Q33", type: "radio" },
+//         ]},
+//         { key: "Q34", type: "radio", condition: {key: "Q34", value: "Yes"}, subQuestions: [
+//             { key: "Q35", type: "radio" },
+//         ]},
+//         { key: "Q36", type: "radio", condition: {key: "Q36", value: "Yes"}, subQuestions: [
+//             { key: "Q37", type: "checkbox" },
+//         ]},
+//     ]
+//   },
+//   {
+//     title: "Section 3: Beyond BE",
+//     questions: [
+//         { key: "Q38", type: "radio", condition: {key: "Q38", value: "Yes"}, subQuestions: [
+//             { key: "Q39", type: "radio" },
+//         ]},
+//         { key: "Q40", type: "radio", condition: {key: "Q40", value: "Yes"}, subQuestions: [
+//             { key: "Q41", type: "radio" },
+//         ]},
+//         { key: "Q42", type: "radio", condition: {key: "Q42", value: "Yes"}, subQuestions: [
+//             { key: "Q43", type: "checkbox-plus-text", otherOptionId: "q43_other_specify", otherPlaceholder: "Specify other cancer" },
+//         ]},
+//     ]
+//   }
+// ];
+
+// function Questionnaire({ onSubmit }) {
+//   const [formData, setFormData] = useState({});
+
+//   const handleChange = (e) => {
+//     const { name, value, type, checked } = e.target;
+//     if (type === 'checkbox') {
+//         const currentValues = formData[name] || [];
+//         const newValues = checked ? [...currentValues, value] : currentValues.filter(v => v !== value);
+//         setFormData(prev => ({ ...prev, [name]: newValues }));
+//     } else {
+//         setFormData(prev => ({ ...prev, [name]: value }));
+//     }
+//   };
+
+//   const handleSubmit = (e) => {
+//     e.preventDefault();
+//     onSubmit(formData);
+//   };
+
+//   const renderInput = (qConfig) => {
+//     const data = questionnaireData[qConfig.key];
+//     if (!data) return <p>Error: Question {qConfig.key} not found in JSON.</p>;
+
+//     const name = qConfig.name || qConfig.key;
+
+//     // For text/number inputs, now with placeholder from qConfig
+//     if (data.answers.length === 0) {
+//       return <input type={qConfig.type || 'text'} name={name} placeholder={qConfig.placeholder || ''} onChange={handleChange} className="text-input" />;
+//     }
+    
+//     // For choice-based inputs
+//     switch (qConfig.type) {
+//       case 'select':
+//         return (
+//           <select name={name} onChange={handleChange} defaultValue="" className="select-input">
+//             <option value="" disabled>Select an option</option>
+//             {data.answers.map((ans, i) => <option key={i} value={ans}>{ans}</option>)}
+//           </select>
+//         );
+//       case 'checkbox':
+//         return (
+//           <div className="checkbox-group vertical">
+//             {data.answers.map((ans, i) => (
+//               <label key={i}><input type="checkbox" name={name} value={ans} onChange={handleChange} /> {ans}</label>
+//             ))}
+//           </div>
+//         );
+//       case 'checkbox-plus-text':
+//          return (
+//              <div className="checkbox-group vertical">
+//                 {data.answers.map((ans, i) => (
+//                     <label key={i}><input type="checkbox" name={name} value={ans} onChange={handleChange} /> {ans}</label>
+//                 ))}
+//                  <input type="text" name={qConfig.otherOptionId} placeholder={qConfig.otherPlaceholder || 'Specify other'} onChange={handleChange} className="text-input" />
+//              </div>
+//          );
+//       case 'radio':
+//       default:
+//         return (
+//           <div className="radio-group vertical">
+//             {data.answers.map((ans, i) => (
+//               <label key={i}><input type="radio" name={name} value={ans} onChange={handleChange} /> {ans}</label>
+//             ))}
+//           </div>
+//         );
+//     }
+//   };
+
+//   const renderSubQuestions = (subQuestions, parentNumber) => {
+//     return subQuestions.map((subQConfig, index) => {
+//       const subQData = questionnaireData[subQConfig.key];
+//       if (!subQData) return null;
+//       const subQName = subQConfig.name || subQConfig.key;
+//       const displayNumber = `${parentNumber}${String.fromCharCode(97 + index)}.`;
+
+//       return (
+//         <React.Fragment key={subQName}>
+//           <div className="question-block">
+//             <label>{displayNumber} {subQData.question}</label>
+//             {renderInput(subQConfig)}
+//           </div>
+//           {subQConfig.subQuestions && (
+//             <div className={`sub-question-container ${formData[subQConfig.condition.key] === subQConfig.condition.value ? 'visible' : ''}`}>
+//               {renderSubQuestions(subQConfig.subQuestions, `${parentNumber}${String.fromCharCode(97 + index)}`)}
+//             </div>
+//           )}
+//         </React.Fragment>
+//       );
+//     });
+//   };
+
+//   let questionCounter = 0;
+
+//   return (
+//     <form className="questionnaire-container" onSubmit={handleSubmit}>
+//       <div className="form-header">
+//         <h1>Breast Cancer Risk Questionnaire</h1>
+//         <p>Please answer the following questions to the best of your ability.</p>
+//       </div>
+
+//       {formStructure.map((section, index) => (
+//         <div key={index} className="form-section">
+//           <h2>{section.title}</h2>
+//           {section.questions.map((qConfig) => {
+//             const data = questionnaireData[qConfig.key];
+//             if (!data) return null;
+
+//             questionCounter++;
+//             const displayNumber = `${questionCounter}.`;
+//             const name = qConfig.name || qConfig.key;
+
+//             return (
+//               <React.Fragment key={name}>
+//                 <div className="question-block">
+//                   <label>{displayNumber} {data.question}</label>
+//                   {renderInput(qConfig)}
+//                 </div>
+//                 {qConfig.subQuestions && (
+//                   <div className={`sub-question-container ${formData[qConfig.condition.key] === qConfig.condition.value ? 'visible' : ''}`}>
+//                     {renderSubQuestions(qConfig.subQuestions, questionCounter)}
+//                   </div>
+//                 )}
+//               </React.Fragment>
+//             );
+//           })}
+//         </div>
+//       ))}
+      
+//       <button type="submit" className="submit-button">Submit Questionnaire</button>
+//     </form>
+//   );
+// }
+
+// export default Questionnaire;
+
+
 import React, { useState } from 'react';
 import './Questionnaire.css';
-// Import the questions data from your JSON file using an import assertion
 import questionnaireData from '../assets/questionnaire.json' with { type: 'json' };
+
+// This structure defines the layout, sections, and sub-question logic.
+// Placeholders are now included here.
+const formStructure = [
+  {
+    title: "Section 1: General Information",
+    questions: [
+      { key: "Q1", type: "number", placeholder: "e.g., 35" },
+      { key: "Q2", type: "number", name: "height_cm", placeholder: "e.g., 165" },
+      { key: "Q3", type: "number", name: "weight_kg", placeholder: "e.g., 60" },
+      { key: "Q4", type: "select" },
+      { key: "Q5", type: "radio" },
+      { key: "Q6", type: "radio" },
+      { key: "Q7", type: "radio" },
+      { key: "Q8", type: "radio" },
+      { key: "Q9", type: "radio", condition: { key: "Q9", value: "Yes" }, subQuestions: [
+          { key: "Q10", type: "number", placeholder: "Please enter a number - years" },
+          { key: "Q11", type: "radio" },
+          { key: "Q12", type: "radio" }
+      ]},
+      { key: "Q13", type: "radio" },
+      { key: "Q14", type: "radio", condition: { key: "Q14", value: "Yes" }, subQuestions: [
+          { key: "Q15", type: "number", placeholder: "Please enter a number" },
+          { key: "Q16", type: "radio" },
+          { key: "Q17", type: "radio" }
+      ]},
+      { key: "Q18", type: "radio" },
+      { key: "Q19", type: "radio" },
+      { key: "Q20", type: "radio", condition: { key: "Q20", value: "Yes" }, subQuestions: [
+          { key: "Q21", type: "radio" },
+          { key: "Q22", type: "number", placeholder: "e.g., 45" },
+          { key: "Q23", type: "checkbox" },
+          { key: "Q24", type: "radio", condition: { key: "Q24", value: "No" }, subQuestions: [
+              { key: "Q25", type: "number", placeholder: "Enter age of death" }
+          ]},
+          { key: "Q26", type: "text", placeholder: "Enter ethnicity" }
+      ]},
+    ]
+  },
+  {
+    title: "Section 2: Breast Examination (BE)",
+    questions: [
+        { 
+          key: "Q27", 
+          type: "radio", 
+          condition: {key: "Q27", value: "Yes"}, 
+          videoUrlOnNo: "https://www.youtube.com/embed/XKtTymNkcj0?autoplay=1&rel=0", // YouTube video for "No" answer
+          subQuestions: [
+            { key: "Q28", type: "radio" },
+            { key: "Q29", type: "radio" },
+          ]
+        },
+        { key: "Q30", type: "radio", condition: {key: "Q30", value: "Yes"}, subQuestions: [
+            { key: "Q31", type: "checkbox" },
+            { key: "Q32", type: "radio" },
+            { key: "Q33", type: "radio" },
+        ]},
+        { key: "Q34", type: "radio", condition: {key: "Q34", value: "Yes"}, subQuestions: [
+            { key: "Q35", type: "radio" },
+        ]},
+        { key: "Q36", type: "radio", condition: {key: "Q36", value: "Yes"}, subQuestions: [
+            { key: "Q37", type: "checkbox" },
+        ]},
+    ]
+  },
+  {
+    title: "Section 3: Beyond BE",
+    questions: [
+        { key: "Q38", type: "radio", condition: {key: "Q38", value: "Yes"}, subQuestions: [
+            { key: "Q39", type: "radio" },
+        ]},
+        { key: "Q40", type: "radio", condition: {key: "Q40", value: "Yes"}, subQuestions: [
+            { key: "Q41", type: "radio" },
+        ]},
+        { key: "Q42", type: "radio", condition: {key: "Q42", value: "Yes"}, subQuestions: [
+            { key: "Q43", type: "checkbox-plus-text", otherOptionId: "q43_other_specify", otherPlaceholder: "Specify other cancer" },
+        ]},
+    ]
+  }
+];
 
 function Questionnaire({ onSubmit }) {
   const [formData, setFormData] = useState({});
@@ -255,11 +899,8 @@ function Questionnaire({ onSubmit }) {
     const { name, value, type, checked } = e.target;
     if (type === 'checkbox') {
         const currentValues = formData[name] || [];
-        if (checked) {
-            setFormData(prev => ({ ...prev, [name]: [...currentValues, value] }));
-        } else {
-            setFormData(prev => ({ ...prev, [name]: currentValues.filter(v => v !== value) }));
-        }
+        const newValues = checked ? [...currentValues, value] : currentValues.filter(v => v !== value);
+        setFormData(prev => ({ ...prev, [name]: newValues }));
     } else {
         setFormData(prev => ({ ...prev, [name]: value }));
     }
@@ -269,113 +910,80 @@ function Questionnaire({ onSubmit }) {
     e.preventDefault();
     onSubmit(formData);
   };
-  
-  // Helper function to create a safe value for form inputs from the option text
-  const formatValue = (option) => {
-    if (typeof option !== 'string') return '';
-    return option.replace(/[^a-zA-Z0-9]/g, '_').toLowerCase();
-  };
 
-  // This function acts as a "render engine" for each type of question
-  const renderQuestionInput = (question) => {
-    const { id, type, placeholder, options, inputs, otherOptionId } = question;
+  const renderInput = (qConfig) => {
+    const data = questionnaireData[qConfig.key];
+    if (!data) return <p>Error: Question {qConfig.key} not found in JSON.</p>;
 
-    switch (type) {
-      case 'number':
-      case 'text':
-        return <input type={type} name={id} placeholder={placeholder || ''} onChange={handleChange} className="text-input" />;
-      
-      case 'inline-inputs':
-        return (
-            <div className="inline-inputs">
-                {inputs.map(input => (
-                    <input key={input.id} type={input.type} name={input.id} placeholder={input.placeholder} onChange={handleChange} className="text-input" />
-                ))}
-            </div>
-        );
+    const name = qConfig.name || qConfig.key;
 
+    // For text/number inputs, now with placeholder from qConfig
+    if (data.answers.length === 0) {
+      return <input type={qConfig.type || 'text'} name={name} placeholder={qConfig.placeholder || ''} onChange={handleChange} className="text-input" />;
+    }
+    
+    // For choice-based inputs
+    switch (qConfig.type) {
       case 'select':
         return (
-          <select name={id} onChange={handleChange} className="select-input" defaultValue="">
-            {options.map((option, index) => <option key={index} value={index === 0 ? "" : formatValue(option)} disabled={index === 0}>{option}</option>)}
+          <select name={name} onChange={handleChange} defaultValue="" className="select-input">
+            <option value="" disabled>Select an option</option>
+            {data.answers.map((ans, i) => <option key={i} value={ans}>{ans}</option>)}
           </select>
         );
-
-      case 'radio':
-        return (
-          <div className="radio-group vertical">
-            {options.map((option, index) => (
-              <label key={index}>
-                <input type="radio" name={id} value={formatValue(option)} onChange={handleChange} /> {option}
-              </label>
-            ))}
-          </div>
-        );
-    
-      case 'radio-long':
-         return (
-             <div className="radio-group vertical with-description">
-                {options.map((option, index) => (
-                    <label key={index}>
-                        <input type="radio" name={id} value={option.value} onChange={handleChange} />
-                        <span><b>{option.label}</b> {option.description}</span>
-                    </label>
-                ))}
-             </div>
-         );
-
       case 'checkbox':
         return (
-          <div className="checkbox-group">
-            {options.map((option, index) => (
-              <label key={index}>
-                <input type="checkbox" name={id} value={formatValue(option)} onChange={handleChange} /> {option}
-              </label>
+          <div className="checkbox-group vertical">
+            {data.answers.map((ans, i) => (
+              <label key={i}><input type="checkbox" name={name} value={ans} onChange={handleChange} /> {ans}</label>
             ))}
           </div>
         );
-        
       case 'checkbox-plus-text':
          return (
              <div className="checkbox-group vertical">
-                {options.map((option, index) => (
-                    <label key={index}>
-                        <input type="checkbox" name={id} value={formatValue(option)} onChange={handleChange} /> {option}
-                    </label>
+                {data.answers.map((ans, i) => (
+                    <label key={i}><input type="checkbox" name={name} value={ans} onChange={handleChange} /> {ans}</label>
                 ))}
-                 <label>
-                    <input type="checkbox" name={id} value="other" onChange={handleChange} /> Other (please specify if you wish)
-                 </label>
-                 <input type="text" name={otherOptionId} placeholder="Please specify other cancer (optional)" onChange={handleChange} className="text-input" />
+                 <input type="text" name={qConfig.otherOptionId} placeholder={qConfig.otherPlaceholder || 'Specify other'} onChange={handleChange} className="text-input" />
              </div>
          );
-
+      case 'radio':
       default:
-        console.warn(`Unknown question type: ${type}`);
-        return null;
+        return (
+          <div className="radio-group vertical">
+            {data.answers.map((ans, i) => (
+              <label key={i}><input type="radio" name={name} value={ans} onChange={handleChange} /> {ans}</label>
+            ))}
+          </div>
+        );
     }
   };
 
-  // This function renders a list of questions (and their sub-questions recursively)
-  const renderQuestions = (questions) => {
-      return questions.map(q => {
-          return (
-              <React.Fragment key={q.id}>
-                  <div className="question-block">
-                      <label>{q.text}</label>
-                      {renderQuestionInput(q)}
-                  </div>
-                  {/* If the question has sub-questions, render them in a container */}
-                  {q.subQuestions && (
-                      <div className={`sub-question-container ${formData[q.id] === 'yes' ? 'visible' : ''}`}>
-                          {/* Recursively call renderQuestions for the sub-questions */}
-                          {renderQuestions(q.subQuestions)}
-                      </div>
-                  )}
-              </React.Fragment>
-          );
-      });
+  const renderSubQuestions = (subQuestions, parentNumber) => {
+    return subQuestions.map((subQConfig, index) => {
+      const subQData = questionnaireData[subQConfig.key];
+      if (!subQData) return null;
+      const subQName = subQConfig.name || subQConfig.key;
+      const displayNumber = `${parentNumber}${String.fromCharCode(97 + index)}.`;
+
+      return (
+        <React.Fragment key={subQName}>
+          <div className="question-block">
+            <label>{displayNumber} {subQData.question}</label>
+            {renderInput(subQConfig)}
+          </div>
+          {subQConfig.subQuestions && (
+            <div className={`sub-question-container ${formData[subQConfig.condition.key] === subQConfig.condition.value ? 'visible' : ''}`}>
+              {renderSubQuestions(subQConfig.subQuestions, `${parentNumber}${String.fromCharCode(97 + index)}`)}
+            </div>
+          )}
+        </React.Fragment>
+      );
+    });
   };
+
+  let questionCounter = 0;
 
   return (
     <form className="questionnaire-container" onSubmit={handleSubmit}>
@@ -384,12 +992,51 @@ function Questionnaire({ onSubmit }) {
         <p>Please answer the following questions to the best of your ability.</p>
       </div>
 
-      {/* Main render loop: iterates through sections from the JSON file */}
-      {questionnaireData.sections.map((section, index) => (
+      {formStructure.map((section, index) => (
         <div key={index} className="form-section">
           <h2>{section.title}</h2>
-          {/* Renders all questions for the current section */}
-          {renderQuestions(section.questions)}
+          {section.questions.map((qConfig) => {
+            const data = questionnaireData[qConfig.key];
+            if (!data) return null;
+
+            questionCounter++;
+            const displayNumber = `${questionCounter}.`;
+            const name = qConfig.name || qConfig.key;
+            
+            // Check if this is Q27 and "No" is selected
+            const isQ27No = qConfig.key === "Q27" && formData[name] === "No";
+
+            return (
+              <React.Fragment key={name}>
+                <div className="question-block">
+                  <label>{displayNumber} {data.question}</label>
+                  {renderInput(qConfig)}
+                </div>
+                
+                {/* Conditional rendering for Q27 sub-questions (only if "Yes") */}
+                {qConfig.subQuestions && (
+                  <div className={`sub-question-container ${formData[name] === 'Yes' ? 'visible' : ''}`}>
+                    {renderSubQuestions(qConfig.subQuestions, questionCounter)}
+                  </div>
+                )}
+
+                {/* Conditional rendering for YouTube video (only if Q27 is "No") */}
+                {isQ27No && qConfig.videoUrlOnNo && (
+                    <div className="youtube-player-container">
+                        <iframe
+                            width="560" // Adjust size as needed, CSS will make it responsive
+                            height="315"
+                            src={qConfig.videoUrlOnNo}
+                            title="YouTube video player"
+                            frameBorder="0"
+                            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+                            allowFullScreen
+                        ></iframe>
+                    </div>
+                )}
+              </React.Fragment>
+            );
+          })}
         </div>
       ))}
       
