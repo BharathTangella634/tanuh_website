@@ -346,6 +346,23 @@
   animation: bounce-dots 1.4s infinite ease-in-out both;
 }
 
+.required-asterisk {
+  color: #d93025; /* A standard red color for required fields */
+  font-weight: bold;
+  margin-left: 4px;
+}
+
+/* Styles for when a required field is not filled out */
+.question-block.error > label {
+  color: #d93025;
+}
+
+.question-block.error .text-input,
+.question-block.error .select-input {
+  border-color: #d93025; /* Add a red border to the input field */
+  background-color: #fbeae9; /* A light red background to make it stand out */
+}
+
 .loading-dots span:nth-child(1) {
   animation-delay: -0.32s;
 }
