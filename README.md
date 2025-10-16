@@ -104,5 +104,27 @@ Usage (run from repo root):
 Requirements:
 - Docker with Compose v2 (docker compose ...)
 
+## Apache deploy helper
+An executable script is provided to install an Apache vhost .conf into the correct Apache directories, check syntax, and reload Apache.
+
+Usage (run from repo root):
+- sudo ./apache-apply-site.sh                                  # uses default conf path
+- sudo ./apache-apply-site.sh deploy/apache/bc-screener-research.conf
+- sudo ./apache-apply-site.sh /path/to/your-site.conf
+
+What it does (Ubuntu/Debian with apache2):
+- Copies the given .conf to /etc/apache2/sites-available/
+- Enables the site with a2ensite <name>
+- Validates Apache config: apache2ctl -t
+- Reloads Apache: systemctl reload apache2
+
+Requirements:
+- Debian/Ubuntu with apache2, a2ensite, apache2ctl, and systemd (systemctl)
+- Root privileges (use sudo)
+
+Note:
+- The default source conf is deploy/apache/bc-screener-research.conf in this repo.
+- If your repo has a differently named file (e.g., bc-screener-research_1.conf), pass its path explicitly.
+
 ## License
 - TODO: Add a LICENSE file and specify the project license in this README.
