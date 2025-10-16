@@ -113,6 +113,7 @@ Usage (run from repo root):
 - sudo ./apache-apply-site.sh /path/to/your-site.conf
 
 What it does (Ubuntu/Debian with apache2):
+- Ensures required Apache modules are enabled (headers, proxy, proxy_http, rewrite, ssl; tries proxy_wstunnel if available)
 - Copies the given .conf to /etc/apache2/sites-available/
 - Enables the site with a2ensite <name>
 - Validates Apache config: apache2ctl -t
