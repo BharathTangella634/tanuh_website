@@ -12,7 +12,7 @@ async function viewData() {
         // --- Query 1: Get the 10 most recent sessions ---
         console.log('\n--- 1. Fetching recent sessions from session_table ---');
         const [sessions] = await pool.query(
-            'SELECT session_id, ip_address, session_start_time, session_end_time FROM session_table ORDER BY session_start_time DESC LIMIT 10'
+            'SELECT session_id, ip_address, session_start_time, session_end_time, snehita_lifetime_risk FROM session_table ORDER BY session_start_time DESC LIMIT 10'
             // 'SELECT * FROM session_table ORDER BY session_start_time DESC LIMIT 10'
             // 'select question_id, is_mandatory, section_id, question_number FROM question'
             // 'select 8 from '
@@ -37,6 +37,7 @@ async function viewData() {
             'SELECT question, answer, created_at FROM session_data_table WHERE session_id = ? ORDER BY created_at ASC',
             // 'SELECT * FROM session_data_table WHERE session_id = ? ORDER BY created_at ASC',
             // 'select * from session_data_table where session_id = ? order by created_at asc',
+            // 'show columns from session_table',
             [mostRecentSessionId]
         );
 

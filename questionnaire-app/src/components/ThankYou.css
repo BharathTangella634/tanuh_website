@@ -61,3 +61,28 @@
 .ok-button:hover {
   background-color: #5000d1;
 }
+
+
+/* Add these new styles to the end of src/components/ThankYou.css */
+
+.risk-result-container {
+  margin-top: 20px;
+  margin-bottom: 25px;
+  padding: 15px;
+  background-color: #f0e6ff; /* A light purple to match the theme */
+  border-left: 4px solid #6200EE;
+  border-radius: 4px;
+}
+
+.risk-result-container p {
+  margin: 0;
+  font-size: 16px;
+  color: #333;
+}
+
+.risk-percentage {
+  font-size: 32px;
+  font-weight: bold;
+  color: #6200EE;
+  margin: 5px 0 0 0;
+}
