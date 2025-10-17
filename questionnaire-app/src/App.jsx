@@ -90,7 +90,7 @@ function App() {
   // THIS FUNCTION IS NOW RESTORED
   const handleConsent = async () => {
     try {
-      const response = await fetch('http://localhost:3001/api/session/start', {
+      const response = await fetch('api/session/start', {
         method: 'POST',
       });
       const data = await response.json();
@@ -115,7 +115,7 @@ function App() {
     setFinalFormData(formData); 
 
     try {
-      const response = await fetch('http://localhost:3001/api/submit', {
+      const response = await fetch('api/submit', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify({ sessionId, formData }),
