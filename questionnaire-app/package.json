@@ -15,6 +15,9 @@
   },
   "dependencies": {
     "dotenv": "^16.4.5",
+    "jspdf": "^3.0.3",
+    "jspdf-autotable": "^5.0.2",
+    "lucide-react": "^0.546.0",
     "mysql2": "^3.11.3",
     "react": "^19.1.1",
     "react-dom": "^19.1.1",

@@ -1,4 +1,4 @@
-/* src/components/ThankYou.css */
+/* 
 .thank-you-overlay {
   position: fixed;
   top: 0;
@@ -63,13 +63,13 @@
 }
 
 
-/* Add these new styles to the end of src/components/ThankYou.css */
+
 
 .risk-result-container {
   margin-top: 20px;
   margin-bottom: 25px;
   padding: 15px;
-  background-color: #f0e6ff; /* A light purple to match the theme */
+  background-color: #f0e6ff; 
   border-left: 4px solid #6200EE;
   border-radius: 4px;
 }
@@ -85,4 +85,172 @@
   font-weight: bold;
   color: #6200EE;
   margin: 5px 0 0 0;
+}
+
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 25px;
+}
+
+
+.ok-button {
+  flex: 1; 
+  margin-top: 0; 
+}
+
+
+.download-button {
+  flex: 2; 
+  padding: 12px 20px;
+  font-size: 16px;
+  font-weight: bold;
+  color: #6200EE; 
+  background-color: #f0e6ff; 
+  border: 1px solid #6200EE;
+  border-radius: 25px;
+  cursor: pointer;
+  transition: background-color 0.3s, color 0.3s;
+}
+
+.download-button:hover {
+  background-color: #6200EE; 
+  color: white; 
+} */
+
+
+
+
+
+
+
+.thank-you-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  font-family: 'Inter', sans-serif;
+}
+
+.thank-you-dialog {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 2rem 2.5rem;
+  width: 90%;
+  max-width: 420px;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+.close-button {
+  position: absolute;
+  top: 12px;
+  right: 14px;
+  background: transparent;
+  border: none;
+  font-size: 1.6rem;
+  color: #999;
+  cursor: pointer;
+  transition: color 0.2s;
+}
+
+.close-button:hover {
+  color: #000;
+}
+
+.icon-wrapper {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin-bottom: 1rem;
+}
+
+.success-icon {
+  color: #4caf50;
+  width: 50px;
+  height: 50px;
+}
+
+.thank-you-message {
+  color: #444;
+  font-size: 1rem;
+  margin: 0.5rem 0 1.2rem;
+}
+
+.risk-result-container {
+  background: #f9f9fb;
+  border-radius: 12px;
+  padding: 1rem;
+  margin-bottom: 1.5rem;
+  box-shadow: inset 0 0 6px rgba(0, 0, 0, 0.05);
+}
+
+.risk-percentage {
+  font-size: 2rem;
+  color: #6a1b9a;
+  margin-top: 0.5rem;
+}
+
+.action-buttons {
+  display: flex;
+  justify-content: center;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.ok-button, .download-button {
+  border: none;
+  border-radius: 8px;
+  padding: 0.7rem 1.5rem;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 500;
+}
+
+.ok-button {
+  background-color: #6a1b9a;
+  color: white;
+}
+
+.ok-button:hover {
+  background-color: #4a0072;
+}
+
+.download-button {
+  background-color: #f0f0f5;
+  color: #333;
+  display: flex;
+  align-items: center;
+  gap: 0.5rem;
+}
+
+.download-button:hover {
+  background-color: #e0e0eb;
+}
+
+.download-icon {
+  width: 18px;
+  height: 18px;
+}
+
+.fade-in {
+  animation: fadeIn 0.4s ease-in-out;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
