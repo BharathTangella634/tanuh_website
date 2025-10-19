@@ -12,7 +12,7 @@ import mysql from 'mysql2/promise';
 // Resolve .env in questionnaire-app/.env relative to this file
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const envPath = path.resolve(__dirname, '../.env');
+const envPath = path.resolve(__dirname, '../backend/.env');
 
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
@@ -22,8 +22,9 @@ if (fs.existsSync(envPath)) {
 }
 
 function required(name, value) {
-  if (!value) {
-    throw new Error(`Missing required env var ${name}. Please set it in questionnaire-app/.env`);
+  if (!value || value === '') {
+    console.error(`❌ Missing required env var ${name}`);
+    throw new Error(`Missing required env var ${name}`);
   }
   return value;
 }

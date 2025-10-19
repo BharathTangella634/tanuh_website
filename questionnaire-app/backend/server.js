@@ -191,47 +191,6 @@ app.set('trust proxy', true);
 
 
 
-// function calculateSnehithaRisk(formData) {
-//     console.log('Calculating risk with data:', formData);
-    
-//     // --- 1. Map form answers to variables (with defaults) ---
-//     const age = parseInt(formData.Q1, 10) || 0;
-//     const ageAtMenarche = parseInt(formData.Q10, 10) || 0;
-    
-//     // Convert text answers to 0 or 1
-//     const irregularCycles = formData.Q11 === 'Irregular' ? 1 : 0;
-//     const breastfeeding24M = formData.Q17 === 'greater than 24 months' ? 1 : 0;
-//     const firstDegreeRelatives = formData.Q21 === 'First Order (Mother, Sibling, Father)' ? 1 : 0;
-//     const previousBiopsy = formData.Q40 === 'Yes' ? 1 : 0;
-
-//     // --- 2. Handle composite variables ---
-//     const isNullipara = formData.Q14 === 'No';
-//     const ageAtFirstBirth_25_29 = formData.Q16 === '25 to 29';
-//     const ageAtFirstBirth_gte30 = formData.Q16 === 'After 30';
-
-//     const ageAtFirstLiveBirth2529OrNullipara = (isNullipara || ageAtFirstBirth_25_29) ? 1 : 0;
-//     const ageAtFirstLiveBirth30OrMore = ageAtFirstBirth_gte30 ? 1 : 0;
-
-//     // --- 3. Calculate logit(p) using the provided formula ---
-//     const logitP = -0.140 +
-//         (0.027 * age) -
-//         (0.082 * ageAtMenarche) +
-//         (0.453 * irregularCycles) -
-//         (0.892 * breastfeeding24M) +
-//         (0.810 * firstDegreeRelatives) +
-//         (1.420 * previousBiopsy) -
-//         (0.811 * ageAtFirstLiveBirth2529OrNullipara) +
-//         (1.035 * ageAtFirstLiveBirth30OrMore);
-
-//     // --- 4. Convert logit(p) to probability ---
-//     const probability = 1 / (1 + Math.exp(-logitP));
-
-//     // --- 5. Format to percentage with 2 decimal places ---
-//     const riskPercentage = (probability * 100).toFixed(2);
-    
-//     console.log(`Calculated Logit(p): ${logitP.toFixed(4)}, Probability: ${probability.toFixed(4)}, Risk: ${riskPercentage}%`);
-//     return riskPercentage;
-// }
 
 function calculateSnehithaRisk(formData) {
     // console.log('--- Starting Snehitha Risk Calculation ---');
@@ -369,4 +328,13 @@ app.post('/api/submit', async (req, res) => {
 app.listen(PORT, () => {
     console.log(`🚀 Server is running on http://localhost:${PORT}`);
 });
+
+app.get('/api/health', (req, res) => {
+  res.status(200).json({ message: 'Backend is healthy!' });
+});
+
+// app.listen(PORT, '0.0.0.0', () => {
+//     console.log(`🚀 Server is running on port ${PORT} (accessible in Docker)`);
+// });
+
 
