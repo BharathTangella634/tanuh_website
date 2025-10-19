@@ -479,7 +479,11 @@ function Questionnaire({ onSubmit, isSubmitting }) {
     <form className="questionnaire-container" onSubmit={handleSubmit} noValidate>
       <div className="form-header">
         <h1>Breast Cancer Risk Questionnaire</h1>
-        <p>Please answer the following questions to the best of your ability.</p>
+        <p style={{ color: "#533b42ff", fontSize: "18px", marginTop: "8px" }}>Please answer the following questions to the best of your ability.</p>
+        {/* <p>Fields marked with * are mandatory and must be filled out before submitting the form.</p> */}
+        <p style={{ color: "#533b42ff", fontSize: "15px", marginTop: "8px" }}>
+          Fields marked with <span style={{ color: "#d93025", fontWeight: 600 }}>*</span> are mandatory.
+        </p>
       </div>
       {formStructure.map((section, index) => (
         <div key={index} className="form-section">

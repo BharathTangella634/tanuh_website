@@ -1,132 +1,6 @@
 /* 
 .thank-you-overlay {
   position: fixed;
-  top: 0;
-  left: 0;
-  width: 100%;
-  height: 100%;
-  background-color: rgba(0, 0, 0, 0.6);
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  z-index: 1000;
-}
-
-.thank-you-dialog {
-  background-color: #ffffff;
-  padding: 30px;
-  border-radius: 12px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  width: 90%;
-  max-width: 450px;
-  position: relative;
-  text-align: center;
-}
-
-.thank-you-dialog h3 {
-  font-size: 24px;
-  margin-top: 0;
-  font-weight: 600;
-}
-
-.thank-you-dialog p {
-  font-size: 18px;
-  margin-bottom: 30px;
-  color: #555;
-}
-
-.close-button {
-  position: absolute;
-  top: 15px;
-  right: 15px;
-  background: none;
-  border: none;
-  font-size: 28px;
-  cursor: pointer;
-  color: #aaa;
-}
-
-.ok-button {
-  padding: 12px 40px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background-color: #6200EE;
-  border: none;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s;
-}
-
-.ok-button:hover {
-  background-color: #5000d1;
-}
-
-
-
-
-.risk-result-container {
-  margin-top: 20px;
-  margin-bottom: 25px;
-  padding: 15px;
-  background-color: #f0e6ff; 
-  border-left: 4px solid #6200EE;
-  border-radius: 4px;
-}
-
-.risk-result-container p {
-  margin: 0;
-  font-size: 16px;
-  color: #333;
-}
-
-.risk-percentage {
-  font-size: 32px;
-  font-weight: bold;
-  color: #6200EE;
-  margin: 5px 0 0 0;
-}
-
-
-.action-buttons {
-  display: flex;
-  gap: 15px;
-  margin-top: 25px;
-}
-
-
-.ok-button {
-  flex: 1; 
-  margin-top: 0; 
-}
-
-
-.download-button {
-  flex: 2; 
-  padding: 12px 20px;
-  font-size: 16px;
-  font-weight: bold;
-  color: #6200EE; 
-  background-color: #f0e6ff; 
-  border: 1px solid #6200EE;
-  border-radius: 25px;
-  cursor: pointer;
-  transition: background-color 0.3s, color 0.3s;
-}
-
-.download-button:hover {
-  background-color: #6200EE; 
-  color: white; 
-} */
-
-
-
-
-
-
-
-.thank-you-overlay {
-  position: fixed;
   inset: 0;
   background-color: rgba(0, 0, 0, 0.5);
   display: flex;
@@ -253,4 +127,166 @@
     opacity: 1;
     transform: translateY(0);
   }
+} */
+
+.thank-you-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(10, 20, 30, 0.5); /* Darker, more professional backdrop */
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
 }
+
+/* --- Main dialog with new animations and style --- */
+.thank-you-dialog {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 480px;
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  border-top: 6px solid #6200EE;
+  animation: slideInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f1f3f5;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.5rem;
+  line-height: 30px;
+  color: #868e96;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background-color: #e9ecef;
+  color: #343a40;
+  transform: rotate(90deg);
+}
+
+/* --- Header section with Icon --- */
+.thank-you-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.success-icon {
+  color: #6200EE !important; /* Force purple color */
+}
+
+.thank-you-dialog h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #343a40;
+  margin: 0;
+}
+
+.thank-you-dialog p {
+  color: #6c757d;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 25px 0;
+}
+
+/* --- Redesigned Risk Result Box --- */
+.risk-result-container {
+  background: #f8f0ff; /* Light Lavender */
+  border-radius: 12px;
+  padding: 20px;
+  margin: 25px 0;
+  border: 1px solid #e0cffc;
+}
+
+.risk-result-container p {
+  margin: 0;
+  color: #495057;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+.risk-percentage {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #6200EE;
+  margin-top: 5px;
+}
+
+/* --- Action Buttons container --- */
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+/* --- Redesigned Buttons with hover effects --- */
+.ok-button, .download-button {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ok-button {
+  background-color: #6200EE;
+  color: white;
+  box-shadow: 0 4px 15px rgba(98, 0, 238, 0.2);
+  font-size: 1.5rem;
+
+}
+
+.ok-button:hover {
+  background-color: #5a00d1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(98, 0, 238, 0.3);
+}
+
+.download-button {
+  background-color: #f1f3f5;
+  color: #495057;
+  border: 1px solid #dee2e6;
+
+}
+
+.download-button:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+  transform: translateY(-2px);
+}
+
+/* --- Animation for the dialog --- */
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+

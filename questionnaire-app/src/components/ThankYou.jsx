@@ -619,7 +619,7 @@ function ThankYou({ riskResult, formData, questionnaireData }) {
         <div className="action-buttons">
           <button className="ok-button" onClick={() => window.location.reload()}>Ok</button>
           <button className="download-button" onClick={handleDownloadPdf}>
-            <Download size={18} style={{ marginRight: '8px' }} /> Download Summary (PDF)
+            <Download size={40} style={{ marginRight: '8px' }} /> Download Summary (PDF)
           </button>
         </div>
       </div>

@@ -4,7 +4,10 @@ body {
   font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
-  background-color: #f0f2f5; /* Light gray background like in Figma */
+  
+  /* A subtle, professional lavender gradient for the entire page background */
+  background: linear-gradient(170deg, #f7f5ff 0%, #ede9ff 100%);
+  min-height: 100vh;
 }
 
 * {

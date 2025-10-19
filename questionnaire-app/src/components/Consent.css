@@ -1,4 +1,4 @@
-/* src/components/Consent.css */
+/* 
 .consent-container {
   background-color: #ffffff;
   border-radius: 12px;
@@ -42,7 +42,7 @@
   font-size: 16px;
   font-weight: bold;
   color: white;
-  background-color: #6200EE; /* Purple color from screenshot */
+  background-color: #6200EE; 
   border: none;
   border-radius: 8px;
   cursor: pointer;
@@ -58,4 +58,120 @@
   cursor: not-allowed;
   opacity: 0.7;
 }
+ */
 
+
+
+
+
+/* --- Main container with a subtle gradient and professional branding --- */
+/* src/components/Consent.css */
+/* Final "Luxe Lavender" Professional Theme */
+
+/* --- Main container with a soft "floating" effect --- */
+.consent-container {
+  background: #ffffff; /* Clean white for better contrast */
+  border-radius: 16px;
+  /* A softer, more diffused lavender shadow for a premium feel */
+  box-shadow: 0 12px 50px -10px rgba(98, 0, 238, 0.15);
+  padding: 40px 50px;
+  max-width: 800px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle edge */
+  border-top: 6px solid #6200EE; /* Professional branding bar */
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* --- Consistent & Professional Typography --- */
+.consent-container h2 {
+  color: #212529; /* Dark, but not pure black for readability */
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e9ecef; /* Light gray divider */
+  padding-bottom: 15px;
+}
+
+.consent-container h3 {
+  color: #495057; /* Softer gray for sub-headings */
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  /* Stronger purple accent bar for structure */
+  border-left: 4px solid #6200EE;
+  padding-left: 15px;
+}
+
+.consent-container p {
+  color: #6c757d; /* Lighter gray for body text */
+  line-height: 1.7;
+  font-size: 1rem;
+}
+
+/* --- Redesigned & Highlighted Checkbox Area --- */
+.consent-checkbox {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f7fa; /* Clean, light gray highlight */
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef; /* Subtle border */
+}
+
+.consent-checkbox input {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+  accent-color: #6200EE; /* Makes the checkmark purple */
+  cursor: pointer;
+}
+
+.consent-checkbox label {
+  font-weight: 500;
+  color: #495057;
+  cursor: pointer;
+}
+
+/* --- Redesigned Button with Enhanced Hover Elevation --- */
+.consent-container button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #6200EE;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 15px rgba(98, 0, 238, 0.2);
+}
+
+.consent-container button:hover:not(:disabled) {
+  background-color: #5a00d1;
+  transform: translateY(-3px); /* More noticeable lift */
+  box-shadow: 0 7px 25px rgba(98, 0, 238, 0.3);
+ 
+
+}
+
+/* --- CORRECTED DISABLED BUTTON STYLE TO MATCH SCREENSHOT --- */
+.consent-container button:disabled {
+  background-color: #efe3fa; /* Very light gray */
+  color: #adb5bd; /* Soft gray text */
+  cursor: not-allowed;
+  box-shadow: none; /* Flat appearance */
+  transform: translateY(0);
+  color: rgb(202, 120, 240);
+
+}
+
+/* --- Keyframe for fade-in animation --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
