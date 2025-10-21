@@ -458,3 +458,8 @@
   transform: translateY(-3px);
   box-shadow: 0 7px 25px rgba(98, 0, 238, 0.35);
 }
+
+.checkbox-group.vertical .text-input {
+  width: 50%;
+  margin-top: 8px; /* Adds a little space above the text box */
+}

@@ -1,113 +1,188 @@
 /* 
+
 .consent-container {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  padding: 30px 40px;
-  max-width: 800px;
-  width: 100%;
-}
-
-.consent-container h2, .consent-container h3 {
-  color: #1c1c1e;
-  margin-top: 20px;
-  margin-bottom: 10px;
-}
-
-.consent-container p {
-  color: #555;
-  line-height: 1.6;
-}
-
-.consent-checkbox {
-  margin-top: 30px;
-  display: flex;
-  align-items: center;
-}
-
-.consent-checkbox input {
-  margin-right: 10px;
-  width: 18px;
-  height: 18px;
-}
-
-.consent-checkbox label {
-  font-weight: 500;
-}
-
-.consent-container button {
-  width: 100%;
-  padding: 15px;
-  margin-top: 20px;
-  font-size: 16px;
-  font-weight: bold;
-  color: white;
-  background-color: #6200EE; 
-  border: none;
-  border-radius: 8px;
-  cursor: pointer;
-  transition: background-color 0.3s, opacity 0.3s;
-}
-
-.consent-container button:hover {
-  background-color: #5000d1;
-}
-
-.consent-container button:disabled {
-  background-color: #c5c5c5;
-  cursor: not-allowed;
-  opacity: 0.7;
-}
- */
-
-
-
-
-
-/* --- Main container with a subtle gradient and professional branding --- */
-/* src/components/Consent.css */
-/* Final "Luxe Lavender" Professional Theme */
-
-/* --- Main container with a soft "floating" effect --- */
-.consent-container {
-  background: #ffffff; /* Clean white for better contrast */
+  background: #ffffff; 
   border-radius: 16px;
-  /* A softer, more diffused lavender shadow for a premium feel */
   box-shadow: 0 12px 50px -10px rgba(98, 0, 238, 0.15);
   padding: 40px 50px;
   max-width: 800px;
   width: 100%;
-  border: 1px solid rgba(0, 0, 0, 0.05); /* Subtle edge */
-  border-top: 6px solid #6200EE; /* Professional branding bar */
+  border: 1px solid rgba(0, 0, 0, 0.05); 
+  border-top: 6px solid #6200EE; 
   animation: fadeIn 0.5s ease-out;
 }
 
-/* --- Consistent & Professional Typography --- */
 .consent-container h2 {
-  color: #212529; /* Dark, but not pure black for readability */
+  color: #212529;
   font-size: 2rem;
   font-weight: 700;
   margin-top: 0;
   margin-bottom: 20px;
-  border-bottom: 1px solid #e9ecef; /* Light gray divider */
+  border-bottom: 1px solid #e9ecef;
   padding-bottom: 15px;
 }
 
 .consent-container h3 {
-  color: #495057; /* Softer gray for sub-headings */
+  color: #495057;
   font-size: 1.25rem;
   font-weight: 600;
   margin-top: 30px;
   margin-bottom: 15px;
-  /* Stronger purple accent bar for structure */
   border-left: 4px solid #6200EE;
   padding-left: 15px;
 }
 
 .consent-container p {
-  color: #6c757d; /* Lighter gray for body text */
+  color: #6c757d; 
   line-height: 1.7;
   font-size: 1rem;
+}
+
+.consent-checkbox {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f7fa;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef; 
+}
+
+.consent-checkbox input {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+  accent-color: #6200EE; 
+  cursor: pointer;
+}
+
+.consent-checkbox label {
+  font-weight: 500;
+  color: #495057;
+  cursor: pointer;
+}
+
+.consent-container button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #6200EE;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 15px rgba(98, 0, 238, 0.2);
+}
+
+.consent-container button:hover:not(:disabled) {
+  background-color: #5a00d1;
+  transform: translateY(-3px); 
+  box-shadow: 0 7px 25px rgba(98, 0, 238, 0.3);
+ 
+
+}
+
+.consent-container button:disabled {
+  background-color: #efe3fa; 
+  color: #adb5bd; 
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: translateY(0);
+  color: rgb(202, 120, 240);
+
+}
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+} */
+
+
+
+.consent-container {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 50px -10px rgba(98, 0, 238, 0.15);
+  padding: 40px 50px;
+  max-width: 800px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 6px solid #6200EE;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* --- Consistent & Professional Typography --- */
+.consent-container h2 {
+  color: #212529;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 15px;
+}
+
+.consent-container h3 {
+  color: #495057;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-left: 4px solid #6200EE;
+  padding-left: 15px;
+}
+
+.consent-container p {
+  color: #6c757d;
+  line-height: 1.7;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* NEW: Style for the study information header */
+.consent-header {
+  background-color: #f8f7fa;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  margin-bottom: 30px;
+}
+
+.consent-header p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.consent-header strong {
+  color: #495057;
+}
+
+/* NEW: Spacing for each numbered section */
+.consent-section {
+  margin-top: 30px;
+}
+
+/* NEW: Style for paragraphs with bolded sub-headings */
+.sub-point strong {
+  color: #495057;
+}
+
+/* NEW: Highlighted box for important notices */
+.important-notice {
+  margin-top: 30px;
+  background-color: #fff9e6; /* Soft yellow for attention */
+  border-left: 4px solid #ffc107; /* Amber color */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.important-notice h3 {
+  border-left: none;
+  padding-left: 0;
+  color: #856404; /* Darker yellow/brown text */
 }
 
 /* --- Redesigned & Highlighted Checkbox Area --- */
@@ -115,17 +190,17 @@
   margin-top: 40px;
   display: flex;
   align-items: center;
-  background-color: #f8f7fa; /* Clean, light gray highlight */
+  background-color: #f8f7fa;
   padding: 15px 20px;
   border-radius: 8px;
-  border: 1px solid #e9ecef; /* Subtle border */
+  border: 1px solid #e9ecef;
 }
 
 .consent-checkbox input {
   margin-right: 12px;
   width: 20px;
   height: 20px;
-  accent-color: #6200EE; /* Makes the checkmark purple */
+  accent-color: #6200EE;
   cursor: pointer;
 }
 
@@ -153,21 +228,16 @@
 
 .consent-container button:hover:not(:disabled) {
   background-color: #5a00d1;
-  transform: translateY(-3px); /* More noticeable lift */
+  transform: translateY(-3px);
   box-shadow: 0 7px 25px rgba(98, 0, 238, 0.3);
- 
-
 }
 
-/* --- CORRECTED DISABLED BUTTON STYLE TO MATCH SCREENSHOT --- */
 .consent-container button:disabled {
-  background-color: #efe3fa; /* Very light gray */
-  color: #adb5bd; /* Soft gray text */
+  background-color: #e9ecef;
+  color: #adb5bd;
   cursor: not-allowed;
-  box-shadow: none; /* Flat appearance */
+  box-shadow: none;
   transform: translateY(0);
-  color: rgb(202, 120, 240);
-
 }
 
 /* --- Keyframe for fade-in animation --- */
