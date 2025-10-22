@@ -48,7 +48,9 @@ services:
       args:
         # VITE_API_URL: http://backend:3001
         # VITE_API_URL: "http://localhost:3001"   # ✅ passes backend URL into frontend build
-        VITE_API_URL: ${VITE_API_URL:-http://localhost:3001}
+        # VITE_API_URL: ${VITE_API_URL:-http://backend:3001}
+        VITE_API_URL: ${VITE_API_URL:-https://bc-screener-research.omraaj.com}
+        SKIP_FETCH: "1"
     container_name: frontend
     ports:
       - "3000:80" 

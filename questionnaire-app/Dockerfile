@@ -89,12 +89,15 @@ RUN npm ci --no-audit --no-fund
 
 COPY . .
 
-# ✅ Accept API URL as a build argument
 ARG VITE_API_URL
-ENV VITE_API_URL=${VITE_API_URL}
+ARG SKIP_FETCH=1
 
-# ✅ Build with the env variable injected
-RUN VITE_API_URL=$VITE_API_URL npm run build
+# ✅ Set environment variables for the build
+ENV VITE_API_URL=${VITE_API_URL}
+ENV SKIP_FETCH=${SKIP_FETCH}
+
+# ✅ Build the frontend, skipping DB fetch during Docker build
+RUN SKIP_FETCH=1 VITE_API_URL=$VITE_API_URL npm run build
 
 # 2️⃣ Runtime stage
 FROM httpd:2.4-alpine AS runtime

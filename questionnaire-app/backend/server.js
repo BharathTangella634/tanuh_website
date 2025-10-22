@@ -227,7 +227,7 @@ function calculateSnehithaRisk(formData) {
     // console.log(`  - Age at First Birth >=30: ${ageAtFirstLiveBirth30OrMore}`);
 
     // --- 3. Calculate logit(p) using the provided formula ---
-    const logitP = -0.140 +
+    const logitP = -0.940 +
         (0.027 * age) -
         (0.082 * ageAtMenarche) +
         (0.453 * irregularCycles) -
@@ -326,7 +326,7 @@ app.post('/api/submit', async (req, res) => {
 });
 
 app.listen(PORT, () => {
-    console.log(`🚀 Server is running on http://localhost:${PORT}`);
+    console.log(`🚀 Server is running on http://0.0.0.0:${PORT}`);
 });
 
 app.get('/api/health', (req, res) => {
