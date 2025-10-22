@@ -128,30 +128,31 @@
     transform: translateY(0);
   }
 } */
-
 .thank-you-overlay {
   position: fixed;
   inset: 0;
-  background-color: rgba(10, 20, 30, 0.5); /* Darker, more professional backdrop */
+  background-color: rgba(10, 20, 30, 0.5);
   display: flex;
   align-items: center;
   justify-content: center;
   z-index: 1000;
   backdrop-filter: blur(5px);
+  overflow-y: auto; /* Allow scrolling if content is long */
+  padding: 20px; /* Add padding for smaller screens */
 }
 
-/* --- Main dialog with new animations and style --- */
 .thank-you-dialog {
   background: #ffffff;
   border-radius: 16px;
   padding: 30px 40px;
   width: 90%;
-  max-width: 480px;
+  max-width: 650px; /* Increased width to accommodate table */
   box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
   text-align: center;
   position: relative;
   border-top: 6px solid #6200EE;
   animation: slideInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  margin: auto; /* Center vertically if space allows */
 }
 
 .close-button {
@@ -179,7 +180,6 @@
   transform: rotate(90deg);
 }
 
-/* --- Header section with Icon --- */
 .thank-you-header {
   display: flex;
   flex-direction: column;
@@ -189,7 +189,7 @@
 }
 
 .success-icon {
-  color: #6200EE !important; /* Force purple color */
+  color: #6200EE !important;
 }
 
 .thank-you-dialog h3 {
@@ -206,9 +206,8 @@
   margin: 0 0 25px 0;
 }
 
-/* --- Redesigned Risk Result Box --- */
 .risk-result-container {
-  background: #f8f0ff; /* Light Lavender */
+  background: #f8f0ff;
   border-radius: 12px;
   padding: 20px;
   margin: 25px 0;
@@ -222,21 +221,20 @@
   font-size: 0.95rem;
 }
 
-.risk-percentage {
+/* Changed class name */
+.risk-score {
   font-size: 2.8rem;
   font-weight: 700;
   color: #6200EE;
   margin-top: 5px;
 }
 
-/* --- Action Buttons container --- */
 .action-buttons {
   display: flex;
   gap: 15px;
   margin-top: 30px;
 }
 
-/* --- Redesigned Buttons with hover effects --- */
 .ok-button, .download-button {
   flex: 1;
   border: none;
@@ -255,8 +253,7 @@
   background-color: #6200EE;
   color: white;
   box-shadow: 0 4px 15px rgba(98, 0, 238, 0.2);
-  font-size: 1.5rem;
-
+  /* font-size: 1.5rem; */ /* Removed to match download button size */
 }
 
 .ok-button:hover {
@@ -269,7 +266,6 @@
   background-color: #f1f3f5;
   color: #495057;
   border: 1px solid #dee2e6;
-
 }
 
 .download-button:hover {
@@ -278,7 +274,6 @@
   transform: translateY(-2px);
 }
 
-/* --- Animation for the dialog --- */
 @keyframes slideInUp {
   from {
     opacity: 0;
@@ -288,5 +283,52 @@
     opacity: 1;
     transform: translateY(0);
   }
+}
+
+/* --- NEW Styles for Interpretation Table --- */
+.interpretation-container {
+  margin-top: 30px;
+  text-align: left; /* Align table content left */
+}
+
+.interpretation-container h4 {
+  font-size: 1.2rem;
+  color: #495057;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.risk-interpretation-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem; /* Slightly smaller text for table */
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05); /* Subtle shadow */
+  border-radius: 8px;
+  overflow: hidden; /* Ensures border-radius applies to table */
+}
+
+.risk-interpretation-table th, 
+.risk-interpretation-table td {
+  border: 1px solid #e9ecef;
+  padding: 10px 12px;
+  vertical-align: top; /* Align text to top */
+}
+
+.risk-interpretation-table th {
+  background-color: #f8f0ff; /* Light lavender header */
+  color: #6200EE; /* Purple text */
+  font-weight: 600;
+  text-align: left;
+}
+
+.risk-interpretation-table td {
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+/* Alternate row color for readability */
+.risk-interpretation-table tbody tr:nth-child(even) {
+  background-color: #fcfaff; 
 }
 

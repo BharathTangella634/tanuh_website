@@ -314,7 +314,7 @@ export const formStructure = [
   {
     title: "Section 2: Breast Examination (BE)",
     questions: [
-        { key: "Q27", type: "radio", condition: {key: "Q27", value: "Yes"}, videoUrlOnNo: "https://www.youtube.com/embed/XKtTymNkcj0?autoplay=1&rel=0", subQuestions: [
+        { key: "Q27", type: "radio", condition: {key: "Q27", value: "Yes"}, videoUrlOnNo: "https://www.youtube.com/embed/wI71TXaoMp8?autoplay=1&rel=0&start=0", subQuestions: [
             { key: "Q28", type: "radio" },
             { key: "Q29", type: "radio" },
         ]},
