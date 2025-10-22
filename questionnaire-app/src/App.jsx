@@ -125,6 +125,7 @@ function App() {
         console.log(`✅ Session started: ${data.sessionId}`);
         setSessionId(data.sessionId);
         setAppState('questionnaire');
+        window.scrollTo(0, 0);
       } else {
         alert('⚠️ Could not start a session. Please try again.');
       }

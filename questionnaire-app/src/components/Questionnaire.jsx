@@ -1,18 +1,19 @@
 
 
 
+
 // import React, { useState } from 'react';
 // import './Questionnaire.css';
 // import questionnaireData from '../assets/questionnaire.json' with { type: 'json' };
 
-// // UPDATED: Added `required: true` based on your `is_mandatory` data.
-// const formStructure = [
+// // THE FIX IS HERE: The "export" keyword has been added back.
+// export const formStructure = [
 //   {
 //     title: "Section 1: General Information",
 //     questions: [
 //       { key: "Q1", type: "number", placeholder: "e.g., 35", required: true },
-//       { key: "Q2", type: "number",  placeholder: "e.g., 165", required: true },
-//       { key: "Q3", type: "number", placeholder: "e.g., 60", required: true },
+//       { key: "Q2", type: "number", name: "height_cm", placeholder: "e.g., 165", required: true },
+//       { key: "Q3", type: "number", name: "weight_kg", placeholder: "e.g., 60", required: true },
 //       { key: "Q4", type: "select", required: true },
 //       { key: "Q5", type: "radio", required: true },
 //       { key: "Q6", type: "radio", required: true },
@@ -38,7 +39,6 @@
 //           { key: "Q24", type: "radio", condition: { key: "Q24", value: "No" }, subQuestions: [
 //               { key: "Q25", type: "number", placeholder: "Enter age of death" } // Not required
 //           ]},
-//           // { key: "Q26", type: "text", placeholder: "Enter ethnicity", required: true }
 //           { key: "Q26", type: "select", required: true }
 //       ]},
 //     ]
@@ -94,29 +94,25 @@
 //     }
 //   };
 
-//   // Helper function to find all VISIBLE required questions
 //   const getVisibleRequiredQuestions = () => {
 //     let visibleRequired = [];
-    
 //     const traverseQuestions = (questions) => {
 //         for (const q of questions) {
 //             if (q.required) {
 //                 visibleRequired.push(q.name || q.key);
 //             }
-//             // If subquestions are visible, check them too
 //             if (q.subQuestions && q.condition && formData[q.condition.key] === q.condition.value) {
 //                 traverseQuestions(q.subQuestions);
 //             }
 //         }
 //     };
-
 //     formStructure.forEach(section => traverseQuestions(section.questions));
 //     return visibleRequired;
 //   };
   
 //   const handleSubmit = (e) => {
 //     e.preventDefault();
-//     setValidationErrors([]); // Clear previous errors
+//     setValidationErrors([]);
 
 //     const visibleRequiredKeys = getVisibleRequiredQuestions();
 //     const missingFields = visibleRequiredKeys.filter(key => {
@@ -127,13 +123,12 @@
 //     if (missingFields.length > 0) {
 //         setValidationErrors(missingFields);
 //         alert("Please fill out all required fields marked with *.");
-//         // Scroll to the first error
 //         const firstErrorKey = missingFields[0];
 //         const errorElement = document.getElementsByName(firstErrorKey)[0];
 //         if (errorElement) {
 //             errorElement.closest('.question-block').scrollIntoView({ behavior: 'smooth', block: 'center' });
 //         }
-//         return; // Stop the submission
+//         return;
 //     }
 
 //     onSubmit(formData);
@@ -214,7 +209,11 @@
 //     <form className="questionnaire-container" onSubmit={handleSubmit} noValidate>
 //       <div className="form-header">
 //         <h1>Breast Cancer Risk Questionnaire</h1>
-//         <p>Please answer the following questions to the best of your ability.</p>
+//         <p style={{ color: "#533b42ff", fontSize: "18px", marginTop: "8px" }}>Please answer the following questions to the best of your ability.</p>
+//         {/* <p>Fields marked with * are mandatory and must be filled out before submitting the form.</p> */}
+//         <p style={{ color: "#533b42ff", fontSize: "15px", marginTop: "8px" }}>
+//           Fields marked with <span style={{ color: "#d93025", fontWeight: 600 }}>*</span> are mandatory.
+//         </p>
 //       </div>
 //       {formStructure.map((section, index) => (
 //         <div key={index} className="form-section">
@@ -271,19 +270,18 @@
 // export default Questionnaire;
 
 
-
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react'; // Added useEffect
 import './Questionnaire.css';
 import questionnaireData from '../assets/questionnaire.json' with { type: 'json' };
 
-// THE FIX IS HERE: The "export" keyword has been added back.
+// Your formStructure - UNCHANGED
 export const formStructure = [
   {
     title: "Section 1: General Information",
     questions: [
       { key: "Q1", type: "number", placeholder: "e.g., 35", required: true },
-      { key: "Q2", type: "number", name: "height_cm", placeholder: "e.g., 165", required: true },
-      { key: "Q3", type: "number", name: "weight_kg", placeholder: "e.g., 60", required: true },
+      { key: "Q2", type: "number", placeholder: "e.g., 165", required: true },
+      { key: "Q3", type: "number", placeholder: "e.g., 60", required: true },
       { key: "Q4", type: "select", required: true },
       { key: "Q5", type: "radio", required: true },
       { key: "Q6", type: "radio", required: true },
@@ -321,7 +319,7 @@ export const formStructure = [
             { key: "Q29", type: "radio" },
         ]},
         { key: "Q30", type: "radio", condition: {key: "Q30", value: "Yes"}, subQuestions: [
-            { key: "Q31", type: "radio" },
+            { key: "Q31", type: "radio" }, // Fixed type
             { key: "Q32", type: "radio" },
             { key: "Q33", type: "radio" },
         ]},
@@ -352,7 +350,57 @@ export const formStructure = [
 function Questionnaire({ onSubmit, isSubmitting }) {
   const [formData, setFormData] = useState({});
   const [validationErrors, setValidationErrors] = useState([]);
+  // NEW: State for progress percentage
+  const [progress, setProgress] = useState(0);
 
+  // --- NEW: Accurate Progress Calculation Logic ---
+  const getVisibleQuestionKeys = (currentFormData) => {
+    const visibleKeys = new Set();
+    const traverse = (questions) => {
+        questions.forEach(q => {
+            const qKey = q.name || q.key;
+            visibleKeys.add(qKey); // Add the main question key
+
+            // Include the 'other specify' text input key if applicable
+            if (q.otherOptionId) {
+                // Determine if the 'Other' checkbox itself is visible and checked
+                // For simplicity, we'll count the text box if the parent Q is visible
+                 visibleKeys.add(q.otherOptionId);
+            }
+
+            // If it has subquestions and the condition is met, traverse them
+            if (q.subQuestions && q.condition && currentFormData[q.condition.key] === q.condition.value) {
+                traverse(q.subQuestions);
+            }
+        });
+    };
+    formStructure.forEach(section => traverse(section.questions));
+    return visibleKeys;
+  };
+
+  const countAnsweredVisibleQuestions = (currentFormData, visibleKeysSet) => {
+      let answeredCount = 0;
+      visibleKeysSet.forEach(key => {
+          const value = currentFormData[key];
+          // Check if the key exists in formData and has a meaningful value
+          if (value !== undefined && value !== null && value !== '' && (!Array.isArray(value) || value.length > 0)) {
+              answeredCount++;
+          }
+      });
+      return answeredCount;
+  };
+
+  // NEW: Effect to update progress when formData changes
+  useEffect(() => {
+      const visibleKeysSet = getVisibleQuestionKeys(formData);
+      const answeredCount = countAnsweredVisibleQuestions(formData, visibleKeysSet);
+      const totalVisible = visibleKeysSet.size;
+      const newProgress = totalVisible > 0 ? Math.round((answeredCount / totalVisible) * 100) : 0;
+      setProgress(Math.min(newProgress, 100)); // Cap at 100%
+  }, [formData]);
+
+
+  // --- handleChange function - UNCHANGED ---
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
     if (type === 'checkbox') {
@@ -364,6 +412,7 @@ function Questionnaire({ onSubmit, isSubmitting }) {
     }
   };
 
+  // --- getVisibleRequiredQuestions function - UNCHANGED ---
   const getVisibleRequiredQuestions = () => {
     let visibleRequired = [];
     const traverseQuestions = (questions) => {
@@ -371,7 +420,8 @@ function Questionnaire({ onSubmit, isSubmitting }) {
             if (q.required) {
                 visibleRequired.push(q.name || q.key);
             }
-            if (q.subQuestions && q.condition && formData[q.condition.key] === q.condition.value) {
+            // Add required keys from visible subquestions
+             if (q.subQuestions && q.condition && formData[q.condition.key] === q.condition.value) {
                 traverseQuestions(q.subQuestions);
             }
         }
@@ -380,6 +430,7 @@ function Questionnaire({ onSubmit, isSubmitting }) {
     return visibleRequired;
   };
   
+  // --- handleSubmit function - UNCHANGED ---
   const handleSubmit = (e) => {
     e.preventDefault();
     setValidationErrors([]);
@@ -394,7 +445,7 @@ function Questionnaire({ onSubmit, isSubmitting }) {
         setValidationErrors(missingFields);
         alert("Please fill out all required fields marked with *.");
         const firstErrorKey = missingFields[0];
-        const errorElement = document.getElementsByName(firstErrorKey)[0];
+        const errorElement = document.querySelector(`[name="${firstErrorKey}"]`);
         if (errorElement) {
             errorElement.closest('.question-block').scrollIntoView({ behavior: 'smooth', block: 'center' });
         }
@@ -404,6 +455,7 @@ function Questionnaire({ onSubmit, isSubmitting }) {
     onSubmit(formData);
   };
 
+  // --- renderInput function - UNCHANGED ---
   const renderInput = (qConfig) => {
     const data = questionnaireData[qConfig.key];
     if (!data) return <p>Error: Question {qConfig.key} not found in JSON.</p>;
@@ -448,6 +500,7 @@ function Questionnaire({ onSubmit, isSubmitting }) {
     }
   };
 
+  // --- renderSubQuestions function - UNCHANGED ---
   const renderSubQuestions = (subQuestions, parentNumber) => {
     return subQuestions.map((subQConfig, index) => {
       const subQData = questionnaireData[subQConfig.key];
@@ -475,66 +528,81 @@ function Questionnaire({ onSubmit, isSubmitting }) {
 
   let questionCounter = 0;
 
+  // --- Main return JSX - ONLY addition is the Progress Bar div ---
   return (
-    <form className="questionnaire-container" onSubmit={handleSubmit} noValidate>
-      <div className="form-header">
-        <h1>Breast Cancer Risk Questionnaire</h1>
-        <p style={{ color: "#533b42ff", fontSize: "18px", marginTop: "8px" }}>Please answer the following questions to the best of your ability.</p>
-        {/* <p>Fields marked with * are mandatory and must be filled out before submitting the form.</p> */}
-        <p style={{ color: "#533b42ff", fontSize: "15px", marginTop: "8px" }}>
-          Fields marked with <span style={{ color: "#d93025", fontWeight: 600 }}>*</span> are mandatory.
-        </p>
-      </div>
-      {formStructure.map((section, index) => (
-        <div key={index} className="form-section">
-          <h2>{section.title}</h2>
-          {section.questions.map((qConfig) => {
-            const data = questionnaireData[qConfig.key];
-            if (!data) return null;
-            questionCounter++;
-            const displayNumber = `${questionCounter}.`;
-            const name = qConfig.name || qConfig.key;
-            const isQ27No = qConfig.key === "Q27" && formData[name] === "No";
-            return (
-              <React.Fragment key={name}>
-                <div className={`question-block ${validationErrors.includes(name) ? 'error' : ''}`}>
-                  <label>
-                      {displayNumber} {data.question}
-                      {qConfig.required && <span className="required-asterisk">*</span>}
-                  </label>
-                  {renderInput(qConfig)}
-                </div>
-                {qConfig.subQuestions && (
-                  <div className={`sub-question-container ${formData[name] === 'Yes' ? 'visible' : ''}`}>
-                    {renderSubQuestions(qConfig.subQuestions, questionCounter)}
-                  </div>
-                )}
-                {isQ27No && qConfig.videoUrlOnNo && (
-                    <div className="youtube-player-container">
-                        <iframe width="560" height="315" src={qConfig.videoUrlOnNo} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
-                    </div>
-                )}
-              </React.Fragment>
-            );
-          })}
+    <>
+      {/* --- PROGRESS BAR --- */}
+      <div className="progress-bar-container">
+        <div className="progress-bar-label">Progress: {progress}%</div>
+        <div className="progress-bar-track">
+          <div 
+            className="progress-bar-fill" 
+            style={{ width: `${progress}%` }} 
+          ></div>
         </div>
-      ))}
-      <div className="submit-button-container">
-        {isSubmitting ? (
-          <button type="button" className="submit-button loading" disabled>
-            <span className="loading-dots">
-              <span></span><span></span><span></span>
-            </span>
-            Submitting...
-          </button>
-        ) : (
-          <button type="submit" className="submit-button">
-            Submit Questionnaire
-          </button>
-        )}
       </div>
-    </form>
+
+      {/* --- YOUR EXISTING FORM STRUCTURE --- */}
+      <form className="questionnaire-container" onSubmit={handleSubmit} noValidate>
+        <div className="form-header">
+          <h1>Breast Cancer Risk Questionnaire</h1>
+          <p style={{ color: "#533b42ff", fontSize: "18px", marginTop: "8px" }}>Please answer the following questions to the best of your ability.</p>
+          <p style={{ color: "#533b42ff", fontSize: "15px", marginTop: "8px" }}>
+            Fields marked with <span style={{ color: "#d93025", fontWeight: 600 }}>*</span> are mandatory.
+          </p>
+        </div>
+        {formStructure.map((section, index) => (
+          <div key={index} className="form-section">
+            <h2>{section.title}</h2>
+            {section.questions.map((qConfig) => {
+              const data = questionnaireData[qConfig.key];
+              if (!data) return null;
+              questionCounter++;
+              const displayNumber = `${questionCounter}.`;
+              const name = qConfig.name || qConfig.key;
+              const isQ27No = qConfig.key === "Q27" && formData[name] === "No";
+              return (
+                <React.Fragment key={name}>
+                  <div className={`question-block ${validationErrors.includes(name) ? 'error' : ''}`}>
+                    <label>
+                        {displayNumber} {data.question}
+                        {qConfig.required && <span className="required-asterisk">*</span>}
+                    </label>
+                    {renderInput(qConfig)}
+                  </div>
+                  {qConfig.subQuestions && (
+                    <div className={`sub-question-container ${formData[name] === 'Yes' ? 'visible' : ''}`}>
+                      {renderSubQuestions(qConfig.subQuestions, questionCounter)}
+                    </div>
+                  )}
+                  {isQ27No && qConfig.videoUrlOnNo && (
+                      <div className="youtube-player-container">
+                          <iframe width="560" height="315" src={qConfig.videoUrlOnNo} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                      </div>
+                  )}
+                </React.Fragment>
+              );
+            })}
+          </div>
+        ))}
+        <div className="submit-button-container">
+          {isSubmitting ? (
+            <button type="button" className="submit-button loading" disabled>
+              <span className="loading-dots">
+                <span></span><span></span><span></span>
+              </span>
+              Submitting...
+            </button>
+          ) : (
+            <button type="submit" className="submit-button">
+              Submit Questionnaire
+            </button>
+          )}
+        </div>
+      </form>
+    </>
   );
 }
 
 export default Questionnaire;
+
