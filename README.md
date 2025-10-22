@@ -1,4 +1,5 @@
 # tanuh_website
+Test deployment via GitHub Actions
 
 A simple repository that currently contains:
 - A React + Vite single-page application for a questionnaire (questionnaire-app).
