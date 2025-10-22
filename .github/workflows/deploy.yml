@@ -20,8 +20,11 @@ jobs:
       - name: Copy project files to server
         run: |
           rsync -avz --delete \
+            --exclude '.env' \
+            --exclude '*/.env' \
             -e "ssh -o StrictHostKeyChecking=no" \
             ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/tanuh_website
+
 
       - name: Rebuild and restart containers
         uses: appleboy/ssh-action@v0.1.10
