@@ -12,16 +12,18 @@ jobs:
       - name: Checkout repository
         uses: actions/checkout@v4
 
-      - name: Copy files to server
-        uses: appleboy/scp-action@v0.1.7
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
         with:
-          host: ${{ secrets.SERVER_IP }}
-          username: ${{ secrets.SERVER_USER }}
-          key: ${{ secrets.SERVER_SSH_KEY }}
-          source: "."
-          target: "~/tanuh_website"
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
 
-      - name: Restart Docker Compose on server
+      - name: Copy project files to server
+        run: |
+          rsync -avz --delete \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/tanuh_website
+
+      - name: Rebuild and restart containers
         uses: appleboy/ssh-action@v0.1.10
         with:
           host: ${{ secrets.SERVER_IP }}
@@ -31,4 +33,3 @@ jobs:
             cd ~/tanuh_website
             chmod +x dc-rebuild.sh
             ./dc-rebuild.sh
-
