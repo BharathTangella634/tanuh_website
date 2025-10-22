@@ -29,5 +29,6 @@ jobs:
           key: ${{ secrets.SERVER_SSH_KEY }}
           script: |
             cd ~/tanuh_website
+            chmod +x dc-rebuild.sh
             ./dc-rebuild.sh
 
