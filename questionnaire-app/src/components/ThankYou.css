@@ -332,3 +332,15 @@
   background-color: #fcfaff; 
 }
 
+/* Add this to the end of src/components/ThankYou.css */
+
+/* Style for highlighting the user's risk row in the HTML table */
+.risk-interpretation-table tbody tr.highlighted-risk-row {
+  background-color: #fff9e6; /* Light yellow background */
+  font-weight: 500; /* Slightly bolder text */
+}
+
+/* Optional: Make text in highlighted row slightly darker for contrast */
+.risk-interpretation-table tbody tr.highlighted-risk-row td {
+  color: #5c523a; 
+}
