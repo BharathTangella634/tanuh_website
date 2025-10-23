@@ -344,3 +344,20 @@
 .risk-interpretation-table tbody tr.highlighted-risk-row td {
   color: #5c523a; 
 }
+
+/* Add this to the end of src/components/ThankYou.css */
+
+/* Styles for the disclaimer text below the table */
+.disclaimer-text {
+  font-size: 0.8rem; /* Smaller font size */
+  color: #6c757d; /* Lighter gray text */
+  margin-top: 15px; /* Space above the text */
+  text-align: left; /* Align text to the left */
+  line-height: 1.4;
+}
+
+.disclaimer-asterisk {
+  color: #e63946; /* Red color for the asterisk */
+  font-weight: bold;
+  margin-right: 4px;
+}

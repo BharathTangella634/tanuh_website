@@ -832,61 +832,67 @@ function ThankYou({ riskResult, formData, questionnaireData }) {
 
     // --- JSX Return - UNCHANGED except for adding className to table row ---
     return (
-        <div className="thank-you-overlay">
-            <div className="thank-you-dialog">
-                <button className="close-button" onClick={() => window.location.reload()}>&times;</button>
-                <div className="thank-you-header">
-                    <CheckCircle className="success-icon" size={40} />
-                    <h3>Submission Complete</h3>
-                </div>
-                <p>Thank you for completing the questionnaire!</p>
-
-                {score !== null && (
-                    <div className="risk-result-container">
-                        <p>Risk Score:</p>
-                        <h2 className="risk-score">{score}</h2>
-                    </div>
-                )}
-
-                {score !== null && (
-                    <div className="interpretation-container">
-                        <h4>What Your Risk Score Means</h4>
-                        <table className="risk-interpretation-table">
-                            <thead>
-                                <tr>
-                                    <th>Risk Level</th>
-                                    <th>Score Range</th>
-                                    <th>What It Means</th>
-                                    <th>What To Do</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                {riskInterpretationData.map((row, index) => (
-                                    <tr
-                                        key={index}
-                                        className={row.level === userRiskLevel ? 'highlighted-risk-row' : ''}
-                                    >
-                                        <td>{row.level}</td>
-                                        <td>{row.range}</td>
-                                        <td>{row.meaning}</td>
-                                        <td>{row.action}</td>
-                                    </tr>
-                                ))}
-                            </tbody>
-                        </table>
-                    </div>
-                )}
-
-                <div className="action-buttons">
-                    <button className="ok-button" onClick={() => window.location.reload()}>Ok</button>
-                    <button className="download-button" onClick={handleDownloadPdf}>
-                        <Download size={18} style={{ marginRight: '8px' }} />
-                        Download Summary (PDF)
-                    </button>
-                </div>
-            </div>
+    <div className="thank-you-overlay">
+      <div className="thank-you-dialog">
+        <button className="close-button" onClick={() => window.location.reload()}>&times;</button>
+        <div className="thank-you-header">
+          <CheckCircle className="success-icon" size={40} /> 
+          <h3>Submission Complete</h3>
         </div>
-    );
+        <p>Thank you for completing the questionnaire!</p>
+        
+        {score !== null && (
+          <div className="risk-result-container">
+            <p>Risk Score:</p>
+            <h2 className="risk-score">{score}</h2> 
+          </div>
+        )}
+
+        {score !== null && (
+          <div className="interpretation-container">
+            <h4>What Your Risk Score Means</h4>
+            <table className="risk-interpretation-table">
+              <thead>
+                <tr>
+                  <th>Risk Level</th>
+                  <th>Score Range</th>
+                  <th>What It Means</th>
+                  <th>What To Do</th>
+                </tr>
+              </thead>
+              <tbody>
+                {riskInterpretationData.map((row, index) => (
+                  <tr 
+                    key={index} 
+                    className={row.level === userRiskLevel ? 'highlighted-risk-row' : ''}
+                  >
+                    <td>{row.level}</td>
+                    <td>{row.range}</td>
+                    <td>{row.meaning}</td>
+                    <td>{row.action}</td>
+                  </tr>
+                ))}
+              </tbody>
+            </table>
+            {/* --- NEW DISCLAIMER TEXT --- */}
+            <p className="disclaimer-text">
+              <strong>Disclaimer</strong>
+                <span className="disclaimer-asterisk">*</span>:
+                This Report is intended for research purposes only. The Breast cancer risk assessment algorithm is currently under development and should not be considered clinically validated. For medically relevant decisions and clinically valid results, please consult a qualified clinician.
+            </p>
+          </div>
+        )}
+
+        <div className="action-buttons">
+          <button className="ok-button" onClick={() => window.location.reload()}>Ok</button>
+          <button className="download-button" onClick={handleDownloadPdf}>
+            <Download size={18} style={{ marginRight: '8px' }} /> 
+            Download Summary (PDF)
+          </button>
+        </div>
+      </div>
+    </div>
+  );
 }
 
 export default ThankYou;
