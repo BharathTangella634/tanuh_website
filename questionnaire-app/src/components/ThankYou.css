@@ -128,6 +128,243 @@
     transform: translateY(0);
   }
 } */
+
+/* 
+
+.thank-you-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(10, 20, 30, 0.5);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+  backdrop-filter: blur(5px);
+  overflow-y: auto; 
+  padding: 20px; 
+}
+
+.thank-you-dialog {
+  background: #ffffff;
+  border-radius: 16px;
+  padding: 30px 40px;
+  width: 90%;
+  max-width: 650px; 
+  box-shadow: 0 10px 40px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  position: relative;
+  border-top: 6px solid #6200EE;
+  animation: slideInUp 0.5s cubic-bezier(0.25, 1, 0.5, 1);
+  margin: auto; 
+}
+
+.close-button {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  background: #f1f3f5;
+  border: none;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  font-size: 1.5rem;
+  line-height: 30px;
+  color: #868e96;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.2s;
+}
+
+.close-button:hover {
+  background-color: #e9ecef;
+  color: #343a40;
+  transform: rotate(90deg);
+}
+
+.thank-you-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 12px;
+  margin-bottom: 15px;
+}
+
+.success-icon {
+  color: #6200EE !important;
+}
+
+.thank-you-dialog h3 {
+  font-size: 1.8rem;
+  font-weight: 700;
+  color: #343a40;
+  margin: 0;
+}
+
+.thank-you-dialog p {
+  color: #6c757d;
+  font-size: 1rem;
+  line-height: 1.6;
+  margin: 0 0 25px 0;
+}
+
+.risk-result-container {
+  background: #f8f0ff;
+  border-radius: 12px;
+  padding: 20px;
+  margin: 25px 0;
+  border: 1px solid #e0cffc;
+}
+
+.risk-result-container p {
+  margin: 0;
+  color: #495057;
+  font-weight: 500;
+  font-size: 0.95rem;
+}
+
+
+.risk-score {
+  font-size: 2.8rem;
+  font-weight: 700;
+  color: #6200EE;
+  margin-top: 5px;
+}
+
+.action-buttons {
+  display: flex;
+  gap: 15px;
+  margin-top: 30px;
+}
+
+.ok-button, .download-button {
+  flex: 1;
+  border: none;
+  border-radius: 8px;
+  padding: 14px;
+  font-size: 1rem;
+  cursor: pointer;
+  transition: all 0.2s ease;
+  font-weight: 600;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.ok-button {
+  background-color: #6200EE;
+  color: white;
+  box-shadow: 0 4px 15px rgba(98, 0, 238, 0.2);
+
+}
+
+.ok-button:hover {
+  background-color: #5a00d1;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(98, 0, 238, 0.3);
+}
+
+.download-button {
+  background-color: #f1f3f5;
+  color: #495057;
+  border: 1px solid #dee2e6;
+}
+
+.download-button:hover {
+  background-color: #e9ecef;
+  border-color: #adb5bd;
+  transform: translateY(-2px);
+}
+
+@keyframes slideInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+
+.interpretation-container {
+  margin-top: 30px;
+  text-align: left; 
+}
+
+.interpretation-container h4 {
+  font-size: 1.2rem;
+  color: #495057;
+  margin-bottom: 15px;
+  text-align: center;
+}
+
+.risk-interpretation-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 0.85rem;
+  margin-bottom: 25px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.05);
+  border-radius: 8px;
+  overflow: hidden; 
+}
+
+.risk-interpretation-table th, 
+.risk-interpretation-table td {
+  border: 1px solid #e9ecef;
+  padding: 10px 12px;
+  vertical-align: top;
+}
+
+.risk-interpretation-table th {
+  background-color: #f8f0ff; 
+  color: #6200EE; 
+  font-weight: 600;
+  text-align: left;
+}
+
+.risk-interpretation-table td {
+  color: #6c757d;
+  line-height: 1.5;
+}
+
+
+.risk-interpretation-table tbody tr:nth-child(even) {
+  background-color: #fcfaff; 
+}
+
+
+
+
+.risk-interpretation-table tbody tr.highlighted-risk-row {
+  background-color: #fff9e6;
+  font-weight: 500;
+}
+
+
+.risk-interpretation-table tbody tr.highlighted-risk-row td {
+  color: #5c523a; 
+}
+
+
+
+
+.disclaimer-text {
+  font-size: 0.8rem;
+  color: #6c757d; 
+  margin-top: 15px;
+  text-align: left;
+  line-height: 1.4;
+}
+
+.disclaimer-asterisk {
+  color: #e63946; 
+  font-weight: bold;
+  margin-right: 4px;
+} */
+
 .thank-you-overlay {
   position: fixed;
   inset: 0;
@@ -332,8 +569,6 @@
   background-color: #fcfaff; 
 }
 
-/* Add this to the end of src/components/ThankYou.css */
-
 /* Style for highlighting the user's risk row in the HTML table */
 .risk-interpretation-table tbody tr.highlighted-risk-row {
   background-color: #fff9e6; /* Light yellow background */
@@ -344,8 +579,6 @@
 .risk-interpretation-table tbody tr.highlighted-risk-row td {
   color: #5c523a; 
 }
-
-/* Add this to the end of src/components/ThankYou.css */
 
 /* Styles for the disclaimer text below the table */
 .disclaimer-text {
@@ -360,4 +593,100 @@
   color: #e63946; /* Red color for the asterisk */
   font-weight: bold;
   margin-right: 4px;
+}
+
+
+/*
+==============================================
+--- NEW: RESPONSIVE STYLES FOR MOBILE ---
+==============================================
+*/
+@media (max-width: 650px) {
+
+  /* 1. Reduce dialog padding */
+  .thank-you-dialog {
+    padding: 25px 20px;
+    width: 95%; /* Give a tiny bit more width */
+  }
+
+  .thank-you-dialog h3 {
+    font-size: 1.5rem; /* Slightly smaller title */
+  }
+
+  .risk-score {
+    font-size: 2.4rem; /* Slightly smaller score */
+  }
+
+  /* 2. Stack action buttons */
+  .action-buttons {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  /* 3. Responsive Table: Stack into "cards" */
+  
+  /* Hide the desktop header */
+  .risk-interpretation-table thead {
+    display: none;
+  }
+
+  .risk-interpretation-table,
+  .risk-interpretation-table tbody,
+  .risk-interpretation-table tr,
+  .risk-interpretation-table td {
+    display: block; /* Make everything block-level */
+    width: 100%;
+  }
+
+  .risk-interpretation-table tr {
+    margin-bottom: 15px;
+    border: 1px solid #dee2e6; /* Give each "card" a border */
+    border-radius: 8px;
+    overflow: hidden; /* Contain the cells */
+  }
+  
+  /* Style the cells */
+  .risk-interpretation-table td {
+    border: none;
+    border-bottom: 1px solid #e9ecef; /* Separate cells within a card */
+    padding-left: 50%; /* Make space for the label */
+    position: relative;
+    text-align: right; /* Align the value to the right */
+    padding-top: 12px;
+    padding-bottom: 12px;
+  }
+
+  .risk-interpretation-table tr:last-child {
+    margin-bottom: 0;
+  }
+
+  .risk-interpretation-table td:last-child {
+    border-bottom: none; /* No border on the last cell in a card */
+  }
+
+  /* Use the ::before pseudo-element to add the label from the data-label attribute */
+  .risk-interpretation-table td[data-label]::before {
+    content: attr(data-label); /* Get text from 'data-label' */
+    position: absolute;
+    left: 12px;
+    width: calc(50% - 24px); /* (50% left padding) - (12px padding) */
+    font-weight: 600;
+    color: #6200EE; /* Use theme color for label */
+    text-align: left;
+    vertical-align: top;
+  }
+
+  /* Maintain highlight style */
+  .risk-interpretation-table tbody tr.highlighted-risk-row {
+    background-color: #fff9e6;
+    border-color: #ffe8a1;
+  }
+
+  .risk-interpretation-table tbody tr.highlighted-risk-row td {
+     color: #5c523a;
+  }
+  
+  .risk-interpretation-table tbody tr.highlighted-risk-row td[data-label]::before {
+    color: #b38f00; /* Darker label for highlighted card */
+  }
 }
