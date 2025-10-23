@@ -593,7 +593,7 @@ function ThankYou({ riskResult, formData, questionnaireData }) {
             doc.setFont('helvetica', 'normal');
             doc.setFontSize(8);
             doc.setTextColor(150);
-            const footerText = `Page ${pageNumber} of ${totalPages} | Generated: ${new Date().toLocaleDateString()}`;
+            const footerText = `Page ${pageNumber} | Generated: ${new Date().toLocaleDateString()}`;
             doc.text(footerText, pageWidth / 2, pageHeight - 8, { align: 'center' });
         };
 
@@ -700,7 +700,7 @@ function ThankYou({ riskResult, formData, questionnaireData }) {
              const tableStartY = y;
              const cellPadding = 3;
              const headerFontSize = 9;
-             const rowFontSize = 8;
+             const rowFontSize = 7.5;
              const colWidths = [35, 30, (pageWidth - margin*2 - 10 - 35 - 30) / 2, (pageWidth - margin*2 - 10 - 35 - 30) / 2 ];
              const tableWidth = colWidths.reduce((a, b) => a + b, 0);
              const tableX = margin + 10;
@@ -785,6 +785,44 @@ function ThankYou({ riskResult, formData, questionnaireData }) {
              y += 10;
          }
 
+        // --- NEW: ADD DISCLAIMER TEXT ---
+        // Check space before adding disclaimer (calculate its approximate height)
+        // --- ADD DISCLAIMER TEXT (Corrected for Width) ---
+        if (y > pageHeight - 40) addPageWithTemplate(); // Check space before disclaimer
+        const disclaimerX = margin + 10;
+        const disclaimerY = y + 5; // Start position for disclaimer block
+        const redColor = [224, 57, 68]; // Red for asterisk
+        const disclaimerFontSize = 9;
+        const disclaimerText = "This Report is intended for research purposes only. The Breast cancer risk assessment algorithm is currently under development and should not be considered clinically validated. For medically relevant decisions and clinically valid results, please consult a qualified clinician.";
+        
+        // Draw Asterisk in Red
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(disclaimerFontSize + 1);
+        doc.setTextColor(redColor[0], redColor[1], redColor[2]);
+        doc.text("*", disclaimerX, disclaimerY);
+
+        // Draw "Disclaimer:" in Bold Grey
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(disclaimerFontSize);
+        doc.setTextColor(100, 100, 100);
+        const disclaimerLabel = "Disclaimer:";
+        const disclaimerLabelWidth = doc.getTextWidth(disclaimerLabel);
+        doc.text(disclaimerLabel, disclaimerX + 2, disclaimerY);
+        
+        // Calculate the available width for the main text
+        const textStartX = disclaimerX + 2 + disclaimerLabelWidth + 2; // X position where the text will start
+        const availableTextWidth = pageWidth - textStartX - margin; // Total width from start point to right margin
+
+        // Draw main disclaimer text in normal grey, with correct wrapping
+        doc.setFont('helvetica', 'normal');
+        doc.setTextColor(120, 120, 120);
+        const disclaimerLines = doc.splitTextToSize(disclaimerText, availableTextWidth);
+        doc.text(disclaimerLines, textStartX, disclaimerY);
+        
+        // Update y position based on the height of the wrapped text
+        const disclaimerHeight = doc.getTextDimensions(disclaimerLines, {fontSize: disclaimerFontSize}).h;
+        y += disclaimerHeight + 10; // Move y down past the disclaimer + margin
+        // --- END OF DISCLAIMER ADDITION ---
 
         // --- 3. RENDER Q&A DATA (Using the corrected renderQAPair) ---
         let mainQuestionCounter = 0;
@@ -876,8 +914,8 @@ function ThankYou({ riskResult, formData, questionnaireData }) {
             </table>
             {/* --- NEW DISCLAIMER TEXT --- */}
             <p className="disclaimer-text">
-              <strong>Disclaimer</strong>
-                <span className="disclaimer-asterisk">*</span>:
+              <span className="disclaimer-asterisk">*</span>
+              <strong>Disclaimer</strong>:
                 This Report is intended for research purposes only. The Breast cancer risk assessment algorithm is currently under development and should not be considered clinically validated. For medically relevant decisions and clinically valid results, please consult a qualified clinician.
             </p>
           </div>
