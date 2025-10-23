@@ -686,7 +686,7 @@ function ThankYou({ riskResult, formData, questionnaireData }) {
           doc.setFillColor(240, 230, 255);
           doc.roundedRect(margin + 10, y, pageWidth - (margin * 2) - 10, 22, 3, 3, 'F');
           doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(40, 40, 40);
-          doc.text('Your Estimated Lifetime Risk Score:', margin + 15, y + 13);
+          doc.text('Risk Score:', margin + 15, y + 13);
           doc.setFontSize(20); doc.setTextColor(...themeColor);
           doc.text(`${score}`, pageWidth - margin - 15, y + 15, { align: 'right' });
           y += 32;
