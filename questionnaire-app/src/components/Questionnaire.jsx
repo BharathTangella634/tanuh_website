@@ -750,8 +750,8 @@ function Questionnaire({ onSubmit, isSubmitting }) {
 
 
         <img src="/TANUH.png" alt="TANUH Logo" className="logo tanuh-logo" />
-        <img src="/IISC Logo White.png" alt="IISC Logo" className="logo iisc-logo" />
-        
+        <img src="/IISC_Logo_White.png" alt="IISC Logo" className="logo iisc-logo" />
+
         <div className="form-header">
           <h1>Breast Cancer Risk Questionnaire</h1>
           <p style={{ color: "#533b42ff", fontSize: "18px", marginTop: "8px" }}>Please answer the following questions to the best of your ability.</p>
