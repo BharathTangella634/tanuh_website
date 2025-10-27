@@ -47,6 +47,10 @@ function Consent({ onAccept }) {
 
   return (
     <div className="consent-container">
+
+      <img src="/TANUH.png" alt="TANUH Logo" className="logo tanuh-logo" />
+      <img src="/IISC Logo White.png" alt="IISC Logo" className="logo iisc-logo" />
+
       <h2>E-Consent</h2>
 
       <div className="consent-header">

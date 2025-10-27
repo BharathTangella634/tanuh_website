@@ -531,3 +531,37 @@
 .video-prompt-button:hover {
   background-color: #5a00d1;
 }
+
+
+
+
+
+/* --- Logo Styles (Add to each CSS file) --- */
+
+/* Make the main container a positioning context */
+.consent-container, 
+.questionnaire-container, 
+.thank-you-dialog {
+  position: relative; 
+  padding-top: 70px; /* Increase top padding to make space for logos */
+}
+
+.logo {
+  position: absolute;
+  top: 20px;       /* Distance from top */
+  height: 40px;    /* Logo height */
+  width: auto;     /* Maintain aspect ratio */
+}
+
+.tanuh-logo {
+  left: 30px;      /* Distance from left */
+}
+
+.iisc-logo {
+  right: 30px;     /* Distance from right */
+  background-color: #6200EE; /* Purple background for white logo */
+  padding: 5px;    /* Padding around the logo inside the background */
+  border-radius: 4px; /* Slightly rounded corners for the background */
+  height: 35px;    /* Adjust height slightly due to padding */
+  top: 18px;       /* Adjust top position slightly */
+}

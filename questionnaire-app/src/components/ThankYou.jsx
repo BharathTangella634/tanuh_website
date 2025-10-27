@@ -759,6 +759,13 @@ function ThankYou({ riskResult, formData, questionnaireData, sessionId }) {
     return (
     <div className="thank-you-overlay">
       <div className="thank-you-dialog">
+        {/* <img src="/TANUH.png" alt="TANUH Logo" className="logo tanuh-logo" />
+
+        <img src="/IISC Logo White.png" alt="IISC Logo" className="logo iisc-logo" /> */}
+
+
+
+
         <button className="close-button" onClick={() => window.location.reload()}>&times;</button>
         <div className="thank-you-header">
           <CheckCircle className="success-icon" size={40} /> 
