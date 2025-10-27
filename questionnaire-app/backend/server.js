@@ -309,7 +309,9 @@ app.post('/api/submit', async (req, res) => {
         
         // --- MODIFIED: Update session_table with end_time AND the calculated risk ---
         const updateSessionSql = 'UPDATE session_table SET session_end_time = ?, snehita_lifetime_risk = ? WHERE session_id = ?';
-        await connection.query(updateSessionSql, [new Date(), `${riskPercentage}%`, sessionId]);
+        // await connection.query(updateSessionSql, [new Date(), `${riskPercentage}%`, sessionId]);
+        await connection.query(updateSessionSql, [new Date(), (riskPercentage / 100).toFixed(2), sessionId]);
+
         console.log(`✅ Finalized session ${sessionId} with risk ${riskPercentage}%`);
         
         await connection.commit();
