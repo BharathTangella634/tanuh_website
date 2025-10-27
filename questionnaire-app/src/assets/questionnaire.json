@@ -344,5 +344,13 @@
       "Uterine cancer",
       "Other"
     ]
+  },
+  "Q44": {
+    "question": "Enter your Patient ID(if any, else leave):",
+    "answers": []
+  },
+  "Q45": {
+    "question": "Enter the Hospital ID(If any, else leave):",
+    "answers": []
   }
 }
