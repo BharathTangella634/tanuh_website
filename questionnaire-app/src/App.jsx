@@ -168,11 +168,13 @@ function App() {
     <div className="app-container">
       {appState === 'consent' && <Consent onAccept={handleConsent} />}
       {appState === 'questionnaire' && <Questionnaire onSubmit={handleSubmit} isSubmitting={isSubmitting} />}
+
       {appState === 'submitted' && (
         <ThankYou
           riskResult={riskResult}
           formData={finalFormData}
           questionnaireData={questionnaireData}
+          sessionId={sessionId} // <<<--- ADD THIS PROP ---<<<
         />
       )}
     </div>

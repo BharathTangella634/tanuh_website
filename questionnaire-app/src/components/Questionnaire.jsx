@@ -727,6 +727,9 @@ function Questionnaire({ onSubmit, isSubmitting }) {
   const [validationErrors, setValidationErrors] = useState([]);
   const [progress, setProgress] = useState(0);
 
+  const [showQ27VideoPrompt, setShowQ27VideoPrompt] = useState(false); 
+  const [q27VideoConfirmed, setQ27VideoConfirmed] = useState(false);
+
   const getVisibleQuestionKeys = (currentFormData) => {
     const visibleKeys = new Set();
     const traverse = (questions) => {
@@ -766,6 +769,19 @@ function Questionnaire({ onSubmit, isSubmitting }) {
 
   const handleChange = (e) => {
     const { name, value, type, checked } = e.target;
+
+    // new addition
+    if (name === 'Q27') {
+      if (value === 'No') {
+        setShowQ27VideoPrompt(true); // Show prompt when 'No' is selected
+        setQ27VideoConfirmed(false); // Reset confirmation
+      } else {
+        setShowQ27VideoPrompt(false); // Hide prompt if not 'No'
+        setQ27VideoConfirmed(false); // Reset confirmation
+      }
+    }
+    //end of addition
+
     if (type === 'checkbox') {
         const currentValues = formData[name] || [];
         const newValues = checked ? [...currentValues, value] : currentValues.filter(v => v !== value);
@@ -938,11 +954,44 @@ function Questionnaire({ onSubmit, isSubmitting }) {
                     </div>
                   )}
                   {/* Video rendering logic remains the same */}
-                  {isQ27No && qConfig.videoUrlOnNo && (
+
+                  {/* {isQ27No && qConfig.videoUrlOnNo && (
                       <div className="youtube-player-container">
                           <iframe width="560" height="315" src={qConfig.videoUrlOnNo} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
                       </div>
+                  )} */}
+
+                  {/* New Addition */}
+
+                  {qConfig.key === "Q27" && formData['Q27'] === "No" && (
+                    <>
+                      {/* Show Prompt if user hasn't confirmed */}
+                      {!q27VideoConfirmed && showQ27VideoPrompt && (
+                        <div className="video-prompt-container">
+                          <p className="video-prompt-note">
+                            Please follow the instructions in the video to perform self examination. It has to be performed in privacy in a room with a mirror. Click okay when you are ready.
+                          </p>
+                          <button
+                            type="button"
+                            className="video-prompt-button"
+                            onClick={() => setQ27VideoConfirmed(true)} // Set confirmation on click
+                          >
+                            Okay
+                          </button>
+                        </div>
+                      )}
+
+                      {/* Show Video if user HAS confirmed */}
+                      {q27VideoConfirmed && qConfig.videoUrlOnNo && (
+                        <div className="youtube-player-container">
+                            <iframe width="560" height="315" src={qConfig.videoUrlOnNo} title="YouTube video player" frameBorder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture" allowFullScreen></iframe>
+                        </div>
+                      )}
+                    </>
                   )}
+                  {/* --- END NEW BLOCK --- */}
+
+
                 </React.Fragment>
               );
             })}

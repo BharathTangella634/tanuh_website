@@ -437,7 +437,7 @@ const getRiskLevel = (score) => {
 };
 
 
-function ThankYou({ riskResult, formData, questionnaireData }) {
+function ThankYou({ riskResult, formData, questionnaireData, sessionId }) {
 
     const score = riskResult !== null ? (parseFloat(riskResult) / 100).toFixed(2) : null;
     const userRiskLevel = score !== null ? getRiskLevel(score) : null;
@@ -751,7 +751,8 @@ function ThankYou({ riskResult, formData, questionnaireData }) {
             addFooter(i, totalPages);
         }
 
-        doc.save('Breast-Cancer-Risk-Summary.pdf');
+        // doc.save('Breast-Cancer-Risk-Summary.pdf');
+        doc.save(`Risk-Summary-${sessionId || 'UnknownSession'}.pdf`);
     };
 
     // --- JSX Return ---
