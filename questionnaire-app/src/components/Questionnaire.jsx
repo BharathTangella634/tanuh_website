@@ -749,7 +749,7 @@ function Questionnaire({ onSubmit, isSubmitting }) {
       <form className="questionnaire-container" onSubmit={handleSubmit} noValidate>
 
 
-        <img src="/TANUH.png" alt="TANUH Logo" className="logo tanuh-logo" />
+        <img src="/tanuh.png" alt="TANUH Logo" className="logo tanuh-logo" />
         <img src="/IISC_Logo_White.png" alt="IISC Logo" className="logo iisc-logo" />
 
         <div className="form-header">
