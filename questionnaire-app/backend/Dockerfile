@@ -22,57 +22,59 @@
 
 
 
-# FROM node:20-alpine
-
-# WORKDIR /app
-
-# # Copy only backend package files first for caching
-# COPY backend/package*.json ./
-
-# RUN npm install --omit=dev --no-audit --no-fund
-
-# # ✅ Copy backend, mysql_explorer, and any shared folders
-# COPY backend ./backend
-# COPY mysql_explorer ./mysql_explorer
-
-
-# # Expose backend port
-# EXPOSE 3001
-
-# # ✅ Start backend with correct path
-# CMD ["node", "backend/server.js"]
-
-
-
-
-
-# # Backend Dockerfile
-# Backend Dockerfile
 FROM node:20-alpine
 
 WORKDIR /app
 
 # Copy only backend package files first for caching
-COPY backend/package*.json ./backend/
+COPY backend/package*.json ./
 
-# Set WORKDIR for npm install
-WORKDIR /app/backend
 RUN npm install --omit=dev --no-audit --no-fund
 
-# Go back to the app root for copying all source files
-WORKDIR /app
+# ✅ Copy backend, mysql_explorer, and any shared folders
 COPY backend ./backend
 COPY mysql_explorer ./mysql_explorer
 
-# --- ADD THIS LINE ---
-# This copies the JSON file from your project's src/assets folder
-# INTO the /app/backend/ folder inside the container, where server.js
-# is now looking for it.
 COPY src/assets/questionnaire.json ./backend/
-# --- END ADDITION ---
+
 
 # Expose backend port
 EXPOSE 3001
 
 # ✅ Start backend with correct path
 CMD ["node", "backend/server.js"]
+
+
+
+
+
+# # # Backend Dockerfile
+# # Backend Dockerfile
+# FROM node:20-alpine
+
+# WORKDIR /app
+
+# # Copy only backend package files first for caching
+# COPY backend/package*.json ./backend/
+
+# # Set WORKDIR for npm install
+# WORKDIR /app/backend
+# RUN npm install --omit=dev --no-audit --no-fund
+
+# # Go back to the app root for copying all source files
+# WORKDIR /app
+# COPY backend ./backend
+# COPY mysql_explorer ./mysql_explorer
+
+# # --- ADD THIS LINE ---
+# # This copies the JSON file from your project's src/assets folder
+# # INTO the /app/backend/ folder inside the container, where server.js
+# # is now looking for it.
+# COPY src/assets/questionnaire.json ./backend/
+# # --- END ADDITION ---
+
+# # Expose backend port
+# EXPOSE 3001
+
+# # ✅ Start backend with correct path
+# CMD ["node", "backend/server.js"]
