@@ -46,34 +46,33 @@
 
 
 
+# # Backend Dockerfile
 # Backend Dockerfile
 FROM node:20-alpine
 
 WORKDIR /app
 
 # Copy only backend package files first for caching
-COPY backend/package*.json ./backend/ 
-# --- FIX: Ensure npm install runs in the backend context ---
-WORKDIR /app/backend 
+COPY backend/package*.json ./backend/
+
+# Set WORKDIR for npm install
+WORKDIR /app/backend
 RUN npm install --omit=dev --no-audit --no-fund
-# --- END FIX ---
 
-# Go back to the app root for subsequent copies if needed, or stay in backend
-WORKDIR /app 
-
-# ✅ Copy backend, mysql_explorer, and any shared folders
+# Go back to the app root for copying all source files
+WORKDIR /app
 COPY backend ./backend
 COPY mysql_explorer ./mysql_explorer
 
 # --- ADD THIS LINE ---
-# Copy the questionnaire JSON from the host's src/assets 
-# directly into the backend directory within the container.
-# Assumes Docker build context is the project root (questionnaire-app).
+# This copies the JSON file from your project's src/assets folder
+# INTO the /app/backend/ folder inside the container, where server.js
+# is now looking for it.
 COPY src/assets/questionnaire.json ./backend/
 # --- END ADDITION ---
 
 # Expose backend port
 EXPOSE 3001
 
-# ✅ Start backend using the path relative to the final WORKDIR (/app)
+# ✅ Start backend with correct path
 CMD ["node", "backend/server.js"]
