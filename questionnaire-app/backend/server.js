@@ -182,7 +182,7 @@ import cors from 'cors';
 import { v4 as uuidv4 } from 'uuid';
 import { getPool } from '../mysql_explorer/db.js';
 
-
+import questionnaireData from '../src/assets/questionnaire.json' with { type: 'json' };
 
 const app = express();
 const PORT = process.env.PORT || 3001;
@@ -295,16 +295,38 @@ app.post('/api/submit', async (req, res) => {
         await connection.beginTransaction();
 
         // (Code for inserting answers into session_data_table remains the same)
+
+        // const answerPromises = [];
+        // for (const questionKey in formData) {
+        //     if (Object.prototype.hasOwnProperty.call(formData, questionKey)) {
+        //         const answerValue = formData[questionKey];
+        //         const sessionDataId = uuidv4();
+        //         const finalAnswer = Array.isArray(answerValue) ? answerValue.join(', ') : answerValue;
+        //         const answerSql = 'INSERT INTO session_data_table (session_data_id, session_id, question, answer, created_at) VALUES (?, ?, ?, ?, ?)';
+        //         answerPromises.push(
+        //             connection.query(answerSql, [sessionDataId, sessionId, questionKey, finalAnswer, new Date()])
+        //         );
+        //     }
+        // }
+
         const answerPromises = [];
         for (const questionKey in formData) {
             if (Object.prototype.hasOwnProperty.call(formData, questionKey)) {
                 const answerValue = formData[questionKey];
                 const sessionDataId = uuidv4();
                 const finalAnswer = Array.isArray(answerValue) ? answerValue.join(', ') : answerValue;
+
+                // --- ADD THIS LINE: Look up the full question text ---
+                // Use optional chaining and fallback to the key if text not found
+                const questionText = questionnaireData[questionKey]?.question || questionKey;
+                // --- END ADDITION ---
+
+                // --- MODIFIED LINE: Use questionText instead of questionKey ---
                 const answerSql = 'INSERT INTO session_data_table (session_data_id, session_id, question, answer, created_at) VALUES (?, ?, ?, ?, ?)';
                 answerPromises.push(
-                    connection.query(answerSql, [sessionDataId, sessionId, questionKey, finalAnswer, new Date()])
+                    connection.query(answerSql, [sessionDataId, sessionId, questionText, finalAnswer, new Date()]) // Pass questionText here
                 );
+                // --- END MODIFICATION ---
             }
         }
         await Promise.all(answerPromises);
