@@ -761,7 +761,7 @@ function ThankYou({ riskResult, formData, questionnaireData, sessionId }) {
       <div className="thank-you-dialog">
         {/* <img src="/tanuh.png" alt="TANUH Logo" className="logo tanuh-logo" />
 
-        <img src="/IISC_Logo_White.png" alt="IISC Logo" className="logo iisc-logo" /> */}
+        <img src="/IISc_logo.png" alt="IISC Logo" className="logo iisc-logo" /> */}
 
 
 

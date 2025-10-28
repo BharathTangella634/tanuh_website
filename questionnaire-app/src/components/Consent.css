@@ -251,7 +251,7 @@
 
 
 /* --- Logo Styles (Add to each CSS file) --- */
-
+/* --- Logo Styles --- */
 
 .consent-container, 
 .questionnaire-container, 
@@ -262,20 +262,21 @@
 
 .logo {
   position: absolute;
-  top: 20px;      
-  height: 40px;   
-  width: auto;    
+  top: 20px;       
+  height: 40px;    /* Base height */
+  width: auto;     
 }
 
 .tanuh-logo {
-  left: 30px;     
+  left: 30px;       
 }
 
 .iisc-logo {
-  right: 30px;    
-  background-color: #6200EE; 
-  padding: 5px;  
-  border-radius: 4px; 
-  height: 35px;    
-  top: 18px;       
+  right: 30px;     
+  background-color: transparent; /* Removed background */
+  padding: 0;                /* Removed padding */
+  border-radius: 0;          /* Removed border-radius */
+  height: 40px;              /* Matched height to .logo */
+  top: 20px;                 /* Matched top to .logo */
+  /* filter: invert(100%);    */
 }
