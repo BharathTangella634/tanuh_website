@@ -30,6 +30,8 @@ RUN npm install --omit=dev --no-audit --no-fund
 COPY backend ./backend
 COPY mysql_explorer ./mysql_explorer
 
+COPY src/assets/questionnaire.json ./backend/
+
 # Expose backend port
 EXPOSE 3001
 
