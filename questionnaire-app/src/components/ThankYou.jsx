@@ -833,381 +833,392 @@
 // }
 
 // export default ThankYou;
-
-
 import React from 'react';
 import './ThankYou.css';
-import { formStructure } from './Questionnaire';
+import { formStructure } from './Questionnaire'; // This import is untouched
 import jsPDF from 'jspdf';
 import { Download, CheckCircle } from 'lucide-react';
+// --- MODIFICATION: Import the new JSON file ---
 import thankYouData from '../assets/thankyou.json' with { type: 'json' };
 
-// Data for the interpretation table is now imported from the JSON
+// --- MODIFICATION: Data is now sourced from the imported JSON ---
 const riskInterpretationData = thankYouData.interpretation.data;
 
-// Helper function to determine the risk level based on the score
-// This logic remains unchanged as it's not text-based
+// Helper function to determine the risk level based on the score (Unchanged)
 const getRiskLevel = (score) => {
-  const numScore = parseFloat(score);
-  if (isNaN(numScore)) return null;
-  if (numScore < 0.4004) return "Normal Risk";
-  if (numScore >= 0.4004 && numScore < 0.574) return "Moderate Risk";
-  if (numScore >= 0.574 && numScore < 0.795) return "High Risk";
-  if (numScore >= 0.795) return "Very High Risk";
-  return null;
+    const numScore = parseFloat(score);
+    if (isNaN(numScore)) return null;
+    if (numScore < 0.4004) return "Normal Risk";
+    if (numScore >= 0.4004 && numScore < 0.574) return "Moderate Risk";
+    if (numScore >= 0.574 && numScore < 0.795) return "High Risk";
+    if (numScore >= 0.795) return "Very High Risk";
+    return null;
 };
 
 
 function ThankYou({ riskResult, formData, questionnaireData, sessionId }) {
 
-  const score = riskResult !== null ? (parseFloat(riskResult) / 100).toFixed(2) : null;
-  const userRiskLevel = score !== null ? getRiskLevel(score) : null;
+    const score = riskResult !== null ? (parseFloat(riskResult) / 100).toFixed(2) : null;
+    const userRiskLevel = score !== null ? getRiskLevel(score) : null;
 
-  const handleDownloadPdf = () => {
-    if (!formData) {
-      alert(thankYouData.pdf.alertNoData); // <-- MODIFIED
-      return;
-    }
-
-    const doc = new jsPDF();
-    const pageWidth = doc.internal.pageSize.getWidth();
-    const pageHeight = doc.internal.pageSize.getHeight();
-    const margin = 15;
-    let y = 0;
-
-    const themeColor = [98, 0, 238];
-    const highlightColor = [255, 249, 230]; 
-
-    const sanitizeText = (text) => {
-      if (!text) return '';
-      return text.replace(/₹/g, 'Rs.').replace(/\s+/g, ' ').trim();
-    };
-
-    const addHeader = () => {
-      doc.setFillColor(242, 237, 255);
-      doc.rect(0, 0, margin + 5, pageHeight, 'F');
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(14);
-      doc.setTextColor(40, 40, 40);
-      doc.text(thankYouData.pdf.mainTitle, margin + 10, 18); // <-- MODIFIED
-      doc.setDrawColor(...themeColor);
-      doc.setLineWidth(0.4);
-      doc.line(margin + 10, 20, pageWidth - margin, 20);
-      y = 32;
-    };
-
-    const addFooter = (pageNumber, totalPages) => {
-      doc.setFont('helvetica', 'normal');
-      doc.setFontSize(8);
-      doc.setTextColor(150);
-      // <-- MODIFIED
-      const footerText = `${thankYouData.pdf.footerPage} ${pageNumber} | ${thankYouData.pdf.footerGenerated}: ${new Date().toLocaleDateString()}`;
-      doc.text(footerText, pageWidth / 2, pageHeight - 8, { align: 'center' });
-    };
-
-    const addPageWithTemplate = () => {
-      const currentPage = doc.internal.getNumberOfPages();
-      const totalPagesGuess = currentPage + 1;
-      addFooter(currentPage, totalPagesGuess);
-      doc.addPage();
-      addHeader();
-    };
-
-    const renderSectionHeader = (title) => {
-      if (y > pageHeight - 30) addPageWithTemplate();
-      y += 10;
-      doc.setFontSize(13);
-      doc.setFont('helvetica', 'bold');
-      doc.setTextColor(...themeColor);
-      doc.text(title, margin + 10, y);
-      y += 10;
-    };
-
-    // --- CORRECTED Q&A Rendering Logic ---
-    const renderQAPair = (questionObject, answerText) => {
-      const qaMargin = margin + 15;
-      const boxX = margin + 10;
-      const boxWidth = pageWidth - (margin * 2) - 10;
-      const textWidth = boxWidth - 16; 
-
-      // Sanitize inputs
-      const questionTitleAndBody = sanitizeText(`${questionObject.title || ''} ${questionObject.text || ''}`);
-      // Prepend "A: " to the answer (from JSON)
-      // <-- MODIFIED
-      const answer = sanitizeText(`${thankYouData.pdf.answerPrefix} ${answerText || ''}`);
-
-      // Set font sizes BEFORE splitting text
-      const questionFontSize = 9; 
-      const answerFontSize = 9;
-
-      doc.setFont('helvetica', 'bold'); 
-      doc.setFontSize(questionFontSize);
-      const questionLines = doc.splitTextToSize(questionTitleAndBody, textWidth);
-      const questionHeight = doc.getTextDimensions(questionLines, {fontSize: questionFontSize}).h;
-
-      doc.setFont('helvetica', 'normal'); 
-      doc.setFontSize(answerFontSize);
-      const answerLines = doc.splitTextToSize(answer, textWidth - 5); 
-      const answerHeight = doc.getTextDimensions(answerLines, {fontSize: answerFontSize}).h;
-
-      const boxPaddingVertical = 8;
-      const spaceBetweenQA = 4; 
-
-      // Calculate total height needed INSIDE the box
-      const contentHeight = questionHeight + spaceBetweenQA + answerHeight;
-      const totalBoxHeight = contentHeight + (boxPaddingVertical * 2);
-
-      // Check for page break BEFORE drawing anything
-      if (y + totalBoxHeight > pageHeight - 20) {
-        addPageWithTemplate();
-      }
-
-      // Draw the Q&A box
-      doc.setFillColor(253, 253, 253);
-      doc.setDrawColor(225, 225, 225);
-      doc.setLineWidth(0.2);
-      doc.roundedRect(boxX, y, boxWidth, totalBoxHeight, 3, 3, 'FD');
-
-      let textY = y + boxPaddingVertical; // Start text with top padding
-
-      // Render Question Text (Title + Body together, bold)
-      doc.setFont('helvetica', 'bold');
-      doc.setFontSize(questionFontSize);
-      doc.setTextColor(50, 50, 50);
-      doc.text(questionLines, qaMargin, textY + 3); 
-      textY += questionHeight + spaceBetweenQA;
-
-      // Render Answer Text (Normal, with A: prefix)
-      doc.setFont('helvetica', 'normal'); 
-      doc.setFontSize(answerFontSize);
-      doc.setTextColor(80, 80, 80);
-      doc.text(answerLines, qaMargin + 5, textY + 3); 
-
-      y += totalBoxHeight + 8; // Move y past the current box with margin
-    };
-
-
-    // --- START PDF GENERATION ---
-    addHeader();
-
-    // --- 1. RENDER RISK SCORE --- 
-    if (score !== null) {
-      doc.setFillColor(240, 230, 255);
-      doc.roundedRect(margin + 10, y, pageWidth - (margin * 2) - 10, 22, 3, 3, 'F');
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(40, 40, 40);
-      doc.text(thankYouData.riskScoreLabel, margin + 15, y + 13); // <-- MODIFIED
-      doc.setFontSize(20); doc.setTextColor(...themeColor);
-      doc.text(`${score}`, pageWidth - margin - 15, y + 15, { align: 'right' });
-      y += 32;
-    }
-
-    // --- 2. RENDER INTERPRETATION TABLE (With Highlighting) ---
-    if (score !== null) {
-      if (y > pageHeight - 60) addPageWithTemplate();
-      renderSectionHeader(thankYouData.interpretation.title); // <-- MODIFIED
-
-      const tableStartY = y;
-      const cellPadding = 3;
-      const headerFontSize = 9;
-      const rowFontSize = 7.5;
-      const colWidths = [35, 30, (pageWidth - margin*2 - 10 - 35 - 30) / 2, (pageWidth - margin*2 - 10 - 35 - 30) / 2 ];
-      const tableWidth = colWidths.reduce((a, b) => a + b, 0);
-      const tableX = margin + 10;
-
-      doc.setFont('helvetica', 'bold'); doc.setFontSize(headerFontSize);
-      doc.setFillColor(230, 230, 250); doc.setTextColor(40, 40, 40);
-      doc.setDrawColor(180, 180, 180); doc.setLineWidth(0.2);
-      doc.rect(tableX, y, tableWidth, 9, 'FD');
-
-      let currentX = tableX + cellPadding;
-      const headerY = y + 6;
-      // <-- MODIFIED (All 4 headers)
-      doc.text(thankYouData.interpretation.headers.level, currentX, headerY); currentX += colWidths[0];
-      doc.text(thankYouData.interpretation.headers.range, currentX, headerY); currentX += colWidths[1];
-      doc.text(thankYouData.interpretation.headers.meaning, currentX, headerY); currentX += colWidths[2];
-      doc.text(thankYouData.interpretation.headers.action, currentX, headerY);
-      y += 9;
-
-      // This uses the riskInterpretationData defined at the top of the file
-      riskInterpretationData.forEach((row, index) => {
-        const levelLines = doc.splitTextToSize(row.level, colWidths[0] - cellPadding * 2);
-        const rangeLines = doc.splitTextToSize(row.range, colWidths[1] - cellPadding * 2);
-        const meaningLines = doc.splitTextToSize(row.meaning, colWidths[2] - cellPadding * 2);
-        const actionLines = doc.splitTextToSize(row.action, colWidths[3] - cellPadding * 2);
-
-        const levelHeight = doc.getTextDimensions(levelLines, {fontSize: rowFontSize}).h;
-        const rangeHeight = doc.getTextDimensions(rangeLines, {fontSize: rowFontSize}).h;
-        const meaningHeight = doc.getTextDimensions(meaningLines, {fontSize: rowFontSize}).h;
-        const actionHeight = doc.getTextDimensions(actionLines, {fontSize: rowFontSize}).h;
-        const rowHeight = Math.max(levelHeight, rangeHeight, meaningHeight, actionHeight) + (cellPadding * 2);
-
-        if (y + rowHeight > pageHeight - 20) {
-          addPageWithTemplate();
-          // Redraw header on new page
-          doc.setFont('helvetica', 'bold'); doc.setFontSize(headerFontSize); doc.setFillColor(230, 230, 250); doc.setTextColor(40, 40, 40);
-          doc.setDrawColor(180, 180, 180); doc.setLineWidth(0.2);
-          doc.rect(tableX, y, tableWidth, 9, 'FD');
-          currentX = tableX + cellPadding;
-          // <-- MODIFIED (All 4 headers)
-          doc.text(thankYouData.interpretation.headers.level, currentX, y + 6); currentX += colWidths[0];
-          doc.text(thankYouData.interpretation.headers.range, currentX, y + 6); currentX += colWidths[1];
-          doc.text(thankYouData.interpretation.headers.meaning, currentX, y + 6); currentX += colWidths[2];
-          doc.text(thankYouData.interpretation.headers.action, currentX, y + 6);
-          y += 9;
+    const handleDownloadPdf = () => {
+        if (!formData) {
+            // --- MODIFIED ---
+            alert(thankYouData.pdf.alertNoData);
+            return;
         }
 
-        const isHighlighted = row.level === userRiskLevel;
-        if (isHighlighted) {
-          doc.setFillColor(highlightColor[0], highlightColor[1], highlightColor[2]); 
-          doc.rect(tableX, y, tableWidth, rowHeight, 'F'); 
-        } else if (index % 2 !== 0) { 
-          doc.setFillColor(250, 250, 250);
-          doc.rect(tableX, y, tableWidth, rowHeight, 'F');
+        const doc = new jsPDF();
+        const pageWidth = doc.internal.pageSize.getWidth();
+        const pageHeight = doc.internal.pageSize.getHeight();
+        const margin = 15;
+        let y = 0;
+
+        const themeColor = [98, 0, 238];
+        const highlightColor = [255, 249, 230]; 
+
+        const sanitizeText = (text) => {
+            if (!text) return '';
+            return text.replace(/₹/g, 'Rs.').replace(/\s+/g, ' ').trim();
+        };
+
+        const addHeader = () => {
+            doc.setFillColor(242, 237, 255);
+            doc.rect(0, 0, margin + 5, pageHeight, 'F');
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(14);
+            doc.setTextColor(40, 40, 40);
+            // --- MODIFIED ---
+            doc.text(thankYouData.pdf.mainTitle, margin + 10, 18);
+            doc.setDrawColor(...themeColor);
+            doc.setLineWidth(0.4);
+            doc.line(margin + 10, 20, pageWidth - margin, 20);
+            y = 32;
+        };
+
+        const addFooter = (pageNumber, totalPages) => {
+            doc.setFont('helvetica', 'normal');
+            doc.setFontSize(8);
+            doc.setTextColor(150);
+            // --- MODIFIED ---
+            const footerText = `${thankYouData.pdf.footerPage} ${pageNumber} | ${thankYouData.pdf.footerGenerated}: ${new Date().toLocaleDateString()}`;
+            doc.text(footerText, pageWidth / 2, pageHeight - 8, { align: 'center' });
+        };
+
+        const addPageWithTemplate = () => {
+           const currentPage = doc.internal.getNumberOfPages();
+           const totalPagesGuess = currentPage + 1;
+           addFooter(currentPage, totalPagesGuess);
+           doc.addPage();
+           addHeader();
+        };
+
+        const renderSectionHeader = (title) => {
+            if (y > pageHeight - 30) addPageWithTemplate();
+            y += 10;
+            doc.setFontSize(13);
+            doc.setFont('helvetica', 'bold');
+            doc.setTextColor(...themeColor);
+            doc.text(title, margin + 10, y);
+            y += 10;
+        };
+
+        // --- Q&A Rendering Logic --- (Unchanged, but text is now from JSON)
+        const renderQAPair = (questionObject, answerText) => {
+            const qaMargin = margin + 15;
+            const boxX = margin + 10;
+            const boxWidth = pageWidth - (margin * 2) - 10;
+            const textWidth = boxWidth - 16; 
+
+            const questionTitleAndBody = sanitizeText(`${questionObject.title || ''} ${questionObject.text || ''}`);
+            // --- MODIFIED ---
+            const answer = sanitizeText(`${thankYouData.pdf.answerPrefix} ${answerText || ''}`);
+
+            const questionFontSize = 9; 
+            const answerFontSize = 9;
+
+            doc.setFont('helvetica', 'bold'); 
+            doc.setFontSize(questionFontSize);
+            const questionLines = doc.splitTextToSize(questionTitleAndBody, textWidth);
+            const questionHeight = doc.getTextDimensions(questionLines, {fontSize: questionFontSize}).h;
+
+            doc.setFont('helvetica', 'normal'); 
+            doc.setFontSize(answerFontSize);
+            const answerLines = doc.splitTextToSize(answer, textWidth - 5); 
+            const answerHeight = doc.getTextDimensions(answerLines, {fontSize: answerFontSize}).h;
+
+            const boxPaddingVertical = 8;
+            const spaceBetweenQA = 4; 
+
+            const contentHeight = questionHeight + spaceBetweenQA + answerHeight;
+            const totalBoxHeight = contentHeight + (boxPaddingVertical * 2);
+
+            if (y + totalBoxHeight > pageHeight - 20) {
+                addPageWithTemplate();
+            }
+
+            doc.setFillColor(253, 253, 253);
+            doc.setDrawColor(225, 225, 225);
+            doc.setLineWidth(0.2);
+            doc.roundedRect(boxX, y, boxWidth, totalBoxHeight, 3, 3, 'FD');
+
+            let textY = y + boxPaddingVertical; 
+
+            doc.setFont('helvetica', 'bold');
+            doc.setFontSize(questionFontSize);
+            doc.setTextColor(50, 50, 50);
+            doc.text(questionLines, qaMargin, textY + 3); 
+            textY += questionHeight + spaceBetweenQA;
+
+            doc.setFont('helvetica', 'normal'); 
+            doc.setFontSize(answerFontSize);
+            doc.setTextColor(80, 80, 80);
+            doc.text(answerLines, qaMargin + 5, textY + 3); 
+
+            y += totalBoxHeight + 8; 
+        };
+
+
+        // --- START PDF GENERATION ---
+        addHeader();
+
+        // --- 1. RENDER RISK SCORE ---
+        if (score !== null) {
+          doc.setFillColor(240, 230, 255);
+          doc.roundedRect(margin + 10, y, pageWidth - (margin * 2) - 10, 22, 3, 3, 'F');
+          doc.setFont('helvetica', 'bold'); doc.setFontSize(11); doc.setTextColor(40, 40, 40);
+          // --- MODIFIED ---
+          doc.text(thankYouData.riskScoreLabel, margin + 15, y + 13);
+          doc.setFontSize(20); doc.setTextColor(...themeColor);
+          doc.text(`${score}`, pageWidth - margin - 15, y + 15, { align: 'right' });
+          y += 32;
         }
 
-        doc.setTextColor(isHighlighted ? 60 : 80, isHighlighted ? 60 : 80, isHighlighted ? 60 : 80);
+        // --- 2. RENDER INTERPRETATION TABLE (With Highlighting) ---
+         if (score !== null) {
+             if (y > pageHeight - 60) addPageWithTemplate();
+             // --- MODIFIED ---
+             renderSectionHeader(thankYouData.interpretation.title);
+
+             const tableStartY = y;
+             const cellPadding = 3;
+             const headerFontSize = 9;
+             const rowFontSize = 7.5;
+             const colWidths = [35, 30, (pageWidth - margin*2 - 10 - 35 - 30) / 2, (pageWidth - margin*2 - 10 - 35 - 30) / 2 ];
+             const tableWidth = colWidths.reduce((a, b) => a + b, 0);
+             const tableX = margin + 10;
+
+             doc.setFont('helvetica', 'bold'); doc.setFontSize(headerFontSize);
+             doc.setFillColor(230, 230, 250); doc.setTextColor(40, 40, 40);
+             doc.setDrawColor(180, 180, 180); doc.setLineWidth(0.2);
+             doc.rect(tableX, y, tableWidth, 9, 'FD');
+
+             let currentX = tableX + cellPadding;
+             const headerY = y + 6;
+             // --- MODIFIED (All 4 headers) ---
+             doc.text(thankYouData.interpretation.headers.level, currentX, headerY); currentX += colWidths[0];
+             doc.text(thankYouData.interpretation.headers.range, currentX, headerY); currentX += colWidths[1];
+             doc.text(thankYouData.interpretation.headers.meaning, currentX, headerY); currentX += colWidths[2];
+             doc.text(thankYouData.interpretation.headers.action, currentX, headerY);
+             y += 9;
+
+             // This loop now uses 'riskInterpretationData' variable defined at the top
+             riskInterpretationData.forEach((row, index) => {
+                 const levelLines = doc.splitTextToSize(row.level, colWidths[0] - cellPadding * 2);
+                 const rangeLines = doc.splitTextToSize(row.range, colWidths[1] - cellPadding * 2);
+                 const meaningLines = doc.splitTextToSize(row.meaning, colWidths[2] - cellPadding * 2);
+                 const actionLines = doc.splitTextToSize(row.action, colWidths[3] - cellPadding * 2);
+
+                 const levelHeight = doc.getTextDimensions(levelLines, {fontSize: rowFontSize}).h;
+                 const rangeHeight = doc.getTextDimensions(rangeLines, {fontSize: rowFontSize}).h;
+                 const meaningHeight = doc.getTextDimensions(meaningLines, {fontSize: rowFontSize}).h;
+                 const actionHeight = doc.getTextDimensions(actionLines, {fontSize: rowFontSize}).h;
+                 const rowHeight = Math.max(levelHeight, rangeHeight, meaningHeight, actionHeight) + (cellPadding * 2);
+
+                 if (y + rowHeight > pageHeight - 20) {
+                     addPageWithTemplate();
+                     // Redraw header on new page
+                     doc.setFont('helvetica', 'bold'); doc.setFontSize(headerFontSize); doc.setFillColor(230, 230, 250); doc.setTextColor(40, 40, 40);
+                     doc.setDrawColor(180, 180, 180); doc.setLineWidth(0.2);
+                     doc.rect(tableX, y, tableWidth, 9, 'FD');
+                     currentX = tableX + cellPadding;
+                     // --- MODIFIED (All 4 headers) ---
+                     doc.text(thankYouData.interpretation.headers.level, currentX, y + 6); currentX += colWidths[0];
+                     doc.text(thankYouData.interpretation.headers.range, currentX, y + 6); currentX += colWidths[1];
+                     doc.text(thankYouData.interpretation.headers.meaning, currentX, y + 6); currentX += colWidths[2];
+                     doc.text(thankYouData.interpretation.headers.action, currentX, y + 6);
+                     y += 9;
+                 }
+
+                 const isHighlighted = row.level === userRiskLevel;
+                 if (isHighlighted) {
+                     doc.setFillColor(highlightColor[0], highlightColor[1], highlightColor[2]); 
+                     doc.rect(tableX, y, tableWidth, rowHeight, 'F'); 
+                 } else if (index % 2 !== 0) { 
+                     doc.setFillColor(250, 250, 250);
+                     doc.rect(tableX, y, tableWidth, rowHeight, 'F');
+                 }
+
+                 doc.setTextColor(isHighlighted ? 60 : 80, isHighlighted ? 60 : 80, isHighlighted ? 60 : 80);
+                 doc.setFont('helvetica', 'normal');
+                 doc.setFontSize(rowFontSize);
+
+                 let textY = y + cellPadding + 3;
+                 currentX = tableX + cellPadding;
+
+                 doc.setFont('helvetica', (isHighlighted ? 'bold' : 'bold')); 
+                 doc.text(levelLines, currentX, textY);
+                 currentX += colWidths[0];
+
+                 doc.setFont('helvetica', (isHighlighted ? 'bold' : 'normal')); 
+                 doc.text(rangeLines, currentX, textY);
+                 currentX += colWidths[1];
+                 doc.text(meaningLines, currentX, textY);
+                 currentX += colWidths[2];
+                 doc.text(actionLines, currentX, textY);
+
+                 doc.setDrawColor(200, 200, 200); doc.setLineWidth(0.1);
+                 doc.rect(tableX, y, tableWidth, rowHeight);
+                 let lineX = tableX;
+                 for (let i = 0; i < colWidths.length; i++) {
+                   lineX += colWidths[i];
+                   if (i < colWidths.length - 1) {
+                     doc.line(lineX, y, lineX, y + rowHeight);
+                   }
+                 }
+                 y += rowHeight;
+             });
+             y += 10;
+        }
+
+        // --- ADD DISCLAIMER TEXT (Corrected for Width) ---
+        if (y > pageHeight - 40) addPageWithTemplate(); 
+        const disclaimerX = margin + 10;
+        const disclaimerY = y + 5; 
+        const redColor = [224, 57, 68]; 
+        const disclaimerFontSize = 9;
+        // --- MODIFIED ---
+        const disclaimerText = thankYouData.disclaimer.text;
+        
+        // Draw Asterisk in Red
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(disclaimerFontSize + 1);
+        doc.setTextColor(redColor[0], redColor[1], redColor[2]);
+        // --- MODIFIED ---
+        doc.text(thankYouData.disclaimer.asterisk, disclaimerX, disclaimerY);
+
+        // Draw "Disclaimer:" in Bold Grey
+        doc.setFont('helvetica', 'bold');
+        doc.setFontSize(disclaimerFontSize);
+        doc.setTextColor(100, 100, 100);
+        // --- MODIFIED ---
+        const disclaimerLabel = `${thankYouData.disclaimer.title}:`;
+        const disclaimerLabelWidth = doc.getTextWidth(disclaimerLabel);
+        doc.text(disclaimerLabel, disclaimerX + 2, disclaimerY);
+        
+        const textStartX = disclaimerX + 2 + disclaimerLabelWidth + 2; 
+        const availableTextWidth = pageWidth - textStartX - margin; 
+
+        // Draw main disclaimer text in normal grey, with correct wrapping
         doc.setFont('helvetica', 'normal');
-        doc.setFontSize(rowFontSize);
+        doc.setTextColor(120, 120, 120);
+        const disclaimerLines = doc.splitTextToSize(disclaimerText, availableTextWidth);
+        doc.text(disclaimerLines, textStartX, disclaimerY);
+        
+        const disclaimerHeight = doc.getTextDimensions(disclaimerLines, {fontSize: disclaimerFontSize}).h;
+        y += disclaimerHeight + 10; 
+        // --- END OF DISCLAIMER ADDITION ---
 
-        let textY = y + cellPadding + 3;
-        currentX = tableX + cellPadding;
+        // --- 3. RENDER Q&A DATA (Logic 100% Unchanged) ---
 
-        doc.setFont('helvetica', (isHighlighted ? 'bold' : 'bold')); 
-        doc.text(levelLines, currentX, textY);
-        currentX += colWidths[0];
+        // ***** THIS IS THE FIX *****
+        // We check if 'questionnaireData' has a 'questions' key.
+        // If yes, we use that. If no, we use 'questionnaireData' directly.
+        const questionsObject = (questionnaireData && questionnaireData.questions) ? questionnaireData.questions : questionnaireData;
+        // ***************************
 
-        doc.setFont('helvetica', (isHighlighted ? 'bold' : 'normal')); 
-        doc.text(rangeLines, currentX, textY);
-        currentX += colWidths[1];
-        doc.text(meaningLines, currentX, textY);
-        currentX += colWidths[2];
-        doc.text(actionLines, currentX, textY);
+        let mainQuestionCounter = 0;
+        formStructure.forEach((section) => {
+            const questionsToRender = [];
+            const findAnsweredQuestions = (questions, parentNumber) => {
+                questions.forEach((qConfig, index) => {
+                    const name = qConfig.name || qConfig.key; const answer = formData[name];
+                    let displayNumber;
+                    if (parentNumber) displayNumber = `${parentNumber}${String.fromCharCode(97 + index)}`;
+                    else { mainQuestionCounter++; displayNumber = mainQuestionCounter; }
+                    
+                    // Check if 'questionsObject' is valid before trying to access it
+                    const questionText = questionsObject ? questionsObject[qConfig.key]?.question : '';
 
-        doc.setDrawColor(200, 200, 200); doc.setLineWidth(0.1);
-        doc.rect(tableX, y, tableWidth, rowHeight);
-        let lineX = tableX;
-        for (let i = 0; i < colWidths.length; i++) {
-          lineX += colWidths[i];
-          if (i < colWidths.length - 1) {
-            doc.line(lineX, y, lineX, y + rowHeight);
-          }
-        }
-        y += rowHeight;
-      });
-      y += 10;
-    }
-    
-    // --- ADD DISCLAIMER TEXT (Corrected for Width) ---
-    if (y > pageHeight - 40) addPageWithTemplate(); // Check space before disclaimer
-    const disclaimerX = margin + 10;
-    const disclaimerY = y + 5; 
-    const redColor = [224, 57, 68]; 
-    const disclaimerFontSize = 9;
-    const disclaimerText = thankYouData.disclaimer.text; // <-- MODIFIED
-    
-    // Draw Asterisk in Red
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(disclaimerFontSize + 1);
-    doc.setTextColor(redColor[0], redColor[1], redColor[2]);
-    doc.text(thankYouData.disclaimer.asterisk, disclaimerX, disclaimerY); // <-- MODIFIED
+                    if (answer !== undefined && answer !== null && answer !== '' && (!Array.isArray(answer) || answer.length > 0)) {
+                        questionsToRender.push({
+                            questionObject: {
+                                // --- MODIFIED (Text only) ---
+                                title: `${thankYouData.pdf.questionPrefix} ${displayNumber}:`,
+                                // --- MODIFIED: Use the 'questionsObject' we defined above ---
+                                text: questionText
+                            },
+                            answer: Array.isArray(answer) ? answer.join(', ') : answer.toString(),
+                        });
+                    }
+                    if (qConfig.subQuestions && qConfig.condition && formData[qConfig.condition.key] === qConfig.condition.value) {
+                        findAnsweredQuestions(qConfig.subQuestions, displayNumber);
+                    }
+                });
+            };
+            findAnsweredQuestions(section.questions);
 
-    // Draw "Disclaimer:" in Bold Grey
-    doc.setFont('helvetica', 'bold');
-    doc.setFontSize(disclaimerFontSize);
-    doc.setTextColor(100, 100, 100);
-    const disclaimerLabel = `${thankYouData.disclaimer.title}:`; // <-- MODIFIED
-    const disclaimerLabelWidth = doc.getTextWidth(disclaimerLabel);
-    doc.text(disclaimerLabel, disclaimerX + 2, disclaimerY);
-    
-    // Calculate the available width for the main text
-    const textStartX = disclaimerX + 2 + disclaimerLabelWidth + 2; 
-    const availableTextWidth = pageWidth - textStartX - margin; 
-
-    // Draw main disclaimer text in normal grey, with correct wrapping
-    doc.setFont('helvetica', 'normal');
-    doc.setTextColor(120, 120, 120);
-    const disclaimerLines = doc.splitTextToSize(disclaimerText, availableTextWidth);
-    doc.text(disclaimerLines, textStartX, disclaimerY);
-    
-    // Update y position based on the height of the wrapped text
-    const disclaimerHeight = doc.getTextDimensions(disclaimerLines, {fontSize: disclaimerFontSize}).h;
-    y += disclaimerHeight + 10; 
-    // --- END OF DISCLAIMER ADDITION ---
-
-    // --- 3. RENDER Q&A DATA (Using the corrected renderQAPair) ---
-    let mainQuestionCounter = 0;
-    formStructure.forEach((section) => {
-      const questionsToRender = [];
-      const findAnsweredQuestions = (questions, parentNumber) => {
-        questions.forEach((qConfig, index) => {
-          const name = qConfig.name || qConfig.key; const answer = formData[name];
-          let displayNumber;
-          if (parentNumber) displayNumber = `${parentNumber}${String.fromCharCode(97 + index)}`;
-          else { mainQuestionCounter++; displayNumber = mainQuestionCounter; }
-          if (answer !== undefined && answer !== null && answer !== '' && (!Array.isArray(answer) || answer.length > 0)) {
-            questionsToRender.push({
-              // Pass both title and body separately
-              questionObject: {
-                // <-- MODIFIED
-                title: `${thankYouData.pdf.questionPrefix} ${displayNumber}:`,
-                text: questionnaireData[qConfig.key]?.question
-              },
-              answer: Array.isArray(answer) ? answer.join(', ') : answer.toString(),
-            });
-          }
-          if (qConfig.subQuestions && qConfig.condition && formData[qConfig.condition.key] === qConfig.condition.value) {
-            findAnsweredQuestions(qConfig.subQuestions, displayNumber);
-          }
+            if (questionsToRender.length > 0) {
+                renderSectionHeader(section.title);
+                questionsToRender.forEach((qa) => renderQAPair(qa.questionObject, qa.answer));
+            }
         });
-      };
-      findAnsweredQuestions(section.questions);
 
-      if (questionsToRender.length > 0) {
-        renderSectionHeader(section.title);
-        // Pass the question object and answer text to the corrected renderer
-        questionsToRender.forEach((qa) => renderQAPair(qa.questionObject, qa.answer));
-      }
-    });
+        // Add footers to all pages
+        const totalPages = doc.internal.getNumberOfPages();
+        for (let i = 1; i <= totalPages; i++) {
+            doc.setPage(i);
+            addFooter(i, totalPages);
+        }
 
-    // Add footers to all pages (Calculate total pages AFTER generation)
-    const totalPages = doc.internal.getNumberOfPages();
-    for (let i = 1; i <= totalPages; i++) {
-      doc.setPage(i);
-      addFooter(i, totalPages);
-    }
+        // --- MODIFIED ---
+        doc.save(`${thankYouData.pdf.fileNamePrefix}-${sessionId || thankYouData.pdf.unknownSession}.pdf`);
+    };
 
-    // <-- MODIFIED
-    doc.save(`${thankYouData.pdf.fileNamePrefix}-${sessionId || thankYouData.pdf.unknownSession}.pdf`);
-  };
-
-  // --- JSX Return ---
-  return (
+    // --- JSX Return ---
+    return (
     <div className="thank-you-overlay">
       <div className="thank-you-dialog">
-        {/* <img src="/tanuh.png" alt={thankYouData.logos.tanuhAlt} className="logo tanuh-logo" />
-        <img src="/IISc_logo.png" alt={thankYouData.logos.iiscAlt} className="logo iisc-logo" /> */}
-        
+        {/* --- MODIFIED (but still commented out) ---
+        <img src="/tanuh.png" alt={thankYouData.logos.tanuhAlt} className="logo tanuh-logo" />
+        <img src="/IISc_logo.png" alt={thankYouData.logos.iiscAlt} className="logo iisc-logo" />
+        */}
+
         <button className="close-button" onClick={() => window.location.reload()}>&times;</button>
         <div className="thank-you-header">
-          <CheckCircle className="success-icon" size={40} />
-          <h3>{thankYouData.title}</h3> {/* <-- MODIFIED */}
+          <CheckCircle className="success-icon" size={40} /> 
+          {/* --- MODIFIED --- */}
+          <h3>{thankYouData.title}</h3>
         </div>
-        <p>{thankYouData.message}</p> {/* <-- MODIFIED */}
+        {/* --- MODIFIED --- */}
+        <p>{thankYouData.message}</p>
         
         {score !== null && (
           <div className="risk-result-container">
-            <p>{thankYouData.riskScoreLabel}</p> {/* <-- MODIFIED */}
-            <h2 className="risk-score">{score}</h2>
+            {/* --- MODIFIED --- */}
+            <p>{thankYouData.riskScoreLabel}</p>
+            <h2 className="risk-score">{score}</h2> 
           </div>
         )}
 
         {score !== null && (
           <div className="interpretation-container">
-            <h4>{thankYouData.interpretation.title}</h4> {/* <-- MODIFIED */}
+            {/* --- MODIFIED --- */}
+            <h4>{thankYouData.interpretation.title}</h4>
             <table className="risk-interpretation-table">
               <thead>
                 <tr>
-                  {/* <-- MODIFIED (All 4 headers) --> */}
+                  {/* --- MODIFIED (All 4 headers) --- */}
                   <th>{thankYouData.interpretation.headers.level}</th>
                   <th>{thankYouData.interpretation.headers.range}</th>
                   <th>{thankYouData.interpretation.headers.meaning}</th>
@@ -1215,13 +1226,13 @@ function ThankYou({ riskResult, formData, questionnaireData, sessionId }) {
                 </tr>
               </thead>
               <tbody>
-                {/* This now uses the riskInterpretationData from the imported JSON */}
+                {/* This loop now uses 'riskInterpretationData' from JSON */}
                 {riskInterpretationData.map((row, index) => (
-                  <tr
-                    key={index}
+                  <tr 
+                    key={index} 
                     className={row.level === userRiskLevel ? 'highlighted-risk-row' : ''}
                   >
-                    {/* <-- MODIFIED (All 4 data-labels) --> */}
+                    {/* --- MODIFIED (All 4 data-labels) --- */}
                     <td data-label={thankYouData.interpretation.headers.level}>{row.level}</td>
                     <td data-label={thankYouData.interpretation.headers.range}>{row.range}</td>
                     <td data-label={thankYouData.interpretation.headers.meaning}>{row.meaning}</td>
@@ -1231,9 +1242,8 @@ function ThankYou({ riskResult, formData, questionnaireData, sessionId }) {
               </tbody>
             </table>
             
-            {/* --- NEW DISCLAIMER TEXT --- */}
+            {/* --- MODIFIED (Disclaimer) --- */}
             <p className="disclaimer-text">
-              {/* <-- MODIFIED (All 3 parts) --> */}
               <span className="disclaimer-asterisk">{thankYouData.disclaimer.asterisk}</span>
               <strong>{thankYouData.disclaimer.title}</strong>:
               {' '}{thankYouData.disclaimer.text}
@@ -1242,13 +1252,14 @@ function ThankYou({ riskResult, formData, questionnaireData, sessionId }) {
         )}
 
         <div className="action-buttons">
-          {/* <-- MODIFIED --> */}
+          {/* --- MODIFIED --- */}
           <button className="ok-button" onClick={() => window.location.reload()}>
             {thankYouData.buttons.ok}
           </button>
           <button className="download-button" onClick={handleDownloadPdf}>
-            <Download size={18} style={{ marginRight: '8px' }} />
-            {thankYouData.buttons.download} {/* <-- MODIFIED */}
+            <Download size={18} style={{ marginRight: '8px' }} /> 
+            {/* --- MODIFIED --- */}
+            {thankYouData.buttons.download}
           </button>
         </div>
       </div>
