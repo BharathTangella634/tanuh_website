@@ -183,7 +183,13 @@ import { v4 as uuidv4 } from 'uuid';
 import { getPool } from '../mysql_explorer/db.js';
 
 // import questionnaireData from '../src/assets/questionnaire.json' with { type: 'json' };
-import questionnaireData from './questionnaire.json' with { type: 'json' };
+// import questionnaireData from './questionnaire.json' with { type: 'json' };
+
+import questionnaireJson from '../src/assets/questionnaire.json' with { type: 'json' };
+// import questionnaireJsonfrom './questionnaire.json' with { type: 'json' };
+
+
+const questionnaireData = questionnaireJson.questions; 
 
 const app = express();
 const PORT = process.env.PORT || 3001;
