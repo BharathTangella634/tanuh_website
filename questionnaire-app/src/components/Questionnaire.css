@@ -541,13 +541,13 @@
 .questionnaire-container, 
 .thank-you-dialog {
   position: relative; 
-  padding-top: 70px; 
+  padding-top: 90px; 
 }
 
 .logo {
   position: absolute;
   top: 20px;       
-  height: 40px;    /* Base height */
+  height: 60px;    /* Increased base height */
   width: auto;     
 }
 
@@ -560,7 +560,7 @@
   background-color: transparent; /* Removed background */
   padding: 0;                /* Removed padding */
   border-radius: 0;          /* Removed border-radius */
-  height: 40px;              /* Matched height to .logo */
+  height: 60px;              /* Match increased height */
   top: 20px;                 /* Matched top to .logo */
   /* filter: invert(100%);     */
 }
