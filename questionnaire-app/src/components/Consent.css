@@ -276,7 +276,7 @@
   background-color: transparent; /* Removed background */
   padding: 0;                /* Removed padding */
   border-radius: 0;          /* Removed border-radius */
-  height: 60px;              /* Match increased height */
+  height: 100px;              /* Match increased height */
   top: 20px;                 /* Matched top to .logo */
   /* filter: invert(100%);    */
 }
