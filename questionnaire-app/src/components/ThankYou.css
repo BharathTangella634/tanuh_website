@@ -696,8 +696,7 @@
 
 
 
-/* --- Logo Styles --- */
-
+/* 
 .consent-container, 
 .questionnaire-container, 
 .thank-you-dialog {
@@ -708,7 +707,7 @@
 .thank-you-dialog .logo {
   position: absolute;
   top: 20px;       
-  height: 40px;    /* Base height */
+  height: 40px;    
   width: auto;     
 }
 
@@ -718,10 +717,10 @@
 
 .thank-you-dialog .iisc-logo {
   right: 30px;     
-  background-color: transparent; /* Removed background */
-  padding: 0;                /* Removed padding */
-  border-radius: 0;          /* Removed border-radius */
-  height: 40px;              /* Matched height to .logo */
-  top: 20px;                 /* Matched top to .logo */
-  /* filter: invert(100%);      */
-}
+  background-color: transparent; 
+  padding: 0;                
+  border-radius: 0;          
+  height: 40px;              
+  top: 20px;                
+
+} */

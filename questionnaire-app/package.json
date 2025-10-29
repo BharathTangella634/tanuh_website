@@ -4,7 +4,6 @@
   "version": "0.0.0",
   "type": "module",
   "scripts": {
-    "predev": "node scripts/fetch_questionnaire.js",
     "dev": "vite",
     "prebuild": "node -e \"if(process.env.SKIP_FETCH !== '1'){ require('./scripts/fetch_questionnaire.js'); } else { console.log('Skipping DB fetch during build (SKIP_FETCH=1)'); }\"",
     "build": "vite build",
