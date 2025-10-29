@@ -705,18 +705,18 @@
   padding-top: 70px; 
 }
 
-.logo {
+.thank-you-dialog .logo {
   position: absolute;
   top: 20px;       
   height: 40px;    /* Base height */
   width: auto;     
 }
 
-.tanuh-logo {
+.thank-you-dialog .tanuh-logo {
   left: 30px;       
 }
 
-.iisc-logo {
+.thank-you-dialog .iisc-logo {
   right: 30px;     
   background-color: transparent; /* Removed background */
   padding: 0;                /* Removed padding */

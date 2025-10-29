@@ -544,23 +544,23 @@
   padding-top: 90px; 
 }
 
-.logo {
+.questionnaire-container .logo {
   position: absolute;
   top: 20px;       
-  height: 60px;    /* Increased base height */
+  height: 80px !important;    /* Increased base height with stronger specificity */
   width: auto;     
 }
 
-.tanuh-logo {
+.questionnaire-container .tanuh-logo {
   left: 30px;       
 }
 
-.iisc-logo {
+.questionnaire-container .iisc-logo {
   right: 30px;     
   background-color: transparent; /* Removed background */
   padding: 0;                /* Removed padding */
   border-radius: 0;          /* Removed border-radius */
-  height: 60px;              /* Match increased height */
+  height: 100px !important;              /* Match increased height with stronger specificity */
   top: 20px;                 /* Matched top to .logo */
   /* filter: invert(100%);     */
 }
