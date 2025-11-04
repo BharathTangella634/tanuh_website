@@ -330,11 +330,6 @@
     "Q45": {
       "question": "Enter the Hospital ID(If any, else leave):",
       "answers": []
-    },
-    "Q46": {
-      "question": "Preferred Language:",
-      "answers": []
     }
-    
   }
 }
