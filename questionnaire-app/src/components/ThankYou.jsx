@@ -1914,8 +1914,8 @@ function ThankYou({ riskResult, formData, questionnaireData, sessionId, formStru
                             </tbody>
                         </table>
                         <p className="disclaimer-text">
-                            <span className="disclaimer-asterisk">*</span>
                             <strong>{tThankYou('disclaimer.title')}</strong>
+                            <span className="disclaimer-asterisk">*</span>:
                             {tThankYou('disclaimer.text')}
                         </p>
                     </div>
