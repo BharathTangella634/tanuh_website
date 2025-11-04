@@ -4,6 +4,12 @@
     "tanuhAlt": "TANUH Logo",
     "iiscAlt": "IISC Logo"
   },
+  "headernames": {
+    "studyTitle": "అధ్యయన శీర్షిక",
+    "sponsor": "ప్రాయోజకుడు",
+    "programManager": "ప్రోగ్రామ్ మేనేజర్",
+    "iecApproval": "IEC ఆమోదం"
+  },
   "header": {
     "studyTitle": "భారతీయ జనాభా కోసం స్తన క్యాన్సర్ స్క్రీనింగ్ సాధన అభివృద్ధి",
     "sponsor": "TANUH Foundation",

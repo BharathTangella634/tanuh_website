@@ -4,6 +4,12 @@
     "tanuhAlt": "TANUH Logo",
     "iiscAlt": "IISC Logo"
   },
+  "headernames": {
+    "studyTitle": "अभ्यास शीर्षक",
+    "sponsor": "प्रायोजक",
+    "programManager": "कार्यक्रम व्यवस्थापक",
+    "iecApproval": "IEC मान्यता"
+  },
   "header": {
     "studyTitle": "भारतीय लोकसंख्येसाठी स्तनाच्या कर्करोगाच्या तपासणीसाठी साधनाचा विकास",
     "sponsor": "TANUH Foundation",
