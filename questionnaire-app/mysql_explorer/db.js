@@ -12,7 +12,7 @@ import mysql from 'mysql2/promise';
 // Resolve .env in questionnaire-app/.env relative to this file
 const __filename = fileURLToPath(import.meta.url);
 const __dirname = path.dirname(__filename);
-const envPath = path.resolve(__dirname, '../.env');
+const envPath = path.resolve(__dirname, '../backend/.env');
 
 if (fs.existsSync(envPath)) {
   dotenv.config({ path: envPath });
@@ -22,18 +22,20 @@ if (fs.existsSync(envPath)) {
 }
 
 function required(name, value) {
-  if (!value) {
-    throw new Error(`Missing required env var ${name}. Please set it in questionnaire-app/.env`);
+  if (!value || value === '') {
+    console.error(`❌ Missing required env var ${name}`);
+    throw new Error(`Missing required env var ${name}`);
   }
   return value;
 }
 
+// Do NOT throw at module load time when env is missing; defer validation to connection time.
 const config = {
-  host: required('MYSQL_HOST', process.env.MYSQL_HOST),
+  host: process.env.MYSQL_HOST,
   port: Number(process.env.MYSQL_PORT || 3306),
-  database: required('MYSQL_DB', process.env.MYSQL_DB),
-  user: required('MYSQL_USER', process.env.MYSQL_USER),
-  password: required('MYSQL_PASSWORD', process.env.MYSQL_PASSWORD),
+  database: process.env.MYSQL_DB,
+  user: process.env.MYSQL_USER,
+  password: process.env.MYSQL_PASSWORD,
   // Optional extra connection options via MYSQL_QUERY (e.g., charset=utf8mb4&ssl=false)
   // We'll parse simple key=value pairs joined by & and apply a few known ones.
 };
@@ -67,8 +69,17 @@ const extra = parseExtraOptions(process.env.MYSQL_QUERY || '');
 
 let pool;
 
+function ensureConfig() {
+  // Validate required env vars at connection time rather than module load.
+  required('MYSQL_HOST', config.host);
+  required('MYSQL_DB', config.database);
+  required('MYSQL_USER', config.user);
+  required('MYSQL_PASSWORD', config.password);
+}
+
 export function getPool() {
   if (!pool) {
+    ensureConfig();
     pool = mysql.createPool({
       host: config.host,
       port: config.port,

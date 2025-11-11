@@ -1,61 +1,282 @@
-/* src/components/Consent.css */
+/* 
+
 .consent-container {
-  background-color: #ffffff;
-  border-radius: 12px;
-  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
-  padding: 30px 40px;
+  background: #ffffff; 
+  border-radius: 16px;
+  box-shadow: 0 12px 50px -10px rgba(98, 0, 238, 0.15);
+  padding: 40px 50px;
   max-width: 800px;
   width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05); 
+  border-top: 6px solid #6200EE; 
+  animation: fadeIn 0.5s ease-out;
 }
 
-.consent-container h2, .consent-container h3 {
-  color: #1c1c1e;
-  margin-top: 20px;
-  margin-bottom: 10px;
+.consent-container h2 {
+  color: #212529;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 15px;
+}
+
+.consent-container h3 {
+  color: #495057;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 30px;
+  margin-bottom: 15px;
+  border-left: 4px solid #6200EE;
+  padding-left: 15px;
 }
 
 .consent-container p {
-  color: #555;
-  line-height: 1.6;
+  color: #6c757d; 
+  line-height: 1.7;
+  font-size: 1rem;
 }
 
 .consent-checkbox {
-  margin-top: 30px;
+  margin-top: 40px;
   display: flex;
   align-items: center;
+  background-color: #f8f7fa;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef; 
 }
 
 .consent-checkbox input {
-  margin-right: 10px;
-  width: 18px;
-  height: 18px;
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+  accent-color: #6200EE; 
+  cursor: pointer;
 }
 
 .consent-checkbox label {
   font-weight: 500;
+  color: #495057;
+  cursor: pointer;
 }
 
 .consent-container button {
   width: 100%;
-  padding: 15px;
-  margin-top: 20px;
-  font-size: 16px;
-  font-weight: bold;
+  padding: 16px;
+  margin-top: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
   color: white;
-  background-color: #6200EE; /* Purple color from screenshot */
+  background-color: #6200EE;
   border: none;
   border-radius: 8px;
   cursor: pointer;
-  transition: background-color 0.3s, opacity 0.3s;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 15px rgba(98, 0, 238, 0.2);
 }
 
-.consent-container button:hover {
-  background-color: #5000d1;
+.consent-container button:hover:not(:disabled) {
+  background-color: #5a00d1;
+  transform: translateY(-3px); 
+  box-shadow: 0 7px 25px rgba(98, 0, 238, 0.3);
+ 
+
 }
 
 .consent-container button:disabled {
-  background-color: #c5c5c5;
+  background-color: #efe3fa; 
+  color: #adb5bd; 
   cursor: not-allowed;
-  opacity: 0.7;
+  box-shadow: none;
+  transform: translateY(0);
+  color: rgb(202, 120, 240);
+
 }
 
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+} */
+
+
+
+.consent-container {
+  background: #ffffff;
+  border-radius: 16px;
+  box-shadow: 0 12px 50px -10px rgba(98, 0, 238, 0.15);
+  padding: 40px 50px;
+  max-width: 800px;
+  width: 100%;
+  border: 1px solid rgba(0, 0, 0, 0.05);
+  border-top: 6px solid #6200EE;
+  animation: fadeIn 0.5s ease-out;
+}
+
+/* --- Consistent & Professional Typography --- */
+.consent-container h2 {
+  color: #212529;
+  font-size: 2rem;
+  font-weight: 700;
+  margin-top: 0;
+  margin-bottom: 20px;
+  border-bottom: 1px solid #e9ecef;
+  padding-bottom: 15px;
+}
+
+.consent-container h3 {
+  color: #495057;
+  font-size: 1.25rem;
+  font-weight: 600;
+  margin-top: 0;
+  margin-bottom: 15px;
+  border-left: 4px solid #6200EE;
+  padding-left: 15px;
+}
+
+.consent-container p {
+  color: #6c757d;
+  line-height: 1.7;
+  font-size: 1rem;
+  margin-bottom: 10px;
+}
+
+/* NEW: Style for the study information header */
+.consent-header {
+  background-color: #f8f7fa;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+  margin-bottom: 30px;
+}
+
+.consent-header p {
+  margin: 5px 0;
+  font-size: 0.9rem;
+}
+
+.consent-header strong {
+  color: #495057;
+}
+
+/* NEW: Spacing for each numbered section */
+.consent-section {
+  margin-top: 30px;
+}
+
+/* NEW: Style for paragraphs with bolded sub-headings */
+.sub-point strong {
+  color: #495057;
+}
+
+/* NEW: Highlighted box for important notices */
+.important-notice {
+  margin-top: 30px;
+  background-color: #fff9e6; /* Soft yellow for attention */
+  border-left: 4px solid #ffc107; /* Amber color */
+  padding: 20px;
+  border-radius: 8px;
+}
+
+.important-notice h3 {
+  border-left: none;
+  padding-left: 0;
+  color: #856404; /* Darker yellow/brown text */
+}
+
+/* --- Redesigned & Highlighted Checkbox Area --- */
+.consent-checkbox {
+  margin-top: 40px;
+  display: flex;
+  align-items: center;
+  background-color: #f8f7fa;
+  padding: 15px 20px;
+  border-radius: 8px;
+  border: 1px solid #e9ecef;
+}
+
+.consent-checkbox input {
+  margin-right: 12px;
+  width: 20px;
+  height: 20px;
+  accent-color: #6200EE;
+  cursor: pointer;
+}
+
+.consent-checkbox label {
+  font-weight: 500;
+  color: #495057;
+  cursor: pointer;
+}
+
+/* --- Redesigned Button with Enhanced Hover Elevation --- */
+.consent-container button {
+  width: 100%;
+  padding: 16px;
+  margin-top: 30px;
+  font-size: 1.1rem;
+  font-weight: 600;
+  color: white;
+  background-color: #6200EE;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: all 0.2s ease-in-out;
+  box-shadow: 0 4px 15px rgba(98, 0, 238, 0.2);
+}
+
+.consent-container button:hover:not(:disabled) {
+  background-color: #5a00d1;
+  transform: translateY(-3px);
+  box-shadow: 0 7px 25px rgba(98, 0, 238, 0.3);
+}
+
+.consent-container button:disabled {
+  background-color: #e9ecef;
+  color: #adb5bd;
+  cursor: not-allowed;
+  box-shadow: none;
+  transform: translateY(0);
+}
+
+/* --- Keyframe for fade-in animation --- */
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(10px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+
+
+
+
+/* --- Logo Styles (Add to each CSS file) --- */
+/* --- Logo Styles --- */
+
+ .consent-container, 
+.questionnaire-container, 
+.thank-you-dialog {
+  position: relative; 
+  padding-top: 140px; 
+}
+
+.consent-container .logo {
+  position: absolute;
+  top: 20px;       
+  height: 80px !important;    /* Increased base height with stronger specificity */
+  width: auto;     
+}
+
+.consent-container .tanuh-logo {
+  left: 30px;       
+}
+
+.consent-container .iisc-logo {
+  right: 30px;     
+  background-color: transparent; /* Removed background */
+  padding: 0;                /* Removed padding */
+  border-radius: 0;          /* Removed border-radius */
+  height: 100px !important;              /* Match increased height with stronger specificity */
+  top: 20px;                 /* Matched top to .logo */
+  /* filter: invert(100%);    */
+}

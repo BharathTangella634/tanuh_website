@@ -1,17 +1,66 @@
+# version: "3.9"
+
+# services:
+#   web:
+#     build:
+#       context: ./questionnaire-app
+#       dockerfile: Dockerfile
+#     ports:
+#       - "8080:80"
+#     restart: unless-stopped
+#     depends_on:
+#       - backend
+#     # If the build needs network access to fetch questionnaire data during `npm run build`,
+#     # it will use the default Docker build network. No extra config needed.
+
+#   backend:
+#     build:
+#       context: .
+#       dockerfile: questionnaire-app/backend/Dockerfile
+#     ports:
+#       - "3001:3001"
+#     restart: unless-stopped
+
+# # Usage:
+# #   docker compose build
+# #   docker compose up -d
+# # Then open http://localhost:8080
 version: "3.9"
 
 services:
-  web:
+  backend:
+    build:
+      context: ./questionnaire-app
+      dockerfile: backend/Dockerfile
+    container_name: backend
+    ports:
+      - "3001:3001"
+    env_file:
+      - ./questionnaire-app/backend/.env   # ✅ your existing backend .env file
+    networks:
+      - tanuhnet
+    restart: always
+
+  frontend:
     build:
       context: ./questionnaire-app
       dockerfile: Dockerfile
+      args:
+        # VITE_API_URL: http://backend:3001
+        # VITE_API_URL: "http://localhost:3001"   # ✅ passes backend URL into frontend build
+        # VITE_API_URL: ${VITE_API_URL:-http://backend:3001}
+        VITE_API_URL: ${VITE_API_URL:-https://bc-screener-research.omraaj.com}
+        SKIP_FETCH: "1"
+    container_name: frontend
     ports:
-      - "8080:80"
-    restart: unless-stopped
-    # If the build needs network access to fetch questionnaire data during `npm run build`,
-    # it will use the default Docker build network. No extra config needed.
+      - "3000:80" 
+      # - "8080:80"                           # access at http://localhost:3000
+    depends_on:
+      - backend
+    networks:
+      - tanuhnet
+    restart: always
 
-# Usage:
-#   docker compose build
-#   docker compose up -d
-# Then open http://localhost:8080
+networks:
+  tanuhnet:
+    driver: bridge

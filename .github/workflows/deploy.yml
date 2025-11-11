@@ -1,0 +1,38 @@
+name: Deploy to VM
+
+on:
+  push:
+    branches: [ main ]   # or 'master', depending on your default branch
+
+jobs:
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Set up SSH
+        uses: webfactory/ssh-agent@v0.9.0
+        with:
+          ssh-private-key: ${{ secrets.SERVER_SSH_KEY }}
+
+      - name: Copy project files to server
+        run: |
+          rsync -avz --delete \
+            --exclude '.env' \
+            --exclude '*/.env' \
+            -e "ssh -o StrictHostKeyChecking=no" \
+            ./ ${{ secrets.SERVER_USER }}@${{ secrets.SERVER_IP }}:~/tanuh_website
+
+
+      - name: Rebuild and restart containers
+        uses: appleboy/ssh-action@v0.1.10
+        with:
+          host: ${{ secrets.SERVER_IP }}
+          username: ${{ secrets.SERVER_USER }}
+          key: ${{ secrets.SERVER_SSH_KEY }}
+          script: |
+            cd ~/tanuh_website
+            chmod +x dc-rebuild.sh
+            ./dc-rebuild.sh
