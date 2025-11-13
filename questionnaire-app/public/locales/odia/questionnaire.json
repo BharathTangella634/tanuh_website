@@ -77,7 +77,7 @@
           "key": "Q27",
           "type": "radio", 
           "condition": {"key": "Q27", "value": "Yes"}, 
-          "videoUrlOnNo": "https://www.youtube.com/embed/wI71TXaoMp8?autoplay=1&rel=0&start=0", 
+          "videoUrlOnNo": "https://www.youtube.com/embed/nKVjF3u3CNg?autoplay=1&rel=0&start=0", 
           "subQuestions": [
             { "key": "Q28", "type": "radio" },
             { "key": "Q29", "type": "radio" },
@@ -241,7 +241,7 @@
     },
     "Q26": {
       "question": "ଦୟାକରି ସେମାନଙ୍କର ଜାତି ଚୟନ କରନ୍ତୁ:",
-      "answers": []
+      "answers": ["ଉତ୍ତର ଭାରତୀୟ", "ଦକ୍ଷିଣ ଭାରତୀୟ", "ପୂର୍ବ ଭାରତୀୟ", "ପଶ୍ଚିମ ଭାରତୀୟ", "ଉତ୍ତର-ପୂର୍ବ ଭାରତୀୟ", "ମଧ୍ୟ ଭାରତୀୟ / ଆଦିବାସୀ ସମୁଦାୟ", "ମିଶ୍ରିତ / ଅନ୍ୟ ଭାରତୀୟ ଜାତି", "ପ୍ରବାସୀ ଭାରତୀୟ (NRI)", "ଅନ୍ୟ"]
     },
     "Q27": {
       "question": "ଆପଣ କେବେ ସ୍ତନ ପରୀକ୍ଷା (BE) କରିଛନ୍ତି କି?",

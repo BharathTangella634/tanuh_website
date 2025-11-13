@@ -77,7 +77,7 @@
           "key": "Q27",
           "type": "radio", 
           "condition": {"key": "Q27", "value": "Yes"}, 
-          "videoUrlOnNo": "https://www.youtube.com/embed/sgFCNcEaGr0?autoplay=1&rel=0&start=0", 
+          "videoUrlOnNo": "https://www.youtube.com/embed/bfoOshMQTq4?autoplay=1&rel=0&start=0", 
           "subQuestions": [
             { "key": "Q28", "type": "radio" },
             { "key": "Q29", "type": "radio" },
@@ -241,7 +241,7 @@
     },
     "Q26": {
       "question": "অনুগ্রহ করে তাদের জাতিগত নির্বাচন করুন:",
-      "answers": []
+      "answers": ["উত্তর ভারতীয়", "দক্ষিণ ভারতীয়", "পূর্ব ভারতীয়", "পশ্চিম ভারতীয়", "উত্তর-পূর্ব ভারতীয়", "মধ্য ভারতীয় / আদিবাসী সম্প্রদায়", "মিশ্রিত / অন্যান্য ভারতীয় জাতিগততা", "অপ্রবাসী ভারতীয় (এনআরআই)", "অন্যান্য"]
     },
     "Q27": {
       "question": "আপনি কি কখনও স্তন পরীক্ষা (BE) করেছেন?",

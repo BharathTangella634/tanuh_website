@@ -77,7 +77,7 @@
           "key": "Q27",
           "type": "radio", 
           "condition": {"key": "Q27", "value": "Yes"}, 
-          "videoUrlOnNo": "https://www.youtube.com/embed/Jj6tB3w0wn4?autoplay=1&rel=0&start=0", 
+          "videoUrlOnNo": "https://www.youtube.com/embed/2iVNL9dBACI?autoplay=1&rel=0&start=0", 
           "subQuestions": [
             { "key": "Q28", "type": "radio" },
             { "key": "Q29", "type": "radio" },
@@ -241,7 +241,7 @@
     },
     "Q26": {
       "question": "ദയവായി അവരുടെ വംശം തിരഞ്ഞെടുക്കുക:",
-      "answers": []
+      "answers": ["ഉത്തരേന്ത്യൻ", "ദക്ഷിണേന്ത്യൻ", "കിഴക്കൻ ഇന്ത്യൻ", "പശ്ചിമ ഇന്ത്യൻ", "വടക്കുകിഴക്കൻ ഇന്ത്യൻ", "മധ്യ ഇന്ത്യൻ / ആദിവാസി സമൂഹങ്ങൾ", "മിശ്ര / മറ്റ് ഇന്ത്യൻ ജാതി", "പ്രവാസി ഇന്ത്യൻ (NRI)", "മറ്റ്"]
     },
     "Q27": {
       "question": "നിങ്ങൾ എപ്പോഴെങ്കിലും ഒരു ബ്രെസ്റ്റ് എക്സാമിനേഷൻ (BE) നടത്തിയിട്ടുണ്ടോ?",

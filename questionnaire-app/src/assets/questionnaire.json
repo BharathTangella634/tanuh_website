@@ -241,7 +241,7 @@
     },
     "Q26": {
       "question": "Please select their ethnicity:",
-      "answers": []
+      "answers": ["North Indian", "South Indian", "East Indian", "West Indian", "North-East Indian", "Central Indian / Tribal Communities", "Mixed / Other Indian Ethnicity", "Non-Resident Indian (NRI)", "Others"]
     },
     "Q27": {
       "question": "Have you ever undergone a Breast Examination (BE)?",

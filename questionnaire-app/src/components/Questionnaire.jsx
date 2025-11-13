@@ -1414,7 +1414,7 @@ function Questionnaire({ onSubmit, isSubmitting, formStructure, questionnaireDat
         const value = dataToSubmit[key];
         return value === undefined || value === null || value === '' || (Array.isArray(value) && value.length === 0);
     });
-    console.log('Submitting:', { dataToSubmit, dataToSubmitEn, missingFields });
+    // console.log('Submitting:', { dataToSubmit, dataToSubmitEn, missingFields });
 
     if (missingFields.length > 0) {
       console.log('Validation Errors:', missingFields);
@@ -1524,7 +1524,21 @@ function Questionnaire({ onSubmit, isSubmitting, formStructure, questionnaireDat
       
       const conditionValue = subQConfig.condition ? subQConfig.condition.value : null;
       // Assumes "Yes" is index 0
-      const translatedConditionValue = (subQConfig.condition && subQConfig.condition.key) ? t(`questions.${subQConfig.condition.key}.answers.0`) : null;
+      // let translatedConditionValue = (subQConfig.condition && subQConfig.condition.key) ? t(`questions.${subQConfig.condition.key}.answers.0`) : null;
+      // if (subQConfig.condition.key === "Q24") {
+      //   translatedConditionValue = (subQConfig.condition && subQConfig.condition.key) ? t(`questions.${subQConfig.condition.key}.answers.1`) : null;
+      // }
+
+      let translatedConditionValue = null;
+      if (subQConfig.condition && subQConfig.condition.key) {
+        // default: use the first answer translation (index 0) if present
+        translatedConditionValue = t(`questions.${subQConfig.condition.key}.answers.0`, { defaultValue: null });
+
+        // special-case: if condition key is Q24, we want "No" (answers[1]) as the trigger
+        if (subQConfig.condition.key === "Q24") {
+          translatedConditionValue = t(`questions.${subQConfig.condition.key}.answers.1`, { defaultValue: null });
+        }
+      }
 
       return (
         <React.Fragment key={subQName}>
