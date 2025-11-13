@@ -77,7 +77,7 @@
           "key": "Q27",
           "type": "radio", 
           "condition": {"key": "Q27", "value": "Yes"}, 
-          "videoUrlOnNo": "https://www.youtube.com/embed/Jk8al8sF1nc?autoplay=1&rel=0&start=0", 
+          "videoUrlOnNo": "https://www.youtube.com/embed/DnXn0vJn_xQ?autoplay=1&rel=0&start=0", 
           "subQuestions": [
             { "key": "Q28", "type": "radio" },
             { "key": "Q29", "type": "radio" },
@@ -241,7 +241,7 @@
     },
     "Q26": {
       "question": "ਕਿਰਪਾ ਕਰਕੇ ਉਹਨਾਂ ਦੀ ਨਸਲ ਚੁਣੋ:",
-      "answers": []
+      "answers": ["ਉੱਤਰੀ ਭਾਰਤੀ", "ਦੱਖਣੀ ਭਾਰਤੀ", "ਪੂਰਬੀ ਭਾਰਤੀ", "ਪੱਛਮੀ ਭਾਰਤੀ", "ਉੱਤਰ-ਪੂਰਬੀ ਭਾਰਤੀ", "ਮੱਧ ਭਾਰਤੀ / ਆਦਿਵਾਸੀ ਭਾਈਚਾਰੇ", "ਮਿਸ਼ਰਤ / ਹੋਰ ਭਾਰਤੀ ਨਸਲ", "ਪਰਵਾਸੀ ਭਾਰਤੀ (NRI)", "ਹੋਰ"]
     },
     "Q27": {
       "question": "ਕੀ ਤੁਸੀਂ ਕਦੇ ਛਾਤੀ ਦੀ ਜਾਂਚ (BE) ਕਰਵਾਈ ਹੈ?",

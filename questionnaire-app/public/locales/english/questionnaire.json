@@ -77,7 +77,7 @@
           "key": "Q27",
           "type": "radio", 
           "condition": {"key": "Q27", "value": "Yes"}, 
-          "videoUrlOnNo": "https://www.youtube.com/embed/wI71TXaoMp8?autoplay=1&rel=0&start=0", 
+          "videoUrlOnNo": "https://www.youtube.com/embed/nKVjF3u3CNg?autoplay=1&rel=0&start=0", 
           "subQuestions": [
             { "key": "Q28", "type": "radio" },
             { "key": "Q29", "type": "radio" },
@@ -237,11 +237,11 @@
     },
     "Q25": {
       "question": "Age of death",
-      "answers": []
+      "answers": ["North Indian", "South Indian", "East Indian", "West Indian", "North-East Indian", "Central Indian / Tribal Communities", "Mixed / Other Indian Ethnicity", "Non-Resident Indian (NRI)", "Others"]
     },
     "Q26": {
       "question": "Please select their ethnicity:",
-      "answers": []
+      "answers": ["North Indian", "South Indian", "East Indian", "West Indian", "North-East Indian", "Central Indian / Tribal Communities", "Mixed / Other Indian Ethnicity", "Non-Resident Indian (NRI)", "Others"]
     },
     "Q27": {
       "question": "Have you ever undergone a Breast Examination (BE)?",
