@@ -2035,7 +2035,7 @@ function ThankYou({ riskResult, formData, sessionId, formStructure, questionnair
         let y = 0;
 
         const themeColor = [98, 0, 238];
-        const highlightColor = [255, 249, 230]; 
+
 
         const sanitizeText = (text) => {
             if (!text) return '';
