@@ -1,7 +1,3 @@
-
-
-
-
 import express from 'express';
 import cors from 'cors';
 import { v4 as uuidv4 } from 'uuid';
@@ -10,8 +6,8 @@ import { getPool } from '../mysql_explorer/db.js';
 // import questionnaireData from '../src/assets/questionnaire.json' with { type: 'json' };
 // import questionnaireData from './questionnaire.json' with { type: 'json' };
 
-// import questionnaireJson from '../src/assets/questionnaire.json' with { type: 'json' };
-import questionnaireJson from './questionnaire.json' with { type: 'json' };
+import questionnaireJson from '../src/assets/questionnaire.json' with { type: 'json' };
+// import questionnaireJson from './questionnaire.json' with { type: 'json' };
 
 
 const questionnaireData = questionnaireJson.questions; 
@@ -61,13 +57,13 @@ function calculateSnehithaRisk(formData) {
     // console.log(`  - Age at First Birth >=30: ${ageAtFirstLiveBirth30OrMore}`);
 
     // --- 3. Calculate logit(p) using the provided formula ---
-    const logitP = -0.940 +
+    const logitP = -0.140 +
         (0.027 * age) -
         (0.082 * ageAtMenarche) +
         (0.453 * irregularCycles) -
         (0.892 * breastfeeding24M) +
         (0.810 * firstDegreeRelatives) +
-        (1.420 * previousBiopsy) -
+        (1.420 * previousBiopsy) +
         (0.811 * ageAtFirstLiveBirth2529OrNullipara) +
         (1.035 * ageAtFirstLiveBirth30OrMore);
 
